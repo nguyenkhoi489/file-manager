@@ -13,7 +13,7 @@ use Nguyenkhoi\FileManager\Repositories\Settings\MediaSettingRepositoryInterface
 
 class FileManagerProvider extends ServiceProvider
 {
-    protected array $files = [
+    protected $files = [
         'file_manager_helper'
     ];
 
@@ -22,19 +22,19 @@ class FileManagerProvider extends ServiceProvider
      */
     public function register(): void
     {
-
-        $this->app->bind(MediaSettingRepositoryInterface::class, MediaSettingRepository::class);
-        $this->app->bind(MediaFileRepositoryInterface::class, MediaFileRepository::class);
-        $this->app->bind(MediaFolderRepositoryInterface::class, MediaFolderRepository::class);
-
-        File::requireOnce(__DIR__ . '/Helpers/file_manager_helper.php');
+        foreach ($this->files as $file) {
+            if (file_exists(__DIR__ . '/Helpers/' . $file . '.php')) {
+                File::requireOnce(__DIR__ . '/Helpers/' . $file . '.php');
+            }
+        }
 
         $this->mergeConfigFrom(
             __DIR__ . '/Config/file-manager.php',
             'nkd-file-manager'
         );
-
-
+        $this->app->bind(MediaSettingRepositoryInterface::class, MediaSettingRepository::class);
+        $this->app->bind(MediaFileRepositoryInterface::class, MediaFileRepository::class);
+        $this->app->bind(MediaFolderRepositoryInterface::class, MediaFolderRepository::class);
     }
 
     /**

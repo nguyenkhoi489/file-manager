@@ -6,13 +6,11 @@ abstract class MediaBaseRepository implements MediaBaseRepositoryInterface
 {
     protected $model;
 
-    //khởi tạo
     public function __construct()
     {
         $this->setModel();
     }
 
-    //lấy model tương ứng
     abstract public function getModel();
 
     /**
