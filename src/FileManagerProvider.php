@@ -63,5 +63,6 @@ class FileManagerProvider extends ServiceProvider
         ], 'nkd-file-manager-config');
 
 
+        $this->loadViewsFrom(__DIR__ . '/Resources/views/', 'file-manager');
     }
 }
