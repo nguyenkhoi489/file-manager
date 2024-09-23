@@ -1,9 +1,9 @@
 {
     "name": "nguyenkhoi/file-manager",
-    "description": "\"Create File Manager For Laravel App\"",
+    "description": "Create File Manager For Laravel App",
     "autoload": {
         "psr-4": {
-            "Nguyenkhoi\\FileManager\\": "src/"
+            "NguyenKhoi\\FileManager\\": "src/"
         }
     },
     "authors": [
@@ -17,7 +17,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Nguyenkhoi\\FileManager\\FileManagerProvider"
+                "NguyenKhoi\\FileManager\\FileManagerProvider"
             ]
         }
     }

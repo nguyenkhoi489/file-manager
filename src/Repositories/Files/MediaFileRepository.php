@@ -1,10 +1,9 @@
 <?php
 
-namespace Nguyenkhoi\FileManager\Repositories\Files;
+namespace NguyenKhoi\FileManager\Repositories\Files;
 
-use App\Repositories\BaseRepository;
-use Nguyenkhoi\FileManager\Model\MediaFile;
-use Nguyenkhoi\FileManager\Repositories\MediaBaseRepository;
+use NguyenKhoi\FileManager\Model\MediaFile;
+use NguyenKhoi\FileManager\Repositories\MediaBaseRepository;
 
 class MediaFileRepository extends MediaBaseRepository implements MediaFileRepositoryInterface
 {

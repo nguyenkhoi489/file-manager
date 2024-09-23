@@ -1,9 +1,9 @@
 <?php
 
-namespace Nguyenkhoi\FileManager\Repositories\Settings;
+namespace NguyenKhoi\FileManager\Repositories\Settings;
 
-use Nguyenkhoi\FileManager\Model\MediaSetting;
-use Nguyenkhoi\FileManager\Repositories\MediaBaseRepository;
+use NguyenKhoi\FileManager\Model\MediaSetting;
+use NguyenKhoi\FileManager\Repositories\MediaBaseRepository;
 
 class MediaSettingRepository extends MediaBaseRepository implements MediaSettingRepositoryInterface
 {

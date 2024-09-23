@@ -1,8 +1,8 @@
 <?php
 
-namespace Nguyenkhoi\FileManager\Repositories\Files;
+namespace NguyenKhoi\FileManager\Repositories\Files;
 
-use Nguyenkhoi\FileManager\Repositories\MediaBaseRepositoryInterface;
+use NguyenKhoi\FileManager\Repositories\MediaBaseRepositoryInterface;
 
 interface MediaFileRepositoryInterface extends MediaBaseRepositoryInterface
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Nguyenkhoi\FileManager\Repositories;
+namespace NguyenKhoi\FileManager\Repositories;
 
 interface MediaBaseRepositoryInterface
 {

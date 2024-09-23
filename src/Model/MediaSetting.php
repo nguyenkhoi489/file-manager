@@ -1,6 +1,6 @@
 <?php
 
-namespace Nguyenkhoi\FileManager\Model;
+namespace NguyenKhoi\FileManager\Model;
 
 use Illuminate\Database\Eloquent\Model;
 

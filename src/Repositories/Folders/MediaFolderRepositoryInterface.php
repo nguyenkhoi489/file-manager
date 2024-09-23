@@ -1,10 +1,12 @@
 <?php
 
-namespace Nguyenkhoi\FileManager\Repositories\Folders;
+namespace NguyenKhoi\FileManager\Repositories\Folders;
 
-use Nguyenkhoi\FileManager\Repositories\MediaBaseRepositoryInterface;
+use NguyenKhoi\FileManager\Repositories\MediaBaseRepositoryInterface;
 
 interface MediaFolderRepositoryInterface extends MediaBaseRepositoryInterface
 {
+    public function getAllFolders(array $data);
 
+    public function filter(array $data);
 }

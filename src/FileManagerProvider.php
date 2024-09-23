@@ -1,15 +1,17 @@
 <?php
 
-namespace Nguyenkhoi\FileManager;
+namespace NguyenKhoi\FileManager;
+
 
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\ServiceProvider;
-use Nguyenkhoi\FileManager\Repositories\Files\MediaFileRepository;
-use Nguyenkhoi\FileManager\Repositories\Files\MediaFileRepositoryInterface;
-use Nguyenkhoi\FileManager\Repositories\Folders\MediaFolderRepository;
-use Nguyenkhoi\FileManager\Repositories\Folders\MediaFolderRepositoryInterface;
-use Nguyenkhoi\FileManager\Repositories\Settings\MediaSettingRepository;
-use Nguyenkhoi\FileManager\Repositories\Settings\MediaSettingRepositoryInterface;
+use NguyenKhoi\FileManager\Http\Controllers\MediaController;
+use NguyenKhoi\FileManager\Repositories\Files\MediaFileRepository;
+use NguyenKhoi\FileManager\Repositories\Files\MediaFileRepositoryInterface;
+use NguyenKhoi\FileManager\Repositories\Folders\MediaFolderRepository;
+use NguyenKhoi\FileManager\Repositories\Folders\MediaFolderRepositoryInterface;
+use NguyenKhoi\FileManager\Repositories\Settings\MediaSettingRepository;
+use NguyenKhoi\FileManager\Repositories\Settings\MediaSettingRepositoryInterface;
 
 class FileManagerProvider extends ServiceProvider
 {
@@ -30,7 +32,7 @@ class FileManagerProvider extends ServiceProvider
 
         $this->mergeConfigFrom(
             __DIR__ . '/Config/file-manager.php',
-            'nkd-file-manager'
+            'file-manager'
         );
         $this->app->bind(MediaSettingRepositoryInterface::class, MediaSettingRepository::class);
         $this->app->bind(MediaFileRepositoryInterface::class, MediaFileRepository::class);
@@ -62,7 +64,7 @@ class FileManagerProvider extends ServiceProvider
             . '/Config/file-manager.php' => config_path('file-manager.php'),
         ], 'nkd-file-manager-config');
 
-
+        //Load View
         $this->loadViewsFrom(__DIR__ . '/Resources/views/', 'file-manager');
     }
 }
