@@ -19,6 +19,6 @@ class MediaFileController extends Controller
 
     public function index()
     {
-        dd(123);
+        return view('file-manager::media.index');
     }
 }
