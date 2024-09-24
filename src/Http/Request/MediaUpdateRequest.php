@@ -14,7 +14,7 @@ class MediaUpdateRequest extends FormRequest
     {
         return [
             'id' => 'required',
-            'name' => 'required|string',
+            'name' => 'nullable|string',
             'is_folder' => 'required',
         ];
     }

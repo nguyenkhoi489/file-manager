@@ -17,7 +17,7 @@ Route::group(
             Route::get('/',  'index')->name('file-manager');
             Route::get('load-media', 'loadMedia')->name('loadMedia');
             Route::post('update-options', 'updateName')->name('update');
-
+            Route::delete('remove-trash', 'removeTrash')->name('destroy');
         });
         Route::controller(FolderController::class)->group(function () {
             Route::post('create-folder', 'saveFolder')->name('folder.create');

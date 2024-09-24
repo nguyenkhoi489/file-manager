@@ -2,12 +2,12 @@
 
 namespace NguyenKhoi\FileManager\Http\Controllers;
 
+use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
-
+use Illuminate\Routing\Controller;
 use NguyenKhoi\FileManager\Http\Request\MediaRequest;
 use NguyenKhoi\FileManager\Http\Request\MediaUpdateRequest;
 use NguyenKhoi\FileManager\Repositories\Files\MediaFileRepositoryInterface;
-use Illuminate\Routing\Controller;
 use NguyenKhoi\FileManager\Repositories\Folders\MediaFolderRepositoryInterface;
 use NguyenKhoi\FileManager\Services\FolderServices;
 
@@ -33,7 +33,7 @@ class MediaController extends Controller
         return view('file-manager::master');
     }
 
-    public function loadMedia(MediaRequest $request): \Illuminate\Http\JsonResponse
+    public function loadMedia(MediaRequest $request): JsonResponse
     {
         $paged = 1;
         $limit = 30;
@@ -96,29 +96,54 @@ class MediaController extends Controller
 
         $isExits = $repoUsed->find($data['id']);
 
-        if (! $isExits) {
+        if (!$isExits) {
             return response()->json([
                 'success' => false,
-                'message' => 'Folder not found'
+                'message' => 'Not found'
             ]);
         }
         $isChecked = $this->diskService->findDir($isExits->name);
 
-        if (! $isChecked)
-        {
+        if (!$isChecked) {
             return response()->json([
                 'success' => false,
-                'message' => 'Folder not found'
+                'message' => 'Not found'
             ]);
         }
         $changed = $this->diskService->renameDir($isExits->name, $data['name']);
-        if (! $changed['success']) {
+        if (!$changed['success']) {
             return response()->json($changed);
         }
 
         $repoUsed->update($isExits->id, $data);
 
         return response()->json($changed);
+
+    }
+
+    public function removeTrash(MediaUpdateRequest $request)
+    {
+        $data = $request->validated();
+
+        $repoUsed = $data['is_folder'] !== 'false' ? $this->folderRepository : $this->fileRepository;
+
+        $isExits = $repoUsed->find($data['id']);
+
+        if (!$isExits) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Not found'
+            ]);
+        }
+
+        $repoUsed->update($isExits->id, [
+            'deleted_at' => Carbon::now()->addHours(24)->toDateTimeString()
+        ]);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Moved selected item(s) to trash successfully!'
+        ]);
 
     }
 
