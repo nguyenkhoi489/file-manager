@@ -7,5 +7,4 @@ use NguyenKhoi\FileManager\Repositories\MediaBaseRepositoryInterface;
 interface MediaFileRepositoryInterface extends MediaBaseRepositoryInterface
 {
     public function filter(array $data);
-    public function getAllFiles(array $data);
 }

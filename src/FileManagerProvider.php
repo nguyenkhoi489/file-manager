@@ -4,8 +4,10 @@ namespace NguyenKhoi\FileManager;
 
 
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 use NguyenKhoi\FileManager\Http\Controllers\MediaController;
+use NguyenKhoi\FileManager\Http\Middleware\AuthMiddlewareHandle;
 use NguyenKhoi\FileManager\Repositories\Files\MediaFileRepository;
 use NguyenKhoi\FileManager\Repositories\Files\MediaFileRepositoryInterface;
 use NguyenKhoi\FileManager\Repositories\Folders\MediaFolderRepository;

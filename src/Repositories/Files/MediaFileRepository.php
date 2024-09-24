@@ -12,9 +12,12 @@ class MediaFileRepository extends MediaBaseRepository implements MediaFileReposi
     {
         return MediaFile::class;
     }
+
     public function filter(array $data)
     {
-        $this->model->latest('id');
+        $model = $this->model->query();
+
+        $model->latest('id')->whereNull('deleted_at');
 
         $paged = $data['paged'] ?? 1;
 
@@ -22,24 +25,28 @@ class MediaFileRepository extends MediaBaseRepository implements MediaFileReposi
 
         $offset = ($paged - 1) * $limit;
 
-        $this->model->limit($limit)->offset($offset);
+        $model->limit($limit)->offset($offset);
 
-        if (isset($data['folder_id'])) {
-            $this->model->where('folder_id', $data['folder_id']);
-        }
+        $model->where(function ($query) use ($data) {
+            if (isset($data['folder_id'])) {
+                $query->where('folder_id', $data['folder_id']);
+            }
+            if (isset($data['search']) && $data['search']) {
+                $query->where('name', 'like', '%' . $data['search'] . '%');
+            }
+        });
 
         if (isset($data['sort_by'])) {
             $order = explode('-', $data['sort_by']);
-            $this->model->orderBy($order[0], $order[1]);
-        }
-        if (isset($data['search'])) {
-            $this->model->where('name', 'like', '%' . $data['search'] . '%');
+            $model->orderBy($order[0], $order[1]);
         }
 
-        return $this->model->get();
+        return $model->get();
     }
-    public function getAllFiles(array $data = [])
+
+    public function getCount()
     {
-
+        return $this->model->whereNull('deleted_at')->count('id');
     }
+
 }

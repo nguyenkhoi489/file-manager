@@ -6,13 +6,18 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>File Manager</title>
-    <link rel="stylesheet" href="{{ asset('vendor/file-manager/assets/css/bootstrap.min.css') }}">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css" rel="stylesheet">
-    <link rel="stylesheet" href="{{ asset('vendor/file-manager/assets/css/base.css') }}">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
 </head>
 <body class="bg-light">
+<link rel="stylesheet" href="{{ asset('vendor/file-manager/assets/css/bootstrap.min.css') }}">
+<link rel="stylesheet" href="{{ asset('vendor/file-manager/assets/lib/toastr/toastr.min.css') }}">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css" rel="stylesheet">
+<link rel="stylesheet" href="{{ asset('vendor/file-manager/assets/css/base.css') }}">
 <div class="container-xl">
-    <div class="nkd-media-container" data-ajax="{{ route('media.loadMedia') }}">
+    <div class="nkd-media-container"
+         data-breadcrumbs-count="1"
+         data-ajax="{{ route('media.loadMedia') }}">
         <div class="nkd-media-main border border-1 rounded rounded-1 bg-white">
             <div class="card-header w-100 flex-column media-header p-0">
                 <div
@@ -48,7 +53,8 @@
 
                                 <div class="dropdown-menu" style="">
                                     <button class="dropdown-item js-dropzone-upload dz-clickable">
-                                        <svg class="icon dropdown-item-icon" xmlns="http://www.w3.org/2000/svg" width="24"
+                                        <svg class="icon dropdown-item-icon" xmlns="http://www.w3.org/2000/svg"
+                                             width="24"
                                              height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
                                              fill="none" stroke-linecap="round" stroke-linejoin="round">
                                             <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
@@ -61,7 +67,8 @@
                                     </button>
 
                                     <button class="dropdown-item js-download-action dropdown-item">
-                                        <svg class="icon dropdown-item-icon" xmlns="http://www.w3.org/2000/svg" width="24"
+                                        <svg class="icon dropdown-item-icon" xmlns="http://www.w3.org/2000/svg"
+                                             width="24"
                                              height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
                                              fill="none" stroke-linecap="round" stroke-linejoin="round">
                                             <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
@@ -83,7 +90,8 @@
                                      viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
                                      stroke-linecap="round" stroke-linejoin="round">
                                     <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                                    <path d="M12 19h-7a2 2 0 0 1 -2 -2v-11a2 2 0 0 1 2 -2h4l3 3h7a2 2 0 0 1 2 2v3.5"></path>
+                                    <path
+                                        d="M12 19h-7a2 2 0 0 1 -2 -2v-11a2 2 0 0 1 2 -2h4l3 3h7a2 2 0 0 1 2 2v3.5"></path>
                                     <path d="M16 19h6"></path>
                                     <path d="M19 16v6"></path>
                                 </svg>
@@ -110,7 +118,8 @@
                                 <input type="search" class="form-control" name="search"
                                        placeholder="Search in current folder">
                                 <button class="btn btn-icon" type="submit">
-                                    <svg class="icon icon-left" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                    <svg class="icon icon-left" xmlns="http://www.w3.org/2000/svg" width="24"
+                                         height="24"
                                          viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
                                          stroke-linecap="round" stroke-linejoin="round">
                                         <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
@@ -164,7 +173,8 @@
                                 <div class="dropdown-menu">
                                     <button class="dropdown-item js-media-change-filter" data-type="sort_by"
                                             data-value="name-asc">
-                                        <svg class="icon dropdown-item-icon" xmlns="http://www.w3.org/2000/svg" width="24"
+                                        <svg class="icon dropdown-item-icon" xmlns="http://www.w3.org/2000/svg"
+                                             width="24"
                                              height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
                                              fill="none" stroke-linecap="round" stroke-linejoin="round">
                                             <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
@@ -178,7 +188,8 @@
                                     </button>
                                     <button class="dropdown-item js-media-change-filter active" data-type="sort_by"
                                             data-value="name-desc">
-                                        <svg class="icon dropdown-item-icon" xmlns="http://www.w3.org/2000/svg" width="24"
+                                        <svg class="icon dropdown-item-icon" xmlns="http://www.w3.org/2000/svg"
+                                             width="24"
                                              height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
                                              fill="none" stroke-linecap="round" stroke-linejoin="round">
                                             <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
@@ -192,7 +203,8 @@
                                     </button>
                                     <button class="dropdown-item js-media-change-filter" data-type="sort_by"
                                             data-value="created_at-asc">
-                                        <svg class="icon dropdown-item-icon" xmlns="http://www.w3.org/2000/svg" width="24"
+                                        <svg class="icon dropdown-item-icon" xmlns="http://www.w3.org/2000/svg"
+                                             width="24"
                                              height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
                                              fill="none" stroke-linecap="round" stroke-linejoin="round">
                                             <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
@@ -207,7 +219,8 @@
                                     </button>
                                     <button class="dropdown-item js-media-change-filter" data-type="sort_by"
                                             data-value="created_at-desc">
-                                        <svg class="icon dropdown-item-icon" xmlns="http://www.w3.org/2000/svg" width="24"
+                                        <svg class="icon dropdown-item-icon" xmlns="http://www.w3.org/2000/svg"
+                                             width="24"
                                              height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
                                              fill="none" stroke-linecap="round" stroke-linejoin="round">
                                             <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
@@ -222,7 +235,8 @@
                                     </button>
                                     <button class="dropdown-item js-media-change-filter" data-type="sort_by"
                                             data-value="size-asc">
-                                        <svg class="icon dropdown-item-icon" xmlns="http://www.w3.org/2000/svg" width="24"
+                                        <svg class="icon dropdown-item-icon" xmlns="http://www.w3.org/2000/svg"
+                                             width="24"
                                              height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
                                              fill="none" stroke-linecap="round" stroke-linejoin="round">
                                             <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
@@ -238,7 +252,8 @@
                                     </button>
                                     <button class="dropdown-item js-media-change-filter" data-type="sort_by"
                                             data-value="size-desc">
-                                        <svg class="icon dropdown-item-icon" xmlns="http://www.w3.org/2000/svg" width="24"
+                                        <svg class="icon dropdown-item-icon" xmlns="http://www.w3.org/2000/svg"
+                                             width="24"
                                              height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
                                              fill="none" stroke-linecap="round" stroke-linejoin="round">
                                             <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
@@ -256,7 +271,7 @@
                             </div>
 
                             <div class="dropdown dropdown-actions">
-                                <button class="btn disabled dropdown-toggle" type="button" disabled=""
+                                <button class="btn disabled dropdown-toggle" type="button" disabled="disabled"
                                         data-bs-toggle="dropdown">
 
                                     <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
@@ -301,47 +316,6 @@
                                         Rename
 
                                     </button>
-
-                                    <button class="dropdown-item js-files-action" data-action="make_copy">
-            <span class="icon-tabler-wrapper dropdown-item-icon"><span class="icon-tabler-wrapper dropdown-item-icon"><svg
-                        xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24"
-                        stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"
-                        stroke-linejoin="round">
-                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                    <path d="M8 8m0 2a2 2 0 0 1 2 -2h8a2 2 0 0 1 2 2v8a2 2 0 0 1 -2 2h-8a2 2 0 0 1 -2 -2z"></path>
-                    <path d="M16 8v-2a2 2 0 0 0 -2 -2h-8a2 2 0 0 0 -2 2v8a2 2 0 0 0 2 2h2"></path>
-                </svg></span></span>
-                                        Make a copy
-
-                                    </button>
-                                    <li role="separator" class="divider"></li>
-                                    <button class="dropdown-item js-files-action" data-action="favorite">
-            <span class="icon-tabler-wrapper dropdown-item-icon"><span class="icon-tabler-wrapper dropdown-item-icon"><svg
-                        xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24"
-                        stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"
-                        stroke-linejoin="round">
-                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                    <path
-                        d="M12 17.75l-6.172 3.245l1.179 -6.873l-5 -4.867l6.9 -1l3.086 -6.253l3.086 6.253l6.9 1l-5 4.867l1.179 6.873z"></path>
-                </svg></span></span>
-                                        Add to favorite
-
-                                    </button>
-                                    <li role="separator" class="divider"></li>
-                                    <button class="dropdown-item js-files-action" data-action="download">
-            <span class="icon-tabler-wrapper dropdown-item-icon"><span class="icon-tabler-wrapper dropdown-item-icon"><svg
-                        xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24"
-                        stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"
-                        stroke-linejoin="round">
-                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                    <path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2"></path>
-                    <path d="M7 11l5 5l5 -5"></path>
-                    <path d="M12 4l0 12"></path>
-                </svg></span></span>
-                                        Download
-
-                                    </button>
-
                                     <button class="dropdown-item js-files-action" data-action="trash">
             <span class="icon-tabler-wrapper dropdown-item-icon"><span class="icon-tabler-wrapper dropdown-item-icon"><svg
                         xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24"
@@ -355,24 +329,6 @@
                     <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"></path>
                 </svg></span></span>
                                         Move to trash
-
-                                    </button>
-
-                                    <button class="dropdown-item js-files-action" data-action="properties">
-                                    <span class="icon-tabler-wrapper dropdown-item-icon"><span
-                                            class="icon-tabler-wrapper dropdown-item-icon"><svg
-                                                xmlns="http://www.w3.org/2000/svg"
-                                                class="icon icon-tabler icon-tabler-palette" width="24" height="24"
-                                                viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-                                                stroke-linecap="round" stroke-linejoin="round"><path stroke="none"
-                                                                                                     d="M0 0h24v24H0z"
-                                                                                                     fill="none"></path><path
-                                                    d="M12 21a9 9 0 0 1 0 -18c4.97 0 9 3.582 9 8c0 1.06 -.474 2.078 -1.318 2.828c-.844 .75 -1.989 1.172 -3.182 1.172h-2.5a2 2 0 0 0 -1 3.75a1.3 1.3 0 0 1 -1 2.25"></path><path
-                                                    d="M8.5 10.5m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"></path><path
-                                                    d="M12.5 7.5m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"></path><path
-                                                    d="M16.5 10.5m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"></path></svg></span></span>
-                                        Properties
-
                                     </button>
                                 </div>
                             </div>
@@ -413,25 +369,73 @@
             </div>
 
             <div class="row nkd-media-wrapper w-100">
-                <div class="col-md-3">
-                    <div class="media-details" style="">
-                        <div class="media-thumbnail"><svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <div class="col-md-10">
+                    <div class="media-grid">
+                        <ul class="m-0 list-unstyled">
+                            <li class="media-list-title up-one-level js-up-one-level">
+                                <div class="media-item" data-context="__type__" title="Up one level">
+                                    <div class="item-media-thumbnail">
+                                        <svg class="icon icon-lg" xmlns="http://www.w3.org/2000/svg" width="24"
+                                             height="24"
+                                             viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                                             stroke-linecap="round" stroke-linejoin="round">
+                                            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                            <path d="M18 18v-6a3 3 0 0 0 -3 -3h-10l4 -4m0 8l-4 -4"></path>
+                                        </svg>
+                                    </div>
+                                    <div class="item-media-description">
+                                        <div class="title">...</div>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-2 p-0">
+                    <div class="media-details w-100" style="">
+                        <div class="media-thumbnail">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
+                                 viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                                 stroke-linecap="round" stroke-linejoin="round">
                                 <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                                 <path d="M15 8h.01"></path>
-                                <path d="M3 6a3 3 0 0 1 3 -3h12a3 3 0 0 1 3 3v12a3 3 0 0 1 -3 3h-12a3 3 0 0 1 -3 -3v-12z"></path>
+                                <path
+                                    d="M3 6a3 3 0 0 1 3 -3h12a3 3 0 0 1 3 3v12a3 3 0 0 1 -3 3h-12a3 3 0 0 1 -3 -3v-12z"></path>
                                 <path d="M3 16l5 -5c.928 -.893 2.072 -.893 3 0l5 5"></path>
                                 <path d="M14 14l1 -1c.928 -.893 2.072 -.893 3 0l3 3"></path>
-                            </svg></div>
+                            </svg>
+                        </div>
                         <div class="media-description"></div>
                     </div>
                 </div>
-                <div class="col-md-9"></div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="modal-create-folder" data-action="{{ route('media.folder.create') }}">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalCenterTitle">Create Folder</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3 position-relative">
+                        <div class="input-group">
+                            <input class="form-control" type="text" name="name" id="name" placeholder="Folder name">
+                            <button class="btn btn-primary js-create-folder" type="submit">
+                                Create
+                            </button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script src="{{ asset('vendor/file-manager/assets/js/bootstrap.bundle.min.js') }}"></script>
+<script src="{{ asset('vendor/file-manager/assets/lib/toastr/toastr.min.js') }}"></script>
+<script src="{{ asset('vendor/file-manager/assets/lib/toastr/toastr-setting.js') }}"></script>
 <script src="{{ asset('vendor/file-manager/assets/js/media.js') }}"></script>
 </body>
 </html>

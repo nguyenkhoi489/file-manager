@@ -18,4 +18,8 @@ class MediaSettingRepository extends MediaBaseRepository implements MediaSetting
         return $this->model->where('key', $key)->first();
     }
 
+    public function getCount()
+    {
+        // TODO: Implement getCount() method.
+    }
 }

@@ -1,19 +1,24 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use NguyenKhoi\FileManager\Http\Controllers\FolderController;
 use NguyenKhoi\FileManager\Http\Controllers\MediaController;
 
 
 Route::group(
     [
-        'namespace' => 'NguyenKhoi\FileManager\Http\Controllers',
-        'middleware' => ['web']
+        'middleware' => ['web', 'auth']
     ], function () {
     Route::group([
         'prefix' => 'file-manager',
         'as' => 'media.',
     ], function () {
-        Route::get('/', 'MediaController@index')->name('file-manager');
-        Route::get('load-media', 'MediaController@loadMedia')->name('loadMedia');
+        Route::controller(MediaController::class)->group(function () {
+            Route::get('/',  'index')->name('file-manager');
+            Route::get('load-media', 'loadMedia')->name('loadMedia');
+        });
+        Route::controller(FolderController::class)->group(function () {
+            Route::post('create-folder', 'saveFolder')->name('folder.create');
+        });
     });
 });
