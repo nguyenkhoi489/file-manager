@@ -2,23 +2,30 @@
 
 namespace NguyenKhoi\FileManager\Http\Controllers;
 
+use Illuminate\Http\JsonResponse;
+
 use NguyenKhoi\FileManager\Http\Request\MediaRequest;
+use NguyenKhoi\FileManager\Http\Request\MediaUpdateRequest;
 use NguyenKhoi\FileManager\Repositories\Files\MediaFileRepositoryInterface;
 use Illuminate\Routing\Controller;
 use NguyenKhoi\FileManager\Repositories\Folders\MediaFolderRepositoryInterface;
+use NguyenKhoi\FileManager\Services\FolderServices;
 
 class MediaController extends Controller
 {
     protected $fileRepository;
     protected $folderRepository;
+    protected $diskService;
 
     public function __construct(
         public MediaFileRepositoryInterface   $fileRepo,
-        public MediaFolderRepositoryInterface $folderRepo
+        public MediaFolderRepositoryInterface $folderRepo,
+        public FolderServices                 $folderServices,
     )
     {
         $this->fileRepository = $this->fileRepo;
         $this->folderRepository = $this->folderRepo;
+        $this->diskService = $folderServices;
     }
 
     public function index()
@@ -26,7 +33,7 @@ class MediaController extends Controller
         return view('file-manager::master');
     }
 
-    public function loadMedia(MediaRequest $request)
+    public function loadMedia(MediaRequest $request): \Illuminate\Http\JsonResponse
     {
         $paged = 1;
         $limit = 30;
@@ -79,4 +86,40 @@ class MediaController extends Controller
             'type' => $countFolders > $limit ? 'folder' : 'file'
         ]);
     }
+
+    public function updateName(MediaUpdateRequest $request): JsonResponse
+    {
+
+        $data = $request->validated();
+
+        $repoUsed = $data['is_folder'] !== 'false' ? $this->folderRepository : $this->fileRepository;
+
+        $isExits = $repoUsed->find($data['id']);
+
+        if (! $isExits) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Folder not found'
+            ]);
+        }
+        $isChecked = $this->diskService->findDir($isExits->name);
+
+        if (! $isChecked)
+        {
+            return response()->json([
+                'success' => false,
+                'message' => 'Folder not found'
+            ]);
+        }
+        $changed = $this->diskService->renameDir($isExits->name, $data['name']);
+        if (! $changed['success']) {
+            return response()->json($changed);
+        }
+
+        $repoUsed->update($isExits->id, $data);
+
+        return response()->json($changed);
+
+    }
+
 }

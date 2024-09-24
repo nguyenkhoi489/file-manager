@@ -16,7 +16,7 @@ class MediaFolderRepository extends MediaBaseRepository implements MediaFolderRe
     {
         $model = $this->model->query();
 
-        $model->latest('id')->whereNull('deleted_at');
+        $model->whereNull('deleted_at');
 
         $paged = $data['paged'] ?? 1;
 
@@ -37,7 +37,9 @@ class MediaFolderRepository extends MediaBaseRepository implements MediaFolderRe
 
         if (isset($data['sort_by'])) {
             $order = explode('-', $data['sort_by']);
-            $model->orderBy($order[0], $order[1]);
+            if ($order[0] !== 'size') {
+                $model->orderBy($order[0], $order[1]);
+            }
         }
 
         return $model->get();

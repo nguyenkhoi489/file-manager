@@ -17,7 +17,7 @@ class MediaFileRepository extends MediaBaseRepository implements MediaFileReposi
     {
         $model = $this->model->query();
 
-        $model->latest('id')->whereNull('deleted_at');
+        $model->whereNull('deleted_at');
 
         $paged = $data['paged'] ?? 1;
 

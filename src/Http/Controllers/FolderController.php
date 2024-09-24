@@ -6,7 +6,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Routing\Controller;
 use NguyenKhoi\FileManager\Http\Request\FolderRequest;
 use NguyenKhoi\FileManager\Repositories\Folders\MediaFolderRepositoryInterface;
-use NguyenKhoi\FileManager\Services\UploadServices;
+use NguyenKhoi\FileManager\Services\FolderServices;
 
 class FolderController extends Controller
 {
@@ -15,18 +15,18 @@ class FolderController extends Controller
 
     public function __construct(
         public MediaFolderRepositoryInterface $mediaFolderRepository,
-        public UploadServices                 $uploadServices
+        public FolderServices                 $folderServices,
     )
     {
         $this->folderRepository = $mediaFolderRepository;
-        $this->diskService = $uploadServices;
+        $this->diskService = $folderServices;
     }
 
     public function saveFolder(FolderRequest $request): JsonResponse
     {
         $data = $request->validated();
 
-        $results = $this->uploadServices->createDir($data['name']);
+        $results = $this->diskService->createDir($data['name']);
 
         if (! $results['success']) {
             return response()->json($results);
@@ -48,4 +48,5 @@ class FolderController extends Controller
             'message' => $results['message']
         ]);
     }
+
 }

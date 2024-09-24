@@ -4,19 +4,18 @@ namespace NguyenKhoi\FileManager\Http\Request;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class FolderRequest extends FormRequest
+class MediaUpdateRequest extends FormRequest
 {
     public function authorize(): bool
     {
         return true;
     }
-
     public function rules(): array
     {
         return [
-            'id' => 'nullable',
+            'id' => 'required',
             'name' => 'required|string',
-            'parent_id' => 'nullable|integer',
+            'is_folder' => 'required',
         ];
     }
 }

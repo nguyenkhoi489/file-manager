@@ -156,7 +156,7 @@
                         class="d-flex justify-content-between justify-content-md-end align-items-center media-tools">
                         <div class="btn-list d-flex justify-content-between" role="group">
                             <div class="dropdown ">
-                                <button class="btn   dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                                <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown">
                                     <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                          viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
                                          stroke-linecap="round" stroke-linejoin="round">
@@ -167,7 +167,6 @@
                                         <path d="M11 12h2"></path>
                                     </svg>
                                     Sort
-
                                 </button>
 
                                 <div class="dropdown-menu">
@@ -391,7 +390,7 @@
                         </ul>
                     </div>
                 </div>
-                <div class="col-md-2 p-0">
+                <div class="col-md-2 column-thumbnail p-0">
                     <div class="media-details w-100" style="">
                         <div class="media-thumbnail">
                             <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
@@ -411,11 +410,35 @@
             </div>
         </div>
     </div>
-    <div class="modal fade" id="modal-create-folder" data-action="{{ route('media.folder.create') }}">
+    <div class="modal fade" id="modal-create-folder"
+         data-update="{{ route('media.update') }}"
+         data-action="{{ route('media.folder.create') }}">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalCenterTitle">Create Folder</h5>
+                    <h5 class="modal-title" >Create Folder</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3 position-relative">
+                        <div class="input-group">
+                            <input class="form-control" type="text" name="name" id="name" placeholder="Folder name">
+                            <button class="btn btn-primary js-create-folder" type="submit">
+                                Create
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="modal-remove-item"
+         data-update="{{ route('media.update') }}"
+         data-action="{{ route('media.folder.create') }}">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" >Create Folder</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -432,6 +455,30 @@
         </div>
     </div>
 </div>
+<script type="text/x-custom-template" id="file">
+
+</script>
+<script type="text/x-custom-template" id="folder">
+    <div class="media-details w-100" style="">
+        <div class="media-thumbnail">
+            __icon__
+        </div>
+        <div class="media-description">
+            <div class="mb-3 media-name">
+                <label class="form-label">Name</label>
+                <span title="__name__">__name__</span>
+            </div>
+            <div class="mb-3 media-name">
+                <label class="form-label">Uploaded at</label>
+                <span title="__uploaded__">__uploaded__</span>
+            </div>
+            <div class="mb-3 media-name">
+                <label class="form-label">Modified at</label>
+                <span title="__modified__">__modified__</span>
+            </div>
+        </div>
+    </div>
+</script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script src="{{ asset('vendor/file-manager/assets/js/bootstrap.bundle.min.js') }}"></script>
 <script src="{{ asset('vendor/file-manager/assets/lib/toastr/toastr.min.js') }}"></script>
