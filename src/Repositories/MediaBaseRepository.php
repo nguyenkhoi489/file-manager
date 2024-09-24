@@ -35,16 +35,16 @@ abstract class MediaBaseRepository implements MediaBaseRepositoryInterface
         return $result;
     }
 
-    public function create($attributes = [])
+    public function create($data = [])
     {
-        return $this->model->create($attributes);
+        return $this->model->create($data);
     }
 
-    public function update($id, $attributes = [])
+    public function update($id, $data = [])
     {
         $result = $this->find($id);
         if ($result) {
-            $result->update($attributes);
+            $result->update($data);
             return $result;
         }
 

@@ -28,7 +28,20 @@ class MediaController extends Controller
 
     public function loadMedia(MediaRequest $request)
     {
-        dd($this->folderRepository->getAllFolders($request->all()));
-        return response()->json($request->all());
+        $paged = 1;
+        $limit = 30;
+        $data = $request->validated();
+
+        $data['paged'] = $data['paged'] ?? $paged;
+        $data['posts_per_page'] = $data['posts_per_page'] ?? $limit;
+
+        $allFolders = $this->folderRepository->getAllFolders($data);
+
+        if (count($allFolders) < $limit) {
+            $limit = $limit - count($allFolders);
+            $data['posts_per_page'] = $limit;
+
+            $allFiles = $this->fileRepository->getAllFiles($data);
+        }
     }
 }
