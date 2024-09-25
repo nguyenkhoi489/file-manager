@@ -6,7 +6,7 @@ File Manager is a package library for Create File Manager For Laravel App.
 ## Installation
 
 ## Step 1
-Create folder "PACKAGES/<NAME>" in root laravel app.
+Create folder "PACKAGES/NAME" in root laravel app.
 
 Example
 
@@ -20,9 +20,8 @@ mkdir packages/nguyenkhoi
 cd packages/nguyenkhoi
 ```
 ## Step 2
-Create folder "PACKAGES/<NAME>" in root laravel app.
 
-Use the git clone
+Use the git clone repo
 ```bash
 git clone https://github.com/nguyenkhoi489/file-manager.git
 ```
