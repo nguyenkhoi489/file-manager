@@ -49,4 +49,13 @@ class MediaFileRepository extends MediaBaseRepository implements MediaFileReposi
         return $this->model->whereNull('deleted_at')->count('id');
     }
 
+    public function findByFolderId($folderId)
+    {
+        return $this->model->where('folder_id', $folderId)->get();
+    }
+
+    public function updateFileByPermalink($permalink, array $data)
+    {
+        return $this->model->where('permalink', $permalink)->update($data);
+    }
 }

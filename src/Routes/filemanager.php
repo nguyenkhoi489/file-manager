@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use NguyenKhoi\FileManager\Http\Controllers\FileController;
 use NguyenKhoi\FileManager\Http\Controllers\FolderController;
 use NguyenKhoi\FileManager\Http\Controllers\MediaController;
 
@@ -21,6 +22,9 @@ Route::group(
         });
         Route::controller(FolderController::class)->group(function () {
             Route::post('create-folder', 'saveFolder')->name('folder.create');
+        });
+        Route::controller(FileController::class)->group(function () {
+            Route::post('upload-from-url', 'uploadMultiple')->name('file.uploadMultiple');
         });
     });
 });

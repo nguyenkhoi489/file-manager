@@ -2,31 +2,49 @@
 
 namespace NguyenKhoi\FileManager\Services;
 
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use NguyenKhoi\FileManager\Repositories\Files\MediaFileRepositoryInterface;
 
 class FolderServices
 {
     protected $path;
     private $disk;
 
-    public function __construct()
+    protected $fileRepository;
+
+    public function __construct(
+        public MediaFileRepositoryInterface $fileRepo
+    )
     {
-        $this->disk = Storage::disk(file_manager_setting('default_disk', 'public'));
-        $this->path = config('file-manager.path_folder');
+
+        $this->disk = Storage::build([
+            'driver' => file_manager_setting('default_disk', 'local'),
+            'root' => public_path(\config('file-manager.path_folder')),
+        ]);
+        $this->fileRepository = $fileRepo;
     }
 
-    public function findDir($name): bool
+    public function getPath()
     {
-        $dirPath = $this->setDirPath($name);
+        return '';
+    }
+
+    public function find($path): bool
+    {
+        return $this->disk->exists($path);
+    }
+
+    public function findDir($dirPath): bool
+    {
         return $this->checkDirExist($dirPath);
     }
 
     protected function setDirPath($name): string
     {
-        $name = Str::slug($name,'-');
-        return $this->path . "/$name";
+        return Str::slug($name, '-');
     }
 
     protected function checkDirExist($path): bool
@@ -34,16 +52,28 @@ class FolderServices
         return $this->disk->exists($path);
     }
 
-    public function renameDir($old_name, $new_name): array
+    public function renameItem($item, $new_name, $parent_path): array
     {
-        $dirPath = $this->setDirPath($old_name);
+        $dirPath = $item->permalink;
 
-        $created_new = $this->createDir($new_name);
+        $created_new = $this->createDir($new_name, $parent_path);
 
-        if (! $created_new['success']) {
+        if (!$created_new['success']) {
             return $created_new;
         }
-        File::copyDirectory($dirPath, $created_new['path']);
+
+        $allFiles = $this->disk->files($dirPath);
+
+        foreach ($allFiles as $file) {
+
+            $this->disk->move($file, $created_new['path'] . '/' . basename($file));
+
+            $this->fileRepository->updateFileByPermalink($file, [
+                'permalink' => $created_new['path'] . '/' . basename($file)
+            ]);
+
+        }
+
 
         $removeDir = $this->disk->deleteDirectory($dirPath);
 
@@ -56,10 +86,12 @@ class FolderServices
         ];
     }
 
-    public function createDir($name): array
+    public function createDir($name, $path = null): array
     {
         $dirPath = $this->setDirPath($name);
-
+        if ($path) {
+            $dirPath = $path . "/" . Str::slug($name, '-');
+        }
         $isExits = $this->checkDirExist($dirPath);
 
         if ($isExits) {
@@ -79,7 +111,7 @@ class FolderServices
             ];
         }
 
-        File::chmod($dirPath,config('file-manager.permission'));
+        File::chmod($dirPath, config('file-manager.permission'));
 
         return [
             'success' => false,

@@ -13,7 +13,9 @@
         }
     ],
     "minimum-stability": "dev",
-    "require": {},
+    "require": {
+        "ext-fileinfo": "*"
+    },
     "extra": {
         "laravel": {
             "providers": [

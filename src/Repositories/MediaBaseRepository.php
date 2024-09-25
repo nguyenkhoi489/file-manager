@@ -35,6 +35,10 @@ abstract class MediaBaseRepository implements MediaBaseRepositoryInterface
         return $result;
     }
 
+    public function insert(array $data)
+    {
+        return $this->model->insert($data);
+    }
     public function create($data = [])
     {
         return $this->model->create($data);

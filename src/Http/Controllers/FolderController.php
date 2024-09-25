@@ -25,8 +25,14 @@ class FolderController extends Controller
     public function saveFolder(FolderRequest $request): JsonResponse
     {
         $data = $request->validated();
+        $path = null;
+        if ($data['parent_id'])
+        {
+            $folder = $this->folderRepository->find($data['parent_id']);
+            $path = $folder->permalink;
+        }
 
-        $results = $this->diskService->createDir($data['name']);
+        $results = $this->diskService->createDir($data['name'],$path);
 
         if (! $results['success']) {
             return response()->json($results);

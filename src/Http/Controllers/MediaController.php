@@ -9,23 +9,27 @@ use NguyenKhoi\FileManager\Http\Request\MediaRequest;
 use NguyenKhoi\FileManager\Http\Request\MediaUpdateRequest;
 use NguyenKhoi\FileManager\Repositories\Files\MediaFileRepositoryInterface;
 use NguyenKhoi\FileManager\Repositories\Folders\MediaFolderRepositoryInterface;
+use NguyenKhoi\FileManager\Services\FileServices;
 use NguyenKhoi\FileManager\Services\FolderServices;
 
 class MediaController extends Controller
 {
-    protected $fileRepository;
-    protected $folderRepository;
-    protected $diskService;
+    private $fileRepository;
+    private $folderRepository;
+    private $folderServices;
+    private $fileServices;
 
     public function __construct(
         public MediaFileRepositoryInterface   $fileRepo,
         public MediaFolderRepositoryInterface $folderRepo,
-        public FolderServices                 $folderServices,
+        public FolderServices                 $folderSer,
+        public FileServices                    $fileSer,
     )
     {
         $this->fileRepository = $this->fileRepo;
         $this->folderRepository = $this->folderRepo;
-        $this->diskService = $folderServices;
+        $this->folderServices = $folderSer;
+        $this->fileServices = $fileSer;
     }
 
     public function index()
@@ -47,17 +51,7 @@ class MediaController extends Controller
             ]
         ];
         if (isset($data['folder_id']) && $data['folder_id']) {
-            $parent = $this->folderRepository->find($data['folder_id']);
-            if ($parent) {
-                $breadcrumbs[] = [
-                    'id' => $parent->id,
-                    'icon' => '<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                    <path d="M5 4h4l3 3h7a2 2 0 0 1 2 2v8a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-11a2 2 0 0 1 2 -2"></path>
-                </svg>',
-                    'name' => ucfirst($parent->name)
-                ];
-            }
+            $breadcrumbs = array_merge($breadcrumbs, $this->getBreadcrumbs($data['folder_id']));
         }
 
         $allFiles = [];
@@ -93,6 +87,7 @@ class MediaController extends Controller
         $data = $request->validated();
 
         $repoUsed = $data['is_folder'] !== 'false' ? $this->folderRepository : $this->fileRepository;
+        $serUsed =  $data['is_folder'] !== 'false' ? $this->folderServices : $this->fileServices;
 
         $isExits = $repoUsed->find($data['id']);
 
@@ -102,7 +97,7 @@ class MediaController extends Controller
                 'message' => 'Not found'
             ]);
         }
-        $isChecked = $this->diskService->findDir($isExits->name);
+        $isChecked = $serUsed->find($isExits->permalink);
 
         if (!$isChecked) {
             return response()->json([
@@ -110,18 +105,35 @@ class MediaController extends Controller
                 'message' => 'Not found'
             ]);
         }
-        $changed = $this->diskService->renameDir($isExits->name, $data['name']);
-        if (!$changed['success']) {
-            return response()->json($changed);
+        $parentFolder = null;
+        if ($isExits->parent_id ?? $isExits->folder_id) {
+            $findFolder = $this->folderRepository->find($isExits->parent_id ?? $isExits->folder_id);
+            $parentFolder = $findFolder->permalink;
         }
 
-        $repoUsed->update($isExits->id, $data);
+        $changed = $serUsed->renameItem($isExits, $data['name'], $parentFolder);
+
+        if (!$changed['success']) {
+
+            return response()->json($changed);
+
+        }
+        $_updateData = [
+            'name' => $data['name'],
+            'permalink' => $changed['path']
+        ];
+
+        if (isset($changed['alt']))
+        {
+            $_updateData['alt'] = $changed['alt'];
+        }
+        $repoUsed->update($isExits->id, $_updateData);
 
         return response()->json($changed);
 
     }
 
-    public function removeTrash(MediaUpdateRequest $request)
+    public function removeTrash(MediaUpdateRequest $request): JsonResponse
     {
         $data = $request->validated();
 
@@ -145,6 +157,27 @@ class MediaController extends Controller
             'message' => 'Moved selected item(s) to trash successfully!'
         ]);
 
+    }
+
+    private function getBreadcrumbs($folder_id): array
+    {
+        $breadcrumbs = [];
+        $folder = $this->folderRepository->find($folder_id);
+        if ($folder) {
+            $breadcrumbs[] = [
+                'id' => $folder->id,
+                'icon' => '<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                <path d="M5 4h4l3 3h7a2 2 0 0 1 2 2v8a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-11a2 2 0 0 1 2 -2"></path>
+            </svg>',
+                'name' => ucfirst($folder->name)
+            ];
+
+            if ($folder->parent_id) {
+                $breadcrumbs = array_merge($this->getBreadcrumbs($folder->parent_id), $breadcrumbs);
+            }
+        }
+        return $breadcrumbs;
     }
 
 }
