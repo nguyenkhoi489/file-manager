@@ -28,7 +28,7 @@ return [
 //        'mpeg' =>'video/mpeg',
 //        'ogv' =>  'video/ogg'
 //    ],
-    'max_file_size' => file_manager_setting('default_file_size',1024*2),
+    'max_file_size' => file_manager_setting('default_file_size',2097152),
     'limit_upload_files' => file_manager_setting('default_limit_file_upload',20),
     'path_folder' => 'uploads',
     'permission' => 0775,

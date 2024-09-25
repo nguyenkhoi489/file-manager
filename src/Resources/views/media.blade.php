@@ -6,6 +6,7 @@
 <div class="container-xl">
     <div class="nkd-media-container"
          data-breadcrumbs-count="1"
+         data-upload="{{ route('media.file.uploadFile') }}"
          data-ajax="{{ route('media.loadMedia') }}">
         <div class="nkd-media-main border border-1 rounded rounded-1 bg-white">
             <div class="card-header w-100 flex-column media-header p-0">
@@ -41,7 +42,7 @@
                                 </button>
 
                                 <div class="dropdown-menu" style="">
-                                    <button class="dropdown-item js-dropzone-upload dz-clickable">
+                                    <button class="dropdown-item js-button-upload">
                                         <svg class="icon dropdown-item-icon" xmlns="http://www.w3.org/2000/svg"
                                              width="24"
                                              height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
@@ -356,8 +357,8 @@
                 </div>
             </div>
 
-            <div class="row nkd-media-wrapper w-100">
-                <div class="col-md-10">
+            <div class="nkd-media-wrapper w-100">
+                <div class="column-item-grid">
                     <div class="media-grid">
                         <ul class="m-0 list-unstyled">
                             <li class="media-list-title up-one-level js-up-one-level">
@@ -379,8 +380,8 @@
                         </ul>
                     </div>
                 </div>
-                <div class="col-md-2 column-thumbnail p-0">
-                    <div class="media-details w-100" style="">
+                <div class="column-thumbnail p-0">
+                    <div class="media-details" style="">
                         <div class="media-thumbnail">
                             <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
                                  viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
@@ -400,7 +401,7 @@
         </div>
     </div>
 </div>
-
+<input type="file" multiple="multiple" class="d-none" tabindex="-1" style="visibility: hidden; position: absolute; top: 0px; left: 0px; height: 0px; width: 0px;">
 <div class="modal fade" id="modal-create-item"
      data-update="{{ route('media.update') }}"
      data-action="{{ route('media.folder.create') }}">
@@ -496,9 +497,63 @@
 </div>
 
 <script type="text/x-custom-template" id="file">
+    <div class="media-details" style="">
+        <div class="media-thumbnail">
+            __icon__
+        </div>
+        <div class="media-description">
+            <div class="mb-3 media-name">
+                <label class="form-label">Name</label>
+                <span title="__name__">__name__</span>
+            </div>
+            <div class="mb-3 media-name">
+                <label class="form-label">Full URL</label>
+                <div class="input-group">
+                    <input type="text" id="file_details_url" class="form-control"
+                           value="__full_url__">
+                    <button class="input-group-text btn btn-default js-btn-copy-to-clipboard" type="button"
+                            data-clipboard-target="#file_details_url">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-clipboard me-0" width="24" height="24"
+                             viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                             stroke-linecap="round" stroke-linejoin="round">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                            <path
+                                d="M9 5h-2a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-12a2 2 0 0 0 -2 -2h-2"></path>
+                            <path
+                                d="M9 3m0 2a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v0a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2z"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            <div class="mb-3 media-name">
+                <label class="form-label">Alt text</label>
+                <span title="__alt__">__alt__</span>
+            </div>
+            <div class="mb-3 media-name">
+                <label class="form-label">Width</label>
+                <span title="__width__">__width__px</span>
+            </div>
+            <div class="mb-3 media-name">
+                <label class="form-label">Height</label>
+                <span title="__height__">__height__px</span>
+            </div>
+            <div class="mb-3 media-name">
+                <label class="form-label">Size</label>
+                <span title="__size__">__size__</span>
+            </div>
+            <div class="mb-3 media-name">
+                <label class="form-label">Uploaded at</label>
+                <span title="__uploaded__">__uploaded__</span>
+            </div>
+            <div class="mb-3 media-name">
+                <label class="form-label">Modified at</label>
+                <span title="__modified__">__modified__</span>
+            </div>
+        </div>
+    </div>
 </script>
 <script type="text/x-custom-template" id="folder">
-    <div class="media-details w-100" style="">
+    <div class="media-details" style="">
         <div class="media-thumbnail">
             __icon__
         </div>

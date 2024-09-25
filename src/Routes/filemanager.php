@@ -24,7 +24,8 @@ Route::group(
             Route::post('create-folder', 'saveFolder')->name('folder.create');
         });
         Route::controller(FileController::class)->group(function () {
-            Route::post('upload-from-url', 'uploadMultiple')->name('file.uploadMultiple');
+            Route::post('upload-from-url', 'uploadFileUrl')->name('file.uploadMultiple');
+            Route::post('upload-file', 'uploadFile')->name('file.uploadFile');
         });
     });
 });
