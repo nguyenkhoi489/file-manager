@@ -5,19 +5,24 @@ body {
     padding: 0;
 
 }
+
 :root {
     --input-border: #e3dfdf;
-    --loading:#206bc4
+    --loading: #206bc4;
+    --bg-item: #f6f8fb;
+    --bg-descriptions: #eef3f6
 }
+
 .input-group {
     border: 1px solid var(--input-border);
     border-radius: 5px;
 }
 
 input.form-control {
-    border:none;
-    border-right: 1px solid  var(--input-border);
+    border: none;
+    border-right: 1px solid var(--input-border);
 }
+
 input.form-control:focus {
     outline: none;
     box-shadow: none;
@@ -28,6 +33,7 @@ input.form-control:focus {
     height: calc(100vh - 16rem);
     position: relative;
 }
+
 .nkd-media-main {
     height: 100%;
     overflow: hidden;
@@ -36,42 +42,54 @@ input.form-control:focus {
     display: flex;
     flex-direction: column;
 }
+
 .nkd-media-main .nkd-media-wrapper {
     display: flex;
     flex-direction: row;
     flex-grow: 1;
+    margin: 0;
+
     height: 200px;
 }
-.nkd-media-main .media-details{
+
+.nkd-media-main .media-details {
     flex-direction: column;
-    min-width: 250px;
     overflow: hidden;
     overflow-y: auto;
     transition: all .3s ease-in-out;
+    min-width: 250px;
     width: 250px;
     height: 100%;
-    border-right: 1px solid var(--input-border);
+    border-left: 1px solid var(--input-border);
 }
-.nkd-media-main .media-thumbnail{
+.nkd-media-main .media-details img {
+    max-height: 100%;
+    max-width: 90%;
+    object-fit: contain;
+}
+.nkd-media-main .media-thumbnail {
     overflow: hidden;
     position: relative;
-    min-width: 250px;
     width: 100%;
     border-bottom: 1px solid var(--input-border);
 }
+
 .nkd-media-main .media-description {
     padding: 10px;
     position: relative;
-    min-width: 250px;
     width: 100%;
 }
+
 .nkd-media-main .media-thumbnail:before {
     content: "";
     display: block;
     height: 0;
     padding-bottom: 100%;
 }
-.nkd-media-main .media-thumbnail img,.nkd-media-main  .media-thumbnail svg {
+
+.nkd-media-main .media-thumbnail img,
+.nkd-media-main .media-thumbnail svg,
+.nkd-media-main .item-media-thumbnail img {
     display: inline-block;
     left: 50%;
     position: absolute;
@@ -82,7 +100,8 @@ input.form-control:focus {
     -moz-transform: translate(-50%, -50%);
     -o-transform: translate(-50%, -50%);
 }
-.nkd-media-main .media-thumbnail  svg {
+
+.nkd-media-main .media-thumbnail svg {
     height: 6rem;
     width: 6rem;
 }
@@ -90,20 +109,22 @@ input.form-control:focus {
 #status_processing {
     background-color: #00000040;
     bottom: 0;
-    height: 100%!important;
-    left: 0!important;
-    margin-inline-start:unset!important;margin-top: unset!important;
+    height: 100% !important;
+    left: 0 !important;
+    margin-inline-start: unset !important;
+    margin-top: unset !important;
     position: absolute;
     right: 0;
-    border:unset;
-    top: 0!important;
-    width: 100%!important;
+    border: unset;
+    top: 0 !important;
+    width: 100% !important;
     z-index: 1
 }
 
-#status_processing>div {
+#status_processing > div {
     display: none
 }
+
 .sr-only {
     position: absolute;
     width: 1px;
@@ -114,6 +135,7 @@ input.form-control:focus {
     clip: rect(0, 0, 0, 0);
     border: 0;
 }
+
 #status_processing:after {
     animation: loading-spinner .9s linear infinite;
     border: 3px solid;
@@ -139,14 +161,14 @@ input.form-control:focus {
     right: 0;
 }
 
-#status_processing>div:last-child {
+#status_processing > div:last-child {
     position: relative;
     width: 80px;
     height: 15px;
     margin: 1em auto
 }
 
-#status_processing>div:last-child>div {
+#status_processing > div:last-child > div {
     position: absolute;
     top: 0;
     width: 13px;
@@ -157,25 +179,26 @@ input.form-control:focus {
     animation-timing-function: cubic-bezier(0, 1, 1, 0)
 }
 
-#status_processing>div:last-child>div:nth-child(1) {
+#status_processing > div:last-child > div:nth-child(1) {
     left: 8px;
     animation: datatables-loader-1 .6s infinite
 }
 
-#status_processing>div:last-child>div:nth-child(2) {
+#status_processing > div:last-child > div:nth-child(2) {
     left: 8px;
     animation: datatables-loader-2 .6s infinite
 }
 
-#status_processing>div:last-child>div:nth-child(3) {
+#status_processing > div:last-child > div:nth-child(3) {
     left: 32px;
     animation: datatables-loader-2 .6s infinite
 }
 
-#status_processing>div:last-child>div:nth-child(4) {
+#status_processing > div:last-child > div:nth-child(4) {
     left: 56px;
     animation: datatables-loader-3 .6s infinite
 }
+
 @keyframes datatables-loader-2 {
     0% {
         transform: translate(0, 0)
@@ -196,10 +219,177 @@ input.form-control:focus {
     }
 }
 
+.media-grid {
+    padding: 15px 0;
+}
+
 .media-grid li {
     display: block;
     float: left;
     margin-bottom: 15px;
     padding: 0 5px;
-    width: 12.5%;
+    width: 16.6666666667%;
+}
+
+.media-grid li .media-item {
+    cursor: pointer;
+    position: relative;
+    transition: all .1s ease-in-out;
+    background-color: var(--bg-item);
+    overflow: hidden;
+}
+
+.item-media-thumbnail {
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+    text-align: center;
+}
+
+.media-grid li .item-media-thumbnail {
+    border-bottom: 0;
+}
+
+.item-media-thumbnail:before {
+    content: "";
+    display: block;
+    height: 0;
+    padding-bottom: 100%;
+}
+
+.media-grid .item-media-thumbnail svg {
+    height: 3rem;
+    width: 3rem;
+    display: inline-block;
+    left: 50%;
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    -webkit-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    -moz-transform: translate(-50%, -50%);
+    -o-transform: translate(-50%, -50%);
+}
+
+.media-grid li .item-media-description {
+    background-color: var(--bg-descriptions);
+    padding: 8px 10px;
+    text-align: center;
+    transition: all .1s ease-in-out;
+}
+
+.media-grid li .item-media-description .title {
+    font-size: 12px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.hidden {
+    display: none !important;
+}
+
+.media-grid li .media-item .item-media-item-selected {
+    background: #007bff;
+    border-radius: 50% !important;
+    display: none;
+    height: 24px;
+    position: absolute;
+    right: 3px;
+    text-align: center;
+    top: 3px;
+    width: 24px;
+    z-index: 20;
+}
+
+.item-media-item-selected svg {
+    text-align: center;
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    width: 100%;
+    color: white;
+    fill: white;
+}
+
+.media-grid li .media-item:after {
+    content: "";
+    display: block;
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+}
+
+.media-grid li input[type=checkbox]:checked + .media-item .item-media-item-selected {
+    display: block;
+}
+
+.media-grid li input[type="checkbox"]:checked + .media-item {
+    border: 1px solid #007bff;
+}
+
+.media-breadcrumb .breadcrumb > li + li:before {
+    color: #ccc;
+    content: "/ ";
+    padding: 0 5px;
+}
+
+.media-breadcrumb .breadcrumb a {
+    color: #206bc4;
+}
+
+.media-breadcrumb .breadcrumb li:not(:nth-child(1)) a {
+    color: #959FAF;
+}
+
+[data-breadcrumbs-count="1"] .js-up-one-level {
+    display: none;
+}
+
+.media-breadcrumb svg {
+    stroke-width: 1.5;
+    font-size: 1.25rem;
+    height: 1.25rem;
+    vertical-align: bottom;
+    width: 1.25rem;
+}
+
+.media-tools .dropdown-toggle {
+    border-color: #A2A6AC;
+    margin-right: 5px;
+}
+
+.btn.disabled, .btn:disabled, fieldset:disabled .btn {
+    box-shadow: none;
+    color: #A2A6AC;
+    pointer-events: none;
+}
+
+.form-label {
+    display: block;
+    font-weight: 600;
+}
+.item-media-thumbnail img {
+    max-height: 100%;
+    height: 100%;
+    left: 50%;
+    top: 0;
+    transform: translateX(-50%);
+    width: auto;
+}
+.column-item-grid,
+.column-thumbnail{
+    align-items: stretch;
+    display: flex;
+    overflow: auto;
+    position: relative;
+}
+.column-item-grid {
+    flex-direction: column;
+    flex-grow: 1;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
 }
