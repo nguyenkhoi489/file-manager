@@ -378,6 +378,7 @@ input.form-control:focus {
     top: 0;
     transform: translateX(-50%);
     width: auto;
+    object-fit: cover;
 }
 .column-item-grid,
 .column-thumbnail{

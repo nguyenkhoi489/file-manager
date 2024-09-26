@@ -103,23 +103,20 @@
                         </div>
                     </div>
                     <div class="media-search">
-                        <form class="input-search-wrapper" action="" method="GET">
-                            <div class="input-group">
-                                <input type="search" class="form-control" name="search"
-                                       placeholder="Search in current folder">
-                                <button class="btn btn-icon" type="submit">
-                                    <svg class="icon icon-left" xmlns="http://www.w3.org/2000/svg" width="24"
-                                         height="24"
-                                         viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-                                         stroke-linecap="round" stroke-linejoin="round">
-                                        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                                        <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0"></path>
-                                        <path d="M21 21l-6 -6"></path>
-                                    </svg>
-
-                                </button>
-                            </div>
-                        </form>
+                        <div class="input-group">
+                            <input type="search" class="form-control" name="search"
+                                   placeholder="Search in current folder">
+                            <button class="btn btn-icon js-search-action" type="submit">
+                                <svg class="icon icon-left" xmlns="http://www.w3.org/2000/svg" width="24"
+                                     height="24"
+                                     viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                                     stroke-linecap="round" stroke-linejoin="round">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                    <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0"></path>
+                                    <path d="M21 21l-6 -6"></path>
+                                </svg>
+                            </button>
+                        </div>
                     </div>
                 </div>
                 <div class="w-100 d-flex flex-wrap justify-content-between gap-3 p-2">
@@ -322,37 +319,6 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="btn-group js-media-change-view-type ms-2" role="group">
-                            <button class="btn btn-icon active" type="button" data-type="tiles">
-                                <svg class="icon icon-left" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                     viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-                                     stroke-linecap="round" stroke-linejoin="round">
-                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                                    <path
-                                        d="M4 4m0 1a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v4a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z"></path>
-                                    <path
-                                        d="M14 4m0 1a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v4a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z"></path>
-                                    <path
-                                        d="M4 14m0 1a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v4a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z"></path>
-                                    <path
-                                        d="M14 14m0 1a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v4a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z"></path>
-                                </svg>
-
-                            </button>
-                            <button class="btn btn-icon" type="button" data-type="list">
-                                <svg class="icon icon-left" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                     viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-                                     stroke-linecap="round" stroke-linejoin="round">
-                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                                    <path
-                                        d="M4 4m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v2a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z"></path>
-                                    <path
-                                        d="M4 14m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v2a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z"></path>
-                                </svg>
-
-                            </button>
-                        </div>
-
                     </div>
                 </div>
             </div>

@@ -11,6 +11,9 @@ jQuery(function ($) {
 
     let url = $('.nkd-media-container').data('ajax')
 
+    const getSearchInput = () => {
+        return $('.media-search').find('input').val();
+    }
     const responseAction = (response,modal) => {
         modal.find('#status_processing').remove()
 
@@ -21,7 +24,7 @@ jQuery(function ($) {
             toastr.success(response.message);
 
             setTimeout(function () {
-                loadMedia('all', getSortBy(), getFolderID(), "", false, 1, 30)
+                loadMedia('all', getSortBy(), getFolderID(), getSearchInput(), false, 1, 30)
             }, 1000);
             return this;
         }
@@ -152,7 +155,7 @@ jQuery(function ($) {
         view_in = 'all',
         sort_by = getSortBy(),
         folder_id = getFolderID(),
-        search = "",
+        search = getSearchInput(),
         load_more = false,
         paged = 1,
         posts_per_page = 30
@@ -229,7 +232,7 @@ jQuery(function ($) {
     //refresh
     $(document).on('click', 'button[data-type="refresh"]', function (e) {
         e.preventDefault();
-        loadMedia('all', getSortBy(), getFolderID(), "", false, 1, 30)
+        loadMedia('all', getSortBy(), getFolderID(), getSearchInput(), false, 1, 30)
     })
 
     //click background remove checked input
@@ -262,7 +265,7 @@ jQuery(function ($) {
         let folder_id = $(this).data('id');
         folder_id = typeof folder_id !== 'undefined' ? folder_id : getFolderID(true)
         restAction()
-        loadMedia('all', getSortBy(), folder_id, "", false, 1, 30)
+        loadMedia('all', getSortBy(), folder_id, getSearchInput(), false, 1, 30)
     })
 
     //show modal create folder
@@ -383,7 +386,7 @@ jQuery(function ($) {
 
         $(this).addClass('active')
 
-        loadMedia('all', getSortBy(), getFolderID(), "", false, 1, 30)
+        loadMedia('all', getSortBy(), getFolderID(), getSearchInput(), false, 1, 30)
     })
 
     //action move to trash
@@ -479,6 +482,7 @@ jQuery(function ($) {
         $('input[type="file"]').click()
     })
 
+    //action upload file
     $(document).on('change', 'input[type="file"]', function (e) {
         e.preventDefault();
         let container = $(document).find('.nkd-media-container');
@@ -505,5 +509,11 @@ jQuery(function ($) {
                 responseAction(response,container)
             }
         })
+    })
+
+    //action copy link
+    $(document).on('click', '.js-search-action', function (e) {
+        e.preventDefault();
+        loadMedia('all', getSortBy(), getFolderID(), getSearchInput(), false, 1, 30)
     })
 })

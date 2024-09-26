@@ -23,7 +23,7 @@ cd packages/nguyenkhoi
 
 Use the git clone repo
 ```bash
-git clone https://github.com/nguyenkhoi489/file-manager.git
+git clone https://github.com/nguyenkhoi489/file-manager.git .
 ```
 ## Step 3
 
