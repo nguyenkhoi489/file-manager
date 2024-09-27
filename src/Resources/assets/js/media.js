@@ -1,25 +1,25 @@
 jQuery(function ($) {
     $.ajaxSetup({
         headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            'X-CSRF-TOKEN': $('[name="nkd-csrf-token"]').attr('content')
         }
     });
 
     const $loading = `<div id="status_processing" class="processing card" role="status" ><div><div></div><div></div><div></div><div></div></div></div>`;
 
-    let boxActions = $('.dropdown-actions').find('button.dropdown-toggle')
+    let boxActions = $('.nkd-dropdown-actions').find('button.nkd-dropdown-toggle')
 
     let url = $('.nkd-media-container').data('ajax')
 
     const getSearchInput = () => {
-        return $('.media-search').find('input').val();
+        return $('.nkd-media-search').find('input').val();
     }
-    const responseAction = (response,modal) => {
+    const responseAction = (response, modal) => {
         modal.find('#status_processing').remove()
 
         if (response.success) {
 
-            modal.modal('hide')
+            modal.removeClass('show')
 
             toastr.success(response.message);
 
@@ -57,15 +57,15 @@ jQuery(function ($) {
         return folder_id
     }
     const restAction = () => {
-        if (!boxActions.hasClass('disabled')) {
-            boxActions.addClass('disabled');
+        if (!boxActions.hasClass('nkd-disabled')) {
+            boxActions.addClass('nkd-disabled');
             boxActions.attr('disabled', 'disabled');
         }
     }
     const resetThumbColumn = () => {
         let thumb = `<div class="media-details" style="">
                         <div class="media-thumbnail">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
+                            <svg xmlns="http://www.w3.org/2000/svg" class="nkd-icon" width="24" height="24"
                                  viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
                                  stroke-linecap="round" stroke-linejoin="round">
                                 <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
@@ -85,7 +85,7 @@ jQuery(function ($) {
         let html = '';
         bread.forEach(item => {
             html += `<li>
-                        <a href="#" data-folder="${item.id}" class="text-decoration-none js-change-folder">
+                        <a href="#" data-folder="${item.id}" class="nkd-text-decoration-none js-change-folder">
                                 ${item.icon}
                                ${item.name}
                         </a>
@@ -99,7 +99,7 @@ jQuery(function ($) {
         let html = `<li class="media-list-title up-one-level js-up-one-level" >
                                 <div class="media-item" data-context="__type__" title="Up one level">
                                     <div class="item-media-thumbnail">
-                                        <svg class="icon icon-lg" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                        <svg class="nkd-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                                             <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                                             <path d="M18 18v-6a3 3 0 0 0 -3 -3h-10l4 -4m0 8l-4 -4"></path>
                                         </svg>
@@ -119,13 +119,13 @@ jQuery(function ($) {
                                     </svg>
                                 </span>
                                 <div class="item-media-thumbnail">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="nkd-icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                                         <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                                         <path d="M5 4h4l3 3h7a2 2 0 0 1 2 2v8a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-11a2 2 0 0 1 2 -2"></path>
                                     </svg>
                                 </div>
                                 <div class="item-media-description">
-                                    <div class="title title">${item.name}</div>
+                                    <div class="title">${item.name}</div>
                                 </div>
                             </div>
                         </li>`;
@@ -143,13 +143,18 @@ jQuery(function ($) {
                                     <img src="/uploads/${item.permalink}" alt="15">
                                 </div>
                                 <div class="item-media-description">
-                                    <div class="title title">${item.name}</div>
+                                    <div class="title">${item.name}</div>
                                 </div>
                             </div>
                         </li>`;
         })
 
         return html;
+    }
+    const actionBoxToggle = (element,add = false) => {
+        $('.nkd-dropdown-menu.show').removeClass('show')
+        element.hasClass('show') ? element.removeClass('show') : (add ? element.addClass('show') : '');
+        return this;
     }
     const loadMedia = (
         view_in = 'all',
@@ -252,8 +257,8 @@ jQuery(function ($) {
         $('.media-list-title input').prop('checked', false);
 
         input.prop('checked', true)
-        if (boxActions.hasClass('disabled')) {
-            boxActions.removeClass('disabled');
+        if (boxActions.hasClass('nkd-disabled')) {
+            boxActions.removeClass('nkd-disabled');
             boxActions.removeAttr('disabled');
         }
         $(this).data('context') === 'file' ? createPreviewFile($(this)) : createPreviewFolder($(this))
@@ -272,7 +277,7 @@ jQuery(function ($) {
     $(document).on('click', '.js-create-folder-action', function (e) {
         e.preventDefault();
         let modal = $('#modal-create-item')
-        modal.modal('show')
+        modal.addClass('show')
     })
 
     //action create folder
@@ -289,10 +294,10 @@ jQuery(function ($) {
             },
             method: 'POST',
             beforeSend: function () {
-                modal.find('.modal-content').append($loading)
+                modal.find('.nkd-modal-content').append($loading)
             },
             success: function (response) {
-                responseAction(response,modal)
+                responseAction(response, modal)
             }
         })
     })
@@ -334,7 +339,7 @@ jQuery(function ($) {
 
         let modal = $('#modal-rename-item')
 
-        let type = ! 'folder_id' in dataItem
+        let type = !'folder_id' in dataItem
 
         modal.find('input').val(dataItem.name)
 
@@ -343,7 +348,7 @@ jQuery(function ($) {
 
         modal.attr('data-folder', type)
 
-        modal.modal('show')
+        modal.addClass('show')
     })
 
     //action update folder name
@@ -369,10 +374,10 @@ jQuery(function ($) {
             },
             method: 'POST',
             beforeSend: function () {
-                modal.find('.modal-content').append($loading)
+                modal.find('.nkd-modal-content').append($loading)
             },
             success: function (response) {
-                responseAction(response,modal)
+                responseAction(response, modal)
             }
         })
     })
@@ -401,12 +406,12 @@ jQuery(function ($) {
 
         let modal = $('#modal-remove-item')
 
-        let type =! 'folder_id' in dataItem
+        let type = !'folder_id' in dataItem
         modal.attr('data-id', dataItem.id)
 
         modal.attr('data-folder', type)
 
-        modal.modal('show')
+        modal.addClass('show')
     })
 
     //action confirm move to trash
@@ -429,10 +434,10 @@ jQuery(function ($) {
             },
             method: 'POST',
             beforeSend: function () {
-                modal.find('.modal-content').append($loading)
+                modal.find('.nkd-modal-content').append($loading)
             },
             success: function (response) {
-                responseAction(response,modal)
+                responseAction(response, modal)
             }
         })
     })
@@ -458,7 +463,7 @@ jQuery(function ($) {
                 modal.append($loading)
             },
             success: function (response) {
-                responseAction(response,modal)
+                responseAction(response, modal)
             }
         })
     })
@@ -506,7 +511,7 @@ jQuery(function ($) {
                 container.append($loading)
             },
             success: function (response) {
-                responseAction(response,container)
+                responseAction(response, container)
             }
         })
     })
@@ -516,4 +521,32 @@ jQuery(function ($) {
         e.preventDefault();
         loadMedia('all', getSortBy(), getFolderID(), getSearchInput(), false, 1, 30)
     })
+
+    //action close modal
+    $(document).on('click', '.nkd-btn-close', function (e) {
+        e.preventDefault();
+        let modal = $(this).closest('.nkd-modal')
+
+        if (modal.hasClass('show')) {
+            modal.removeClass('show')
+            return this
+        }
+
+    })
+    $(document).on('click', function (e) {
+        actionBoxToggle($('.nkd-dropdown-menu'))
+    })
+    //action open toggle
+    $(document).on('click', '.nkd-dropdown-toggle', function (e) {
+        e.preventDefault()
+        e.stopPropagation()
+        let $this = $(this)
+        let actionBox = $this.parent().find('.nkd-dropdown-menu')
+
+        $this.hasClass('show') ? $this.removeClass('show') : $this.addClass('show');
+
+        actionBoxToggle(actionBox,true)
+
+    })
+
 })
