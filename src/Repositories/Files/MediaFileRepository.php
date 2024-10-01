@@ -58,4 +58,34 @@ class MediaFileRepository extends MediaBaseRepository implements MediaFileReposi
     {
         return $this->model->where('permalink', $permalink)->update($data);
     }
+
+    public function updateFile(array $data, $request)
+    {
+        if (!count($data)) {
+            return [
+                'success' => false,
+                'message' => "The files could not be uploaded.",
+            ];
+        }
+
+        $data = collect($data)->map(function ($item) use ($request) {
+            $data = $item['data'];
+            $data['user_id'] = $request->user()->id;
+            $data['folder_id'] = $request->get('folderId');
+            return $data;
+        })->toArray();
+
+        $insertItem = $this->insert($data);
+
+        if (!$insertItem) {
+            return [
+                'success' => false,
+                'message' => "The files could not be uploaded.",
+            ];
+        }
+        return [
+            'success' => true,
+            'message' => "The files has been uploaded.",
+        ];
+    }
 }

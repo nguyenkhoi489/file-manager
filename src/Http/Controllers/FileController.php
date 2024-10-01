@@ -57,7 +57,7 @@ class FileController extends Controller
 
         $filePath = $this->fileService->uploadByURL(trim($request->get('url')), $folder);
 
-        return response()->json($this->updateDatabase($filePath,$request));
+        return response()->json($this->fileRepository->updateFile($filePath,$request));
     }
 
     public function uploadFile(FileRequest $request): JsonResponse
@@ -77,35 +77,7 @@ class FileController extends Controller
 
         $files = $this->fileService->uploadMultipleFile($data['files'], $folder);
 
-        return response()->json($this->updateDatabase($files,$request));
+        return response()->json($this->fileRepository->updateFile($files,$request));
     }
 
-    protected function updateDatabase($files,$request): array
-    {
-        if (!count($files)) {
-            return [
-                'success' => false,
-                'message' => "The files could not be uploaded.",
-            ];
-        }
-        $data = collect($files)->map(function ($item) use ($request) {
-            $data = $item['data'];
-            $data['user_id'] = $request->user()->id;
-            $data['folder_id'] = $request->get('folderId');
-            return $data;
-        })->toArray();
-
-        $insertItem = $this->fileRepository->insert($data);
-
-        if (!$insertItem) {
-            return [
-                'success' => false,
-                'message' => "The files could not be uploaded.",
-            ];
-        }
-        return [
-            'success' => true,
-            'message' => "The files has been uploaded.",
-        ];
-    }
 }

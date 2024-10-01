@@ -15,19 +15,20 @@ return [
         'video/mpeg',
         'video/ogg'
     ],
-//    'mime_types' => [
-//        'png' => 'image/png',
-//        'jpg' => 'image/jpeg',
-//        'svg' => 'image/svg+xml',
-//        'webp' => 'image/webp',
-//        'csv' => 'text/csv',
-//        'xlsx' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-//        'xls' => 'application/vnd.ms-excel',
-//        'pdf' => 'application/pdf',
-//        'mp4' =>'video/mp4',
-//        'mpeg' =>'video/mpeg',
-//        'ogv' =>  'video/ogg'
-//    ],
+    'extensions' => [
+        'png',
+        'jpg',
+        'svg',
+        'webp',
+        'csv',
+        'xlsx',
+        'xls',
+        'pdf',
+        'mp4',
+        'mpeg',
+        'ogv'
+    ],
+
     'max_file_size' => file_manager_setting('default_file_size',2097152),
     'limit_upload_files' => file_manager_setting('default_limit_file_upload',20),
     'path_folder' => 'uploads',

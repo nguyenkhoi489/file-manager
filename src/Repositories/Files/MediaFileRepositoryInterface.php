@@ -12,4 +12,6 @@ interface MediaFileRepositoryInterface extends MediaBaseRepositoryInterface
     public function findByFolderId($folderId);
 
     public function updateFileByPermalink($permalink, array $data);
+
+    public function updateFile(array $data, $request);
 }

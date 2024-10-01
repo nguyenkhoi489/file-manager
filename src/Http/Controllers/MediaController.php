@@ -4,6 +4,7 @@ namespace NguyenKhoi\FileManager\Http\Controllers;
 
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use NguyenKhoi\FileManager\Http\Request\MediaRequest;
 use NguyenKhoi\FileManager\Http\Request\MediaUpdateRequest;
@@ -23,7 +24,7 @@ class MediaController extends Controller
         public MediaFileRepositoryInterface   $fileRepo,
         public MediaFolderRepositoryInterface $folderRepo,
         public FolderServices                 $folderSer,
-        public FileServices                    $fileSer,
+        public FileServices                   $fileSer,
     )
     {
         $this->fileRepository = $this->fileRepo;
@@ -32,9 +33,10 @@ class MediaController extends Controller
         $this->fileServices = $fileSer;
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        return view('file-manager::master');
+        $isChoose = $request->get('choose') ?? false;
+        return view('file-manager::master' ,compact('isChoose'));
     }
 
     public function loadMedia(MediaRequest $request): JsonResponse
@@ -87,7 +89,7 @@ class MediaController extends Controller
         $data = $request->validated();
 
         $repoUsed = $data['is_folder'] !== 'false' ? $this->folderRepository : $this->fileRepository;
-        $serUsed =  $data['is_folder'] !== 'false' ? $this->folderServices : $this->fileServices;
+        $serUsed = $data['is_folder'] !== 'false' ? $this->folderServices : $this->fileServices;
 
         $isExits = $repoUsed->find($data['id']);
 
@@ -123,8 +125,7 @@ class MediaController extends Controller
             'permalink' => $changed['path']
         ];
 
-        if (isset($changed['alt']))
-        {
+        if (isset($changed['alt'])) {
             $_updateData['alt'] = $changed['alt'];
         }
         $repoUsed->update($isExits->id, $_updateData);

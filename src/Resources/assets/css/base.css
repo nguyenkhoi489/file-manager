@@ -17,40 +17,14 @@ body {
     margin: 0;
     padding: 0;
 }
-
-@media (min-width: 576px) {
-    .container,.container-sm {
-        max-width:540px
-    }
-}
-
-@media (min-width: 768px) {
-    .container,.container-md,.container-sm {
-        max-width:720px
-    }
-}
-
-@media (min-width: 992px) {
-    .container,.container-lg,.container-md,.container-sm {
-        max-width:960px
-    }
-}
-
-@media (min-width: 1200px) {
-    .container,.container-lg,.container-md,.container-sm,.container-xl {
-        max-width:1140px
-    }
-}
-
-@media (min-width: 1400px) {
-    .container,.container-lg,.container-md,.container-sm,.container-xl,.container-xxl {
-        max-width:1320px
-    }
+.nkd-container {
+    padding: 10px;
 }
 .nkd-media-container {
     height: calc(100vh - 8rem);
     position: relative;
     background: white;
+    overflow: hidden;
 }
 
 
@@ -59,7 +33,6 @@ body {
     flex-direction: row;
     flex-grow: 1;
     margin: 0;
-
     height: 200px;
 }
 
@@ -411,7 +384,7 @@ body {
     flex-wrap: wrap;
     justify-content: space-between;
     align-items: flex-start;
-    padding: .5rem !important;
+    padding: .5rem 0!important;
     gap: 1rem !important;
     background-color: #F1F3F6
 }
@@ -421,6 +394,7 @@ body {
     justify-content: space-between;
     gap: .5rem;
     width: auto;
+    margin-left: 10px;
 }
 
 .nkd-btn-list {
@@ -453,6 +427,7 @@ body {
 
 .nkd-media-search {
     width: auto;
+    margin-right: 10px;
 }
 
 .nkd-input-group {
@@ -513,7 +488,7 @@ body {
 .nkd-header-breadcrumbs {
     display: flex;
     flex-wrap: wrap;
-    padding: .5rem;
+    padding: .5rem 0;
     gap: 1rem;
 }
 
@@ -543,7 +518,7 @@ body {
     display: none;
     min-width: 10rem;
     padding: 0;
-
+    right: 0;
     font-size: 1rem;
     color: #212529;
     text-align: left;
@@ -569,6 +544,8 @@ body {
     text-align: inherit;
     white-space: nowrap;
     width: 100%;
+    gap: 10px;
+    cursor: pointer;
     align-items: center;
     display: flex;
     line-height: 1.4285714286;
@@ -586,13 +563,18 @@ body {
 .nkd-media-breadcrumb .breadcrumb {
     list-style: none;
     margin-bottom: 0;
+    margin-left: 10px;
+    margin-top: 0;
+    padding-left: 0;
+}
+.nkd-media-breadcrumb .breadcrumb li{
+    display: inline-block;
 }
 .nkd-media-breadcrumb .breadcrumb > li + li:before {
     color: #ccc;
     content: "/ ";
     padding: 0 5px;
 }
-
 .nkd-media-breadcrumb .breadcrumb a {
     color: #206bc4;
 }

@@ -2,13 +2,13 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css" rel="stylesheet">
 <link rel="stylesheet" href="{{ asset('vendor/file-manager/assets/css/base.css') }}">
 
-<div class="container-xl">
+<div class="nkd-container">
     <div class="nkd-media-container"
          data-breadcrumbs-count="1"
          data-upload="{{ route('media.file.uploadFile') }}"
          data-ajax="{{ route('media.loadMedia') }}">
         <div class="nkd-media-main">
-            <input type="hidden" name="nkd-csrf-token" >
+            <input type="hidden" name="nkd-csrf-token" value="{{ csrf_token() }}">
             <div class="nkd-card-header">
                 <div
                     class="nkd-header-flex nkd-w-100">
@@ -324,7 +324,6 @@
                     </div>
                 </div>
             </div>
-
             <div class="nkd-media-wrapper nkd-w-100">
                 <div class="column-item-grid">
                     <div class="media-grid">
@@ -366,6 +365,9 @@
                     </div>
                 </div>
             </div>
+            @isset($isChoose)
+                @include("file-manager::action")
+            @endif
         </div>
     </div>
 </div>
@@ -547,4 +549,4 @@
 <script src="{{ asset('vendor/file-manager/assets/lib/jquery/jquery-3.7.1.min.js') }}"></script>
 <script src="{{ asset('vendor/file-manager/assets/lib/toastr/toastr.min.js') }}"></script>
 <script src="{{ asset('vendor/file-manager/assets/lib/toastr/toastr-setting.js') }}"></script>
-<script src="{{ asset('vendor/file-manager/assets/js/media.js') }}"></script>
+<script src="{{ asset('vendor/file-manager/assets/js/CKMedia.js') }}"></script>

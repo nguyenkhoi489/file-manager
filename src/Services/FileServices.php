@@ -24,11 +24,11 @@ class FileServices
         ]);
     }
 
-    public function uploadMultipleFile($files, $folder)
+    public function uploadMultipleFile($files, $folder): array
     {
 
         if (!is_array($files)) {
-            return $this->uploadFile($files, $folder);
+            return [$this->uploadFile($files, $folder)];
         }
         if (!count($files)) return [
             'success' => false,
