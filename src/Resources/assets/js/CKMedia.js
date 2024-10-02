@@ -1,6 +1,6 @@
-
 var CKMedia = {
     basePath: `/file-manager`,
+
     __init() {
         this.setAjax()
         this.container = $('.nkd-media-container')
@@ -8,6 +8,7 @@ var CKMedia = {
         this.url = this.container.data('ajax')
 
         this.loadMedia()
+        this.handleCommand()
         this.bindInsertCKEditorAction() //bind to insert action
         this.bindOpenToggleDropdown() //bind to open Toggle Dropdown
         this.bindRefreshLayout() //refresh layout
@@ -31,7 +32,8 @@ var CKMedia = {
         this.bindActionCloseModal() //action close modal
         this.bindActionDocumentActionBox() //action Document Close Box
     },
-    setAjax(){
+    setAjax() {
+
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('[name="nkd-csrf-token"]').attr('value')
@@ -247,37 +249,72 @@ var CKMedia = {
 
         return (match && match.length > 1) ? match[1] : null;
     },
-    handleCKEditorFile(item) {
-        if (typeof window.opener.CKEDITOR !== 'undefined') {
+    handleCKEditorFile(_item) {
+        let funcNum = this.getParameter('CKEditorFuncNum')
+        if (funcNum)
+        {
+            if (typeof window.opener.CKEDITOR !== 'undefined') {
 
-            let funcNum = this.getParameter('CKEditorFuncNum')
+                let item = _item.detail[0]
 
-            let dataItem = JSON.parse($(item).attr('data-item'))
+                window.opener.CKEDITOR.tools.callFunction(funcNum, item.fileUrl, function () {
 
-            let fileUrl = `${window.origin}/uploads/${dataItem.permalink}`
+                    var dialog = this.getDialog();
 
-            window.opener.CKEDITOR.tools.callFunction(funcNum, fileUrl, function () {
+                    if (dialog.getName() === 'image') {
 
-                var dialog = this.getDialog();
+                        var element = dialog.getContentElement('info', 'txtAlt');
 
-                if (dialog.getName() === 'image') {
+                        if (element)
+                            element.setValue(item.alt);
+                    }
 
-                    var element = dialog.getContentElement('info', 'txtAlt');
-
-                    if (element)
-                        element.setValue(dataItem.alt);
-                }
-
-            });
-            window.close();
+                });
+                window.close();
+            }
+            return this;
         }
+        window.close();
     },
-    popup({width = 400, height = 250, isMultiple = false}) {
-        let connectPath = `${this.basePath}?isMultiple=${isMultiple}`;
-        window.open(
+
+    fileChosen(_files) {
+        let files = _files;
+        let allFiles = []
+        Array.from(files).forEach(element => {
+            let parentItem = $(element).parent();
+            let dataItem = JSON.parse(parentItem.attr('data-item'));
+            let fileUrl = `${window.origin}/uploads${dataItem.permalink}`
+            let alt = dataItem.alt
+            allFiles.push({
+                fileUrl : fileUrl,
+                alt: alt
+            });
+        })
+        const event = new CustomEvent('files:choose', {detail: allFiles});
+        document.dispatchEvent(event);
+    },
+    popup({width = 1200, height = 850, isMultiple = false, isChoose = true, onInit = null}) {
+        let connectPath = `${this.basePath}?isMultiple=${isMultiple}&isChoose=${isChoose}`;
+        let popupWindow = window.open(
             connectPath,
-            "mywindow",
-            `menubar=1,resizable=1,width=${width},height=${height}`);
+            "_blank",
+            `menubar=1,resizable=1,width=${width},height=${height}`
+        );
+
+        if (typeof onInit === 'function') {
+            popupWindow.onload = function () {
+                if (typeof onInit === 'function') {
+                    const eventEmitter = {
+                        on(eventName, callback) {
+                            popupWindow.document.addEventListener(eventName, (e) => {
+                                callback(Array.from(e.detail));
+                            });
+                        }
+                    };
+                    onInit(eventEmitter);
+                }
+            };
+        }
     },
     bindRefreshLayout() {
         $(document).on('click', 'button[data-type="refresh"]', function (e) {
@@ -317,23 +354,23 @@ var CKMedia = {
             return this;
         })
     },
-    bindActionBackOrFolderClick(){
+    bindActionBackOrFolderClick() {
         $(document).on('dblclick', 'li[data-context="folder"],.js-up-one-level', function (e) {
             e.preventDefault();
             let folder_id = $(this).data('id');
             folder_id = typeof folder_id !== 'undefined' ? folder_id : CKMedia.getFolderID(true)
             CKMedia.bindResetAction()
-            CKMedia.loadMedia('all',CKMedia.getSortBy(), folder_id, CKMedia.getSearchInput(), false, 1, 30)
+            CKMedia.loadMedia('all', CKMedia.getSortBy(), folder_id, CKMedia.getSearchInput(), false, 1, 30)
         })
     },
-    bindActionCreateFolder(){
+    bindActionCreateFolder() {
         $(document).on('click', '.js-create-folder-action', function (e) {
             e.preventDefault();
             let modal = $('#modal-create-item')
             modal.addClass('show')
         })
     },
-    bindActionConfirmCreateFolder(){
+    bindActionConfirmCreateFolder() {
         $(document).on('click', '.js-create-folder', function (e) {
             e.preventDefault();
 
@@ -356,7 +393,7 @@ var CKMedia = {
         })
 
     },
-    bindActionCopyLink(){
+    bindActionCopyLink() {
         $(document).on('click', '.js-files-action[data-action="copy_link"]', function (e) {
             e.preventDefault();
 
@@ -381,7 +418,7 @@ var CKMedia = {
             toastr.success('These links have been copied to clipboard')
         })
     },
-    bindActionRenameModal(){
+    bindActionRenameModal() {
         $(document).on('click', '.js-files-action[data-action="rename"]', function (e) {
             e.preventDefault();
 
@@ -405,7 +442,7 @@ var CKMedia = {
             modal.addClass('show')
         })
     },
-    bindActionRenameConfirm(){
+    bindActionRenameConfirm() {
         $(document).on('click', '.js-update-folder', function (e) {
             e.preventDefault();
 
@@ -436,7 +473,7 @@ var CKMedia = {
             })
         })
     },
-    bindActionSort(){
+    bindActionSort() {
         $(document).on('click', '.js-media-change-filter', function (e) {
 
             e.preventDefault();
@@ -448,7 +485,7 @@ var CKMedia = {
             CKMedia.loadMedia('all', CKMedia.getSortBy(), CKMedia.getFolderID(), CKMedia.getSearchInput(), false, 1, 30)
         })
     },
-    bindActionMoveToTrashModal(){
+    bindActionMoveToTrashModal() {
         $(document).on('click', '.js-files-action[data-action="trash"]', function (e) {
             e.preventDefault();
 
@@ -469,7 +506,7 @@ var CKMedia = {
             modal.addClass('show')
         })
     },
-    bindActionMoveToTrashConfirm(){
+    bindActionMoveToTrashConfirm() {
         $(document).on('click', '.js-move-trash', function (e) {
 
             e.preventDefault();
@@ -497,7 +534,7 @@ var CKMedia = {
             })
         })
     },
-    bindActionOpenModalUploadURL(){
+    bindActionOpenModalUploadURL() {
         $(document).on('click', '.js-download-action', function (e) {
             e.preventDefault();
             let modal = $($(this).attr('data-bs-target'))
@@ -508,7 +545,7 @@ var CKMedia = {
             }
         })
     },
-    bindActionUploadByURL(){
+    bindActionUploadByURL() {
         $(document).on('submit', '#modal-upload-link form', function (e) {
 
             e.preventDefault()
@@ -534,7 +571,7 @@ var CKMedia = {
             })
         })
     },
-    bindActionCopyLinkDetail(){
+    bindActionCopyLinkDetail() {
         $(document).on('click', '.js-btn-copy-to-clipboard', function (e) {
             e.preventDefault();
 
@@ -547,13 +584,13 @@ var CKMedia = {
             toastr.success('These links have been copied to clipboard')
         })
     },
-    bindActionTriggerFileUpload(){
+    bindActionTriggerFileUpload() {
         $(document).on('click', '.js-button-upload', function (e) {
             e.preventDefault();
             $('input[type="file"]').click()
         })
     },
-    bindActionUploadFile(){
+    bindActionUploadFile() {
         $(document).on('change', 'input[type="file"]', function (e) {
             e.preventDefault();
             let container = $(document).find('.nkd-media-container');
@@ -582,13 +619,13 @@ var CKMedia = {
             })
         })
     },
-    bindActionSearch(){
+    bindActionSearch() {
         $(document).on('click', '.js-search-action', function (e) {
             e.preventDefault();
             CKMedia.loadMedia('all', CKMedia.getSortBy(), CKMedia.getFolderID(), CKMedia.getSearchInput(), false, 1, 30)
         })
     },
-    bindActionCloseModal(){
+    bindActionCloseModal() {
         $(document).on('click', '.nkd-btn-close', function (e) {
             e.preventDefault();
             let modal = $(this).closest('.nkd-modal')
@@ -619,12 +656,17 @@ var CKMedia = {
             if (!inputChecked.length) {
                 return false;
             }
-            CKMedia.handleCKEditorFile(inputChecked.parent());
+            CKMedia.fileChosen(inputChecked)
         });
     },
-    bindActionDocumentActionBox(){
+    bindActionDocumentActionBox() {
         $(document).on('click', function (e) {
             CKMedia.actionBoxToggle($('.nkd-dropdown-menu'))
+        })
+    },
+    handleCommand() {
+        $(document).on('files:choose', function (files) {
+            CKMedia.handleCKEditorFile(files);
         })
     }
 

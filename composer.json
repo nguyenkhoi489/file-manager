@@ -14,7 +14,7 @@
     ],
     "minimum-stability": "dev",
     "require": {
-        "ext-fileinfo": "*"
+
     },
     "extra": {
         "laravel": {
