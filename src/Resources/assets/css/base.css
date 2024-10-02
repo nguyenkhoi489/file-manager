@@ -11,9 +11,12 @@ button, input, optgroup, select, textarea {
     font-size: inherit;
     line-height: inherit;
 }
+* {
+    box-sizing: border-box;
+}
 html,
 body {
-    box-sizing: border-box;
+
     margin: 0;
     padding: 0;
 }
@@ -384,7 +387,7 @@ body {
     flex-wrap: wrap;
     justify-content: space-between;
     align-items: flex-start;
-    padding: .5rem 0!important;
+    padding: .5rem !important;
     gap: 1rem !important;
     background-color: #F1F3F6
 }
@@ -394,7 +397,6 @@ body {
     justify-content: space-between;
     gap: .5rem;
     width: auto;
-    margin-left: 10px;
 }
 
 .nkd-btn-list {
@@ -427,7 +429,6 @@ body {
 
 .nkd-media-search {
     width: auto;
-    margin-right: 10px;
 }
 
 .nkd-input-group {
@@ -530,7 +531,10 @@ body {
     margin-top: 5px;
 
 }
-
+.nkd-media-actions .nkd-dropdown-menu {
+    right: unset;
+    left: 0;
+}
 .nkd-dropdown-menu.show {
     display: block;
 }
@@ -709,6 +713,7 @@ body {
     font-weight: 600;
     margin-bottom: 0;
     line-height: 1.5;
+    margin-top: 0;
 }
 
 .nkd-btn-close {
@@ -788,4 +793,15 @@ body {
 }
 .nkd-modal.show {
     display: block;
+}
+.nkd-card-footer {
+    display: flex;
+    flex-wrap: wrap;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: flex-end;
+    padding: .75rem;
+    border-top: 1px solid #dee2e6;
+    border-bottom-right-radius: calc(.3rem - 1px);
+    border-bottom-left-radius: calc(.3rem - 1px);
 }
