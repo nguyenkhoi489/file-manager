@@ -365,7 +365,7 @@
                     </div>
                 </div>
             </div>
-            @isset($isChoose)
+            @if(isset($isChoose) && $isChoose)
                 @include("file-manager::action")
             @endif
         </div>

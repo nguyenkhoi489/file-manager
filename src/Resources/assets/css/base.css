@@ -581,6 +581,7 @@ body {
 }
 .nkd-media-breadcrumb .breadcrumb a {
     color: #206bc4;
+    text-decoration: none;
 }
 
 .nkd-media-breadcrumb .breadcrumb li:not(:nth-child(1)) a {

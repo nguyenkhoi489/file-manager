@@ -3,11 +3,11 @@ var CKMedia = {
     basePath: `/file-manager`,
     __init() {
         this.setAjax()
-        this.loadMedia()
         this.container = $('.nkd-media-container')
         this.boxAction = $('.nkd-dropdown-actions').find('button.nkd-dropdown-toggle')
         this.url = this.container.data('ajax')
 
+        this.loadMedia()
         this.bindInsertCKEditorAction() //bind to insert action
         this.bindOpenToggleDropdown() //bind to open Toggle Dropdown
         this.bindRefreshLayout() //refresh layout
@@ -69,19 +69,19 @@ var CKMedia = {
         return detail.data('value')
     },
     getFolderID(prev = null) {
-        let countBreadcrumbs = this.container.attr('data-breadcrumbs-count');
+        let countBreadcrumbs = CKMedia.container.attr('data-breadcrumbs-count');
         let folder_id = 0
         if (countBreadcrumbs > 1) {
-            let breadcrumb_item = this.container.find('ul.breadcrumb li')
+            let breadcrumb_item = CKMedia.container.find('ul.breadcrumb li')
             let folder = prev ? breadcrumb_item[countBreadcrumbs - 2] : breadcrumb_item[countBreadcrumbs - 1]
             folder_id = $(folder).find('a').data('folder');
         }
         return folder_id
     },
     restAction() {
-        if (!this.boxAction.hasClass('nkd-disabled')) {
-            this.boxAction.addClass('nkd-disabled');
-            this.boxAction.attr('disabled', 'disabled');
+        if (!CKMedia.boxAction.hasClass('nkd-disabled')) {
+            CKMedia.boxAction.addClass('nkd-disabled');
+            CKMedia.boxAction.attr('disabled', 'disabled');
         }
     },
     resetThumbColumn() {

@@ -35,7 +35,7 @@ class MediaController extends Controller
 
     public function index(Request $request)
     {
-        $isChoose = $request->get('choose') ?? false;
+        $isChoose = $request->get('isChoose') ?? false;
         return view('file-manager::master' ,compact('isChoose'));
     }
 
