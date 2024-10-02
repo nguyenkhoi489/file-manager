@@ -740,8 +740,7 @@ var CKMedia = {
         $(document).on('click', '.js-files-action[data-action="crop"]', function (e) {
             let dataItem = CKMedia.getSelectedItems()[0]
             let modal = CKMedia.$body.find('#modal-crop-image')
-
-            modal.find('#crop-image').append(`<img id="image" class="nkd-w-100" src="${window.origin}/uploads${dataItem.permalink}" />`)
+            modal.find('#crop-image').empty().append(`<img id="image" class="nkd-w-100" src="${window.origin}/uploads${dataItem.permalink}" />`)
             modal.find('input[name="image_id"]').val(dataItem.id)
 
             CKMedia.setupCropAction(modal)
