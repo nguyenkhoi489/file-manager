@@ -726,7 +726,8 @@ body {
     background: transparent url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23000'%3e%3cpath d='M.293.293a1 1 0 011.414 0L8 6.586 14.293.293a1 1 0 111.414 1.414L9.414 8l6.293 6.293a1 1 0 01-1.414 1.414L8 9.414l-6.293 6.293a1 1 0 01-1.414-1.414L6.586 8 .293 1.707a1 1 0 010-1.414z'/%3e%3c/svg%3e") center/1em auto no-repeat;
     border: 0;
     border-radius: .25rem;
-    opacity: .5
+    opacity: .5;
+    cursor: pointer;
 }
 
 .nkd-btn-close:hover {
@@ -805,4 +806,45 @@ body {
     border-top: 1px solid #dee2e6;
     border-bottom-right-radius: calc(.3rem - 1px);
     border-bottom-left-radius: calc(.3rem - 1px);
+}
+.nkd-modal-lg, .nkd-modal-xl {
+    max-width: 800px;
+}
+.nkd-row {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin: 0
+}
+.nkd-col-lg-9 {
+    flex: 0 0 auto;
+    width: 75%;
+    padding: 0 .75rem;
+}
+.nkd-col-lg-3 {
+    flex: 0 0 auto;
+    width: 25%;
+    padding: 0 .75rem;
+}
+.nkd-mt-3 {
+    margin-top: 1rem !important;
+}
+.nkd-form-check {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    position: relative;
+    gap: 10px;
+}
+.nkd-form-check-input {
+    background-size: 1.25rem;
+    box-shadow:  0 1px 1px rgba(24, 36, 51, 0.06);
+    margin-top: 0;
+}
+
+.nkd-form-check-input[type=checkbox] {
+    border-radius: 4px;
+}
+.nkd-form-check-label {
+    display: block;
 }

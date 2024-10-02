@@ -1,5 +1,6 @@
 <link rel="stylesheet" href="{{ asset('vendor/file-manager/assets/lib/toastr/toastr.min.css') }}">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css" rel="stylesheet">
+<link rel="stylesheet" href="{{ asset('vendor/file-manager/assets/lib/cropper/cropper.min.css') }}">
 <link rel="stylesheet" href="{{ asset('vendor/file-manager/assets/css/base.css') }}">
 
 <div class="nkd-container">
@@ -261,63 +262,7 @@
                                 </button>
 
                                 <div class="nkd-dropdown-menu">
-                                    <!-- Action Copy -->
-                                    <button class="nkd-dropdown-item js-files-action" data-action="copy_link">
-                                        <span class="nkd-dropdown-item-icon">
-                                            <span class="nkd-dropdown-item-icon">
-                                                <svg
-                                                    xmlns="http://www.w3.org/2000/svg" class="nkd-icon" width="24"
-                                                    height="24" viewBox="0 0 24 24"
-                                                    stroke-width="2" stroke="currentColor" fill="none"
-                                                    stroke-linecap="round"
-                                                    stroke-linejoin="round">
-                                                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                                                <path d="M9 15l6 -6"></path>
-                                                <path d="M11 6l.463 -.536a5 5 0 0 1 7.071 7.072l-.534 .464"></path>
-                                                <path
-                                                    d="M13 18l-.397 .534a5.068 5.068 0 0 1 -7.127 0a4.972 4.972 0 0 1 0 -7.071l.524 -.463"></path>
-                                            </svg>
-                                            </span>
-                                        </span>
-                                        Copy link
 
-                                    </button>
-                                    <!-- Action Rename -->
-                                    <button class="nkd-dropdown-item js-files-action" data-action="rename">
-                                        <span class="nkd-dropdown-item-icon">
-                                            <span class="dropdown-item-icon">
-                                                <svg
-                                                        xmlns="http://www.w3.org/2000/svg" class="nkd-icon icon" width="24" height="24" viewBox="0 0 24 24"
-                                                        stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"
-                                                        stroke-linejoin="round">
-                                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                                                    <path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1"></path>
-                                                    <path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z"></path>
-                                                    <path d="M16 5l3 3"></path>
-                                                </svg>
-                                            </span>
-                                        </span>
-                                        Rename
-                                    </button>
-                                    <!-- Action Move To Trash -->
-                                    <button class="nkd-dropdown-item js-files-action" data-action="trash">
-                                        <span class="nkd-dropdown-item-icon">
-                                            <span class="dropdown-item-icon">
-                                                <svg
-                                                    xmlns="http://www.w3.org/2000/svg" class="nkd-icon" width="24" height="24" viewBox="0 0 24 24"
-                                                    stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"
-                                                    stroke-linejoin="round">
-                                                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                                                <path d="M4 7l16 0"></path>
-                                                <path d="M10 11l0 6"></path>
-                                                <path d="M14 11l0 6"></path>
-                                                <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"></path>
-                                                <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"></path>
-                                            </svg>
-                                            </span>
-                                        </span>
-                                        Move to trash
-                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -398,7 +343,7 @@
 <div class="nkd-modal nkd-modal-blur nkd-fade" id="modal-rename-item"
      data-update="{{ route('media.update') }}">
     <div class="nkd-modal-dialog nkd-modal-dialog-centered">
-        <div class=nkd-modal-content">
+        <div class="nkd-modal-content">
             <div class="nkd-modal-header">
                 <h5 class="nkd-modal-title">Rename</h5>
                 <button type="button" class="nkd-btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -467,7 +412,75 @@
         </div>
     </div>
 </div>
+<div class="nkd-modal nkd-modal-blur nkd-fade" id="modal-crop-image"
+     data-action="{{ route('media.file.uploadMultiple') }}">
+    <div class="nkd-modal-dialog nkd-modal-xl nkd-modal-dialog-centered">
+        <form action="{{ route('media.file.uploadMultiple') }}" class="nkd-w-100" method="post">
+            @csrf
+            <div class="nkd-modal-content">
+                <div class="nkd-modal-header">
+                    <h5 class="nkd-modal-title">
+                        <svg class="nkd-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                             viewBox="0 0 24 24"
+                             stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"
+                             stroke-linejoin="round">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                            <path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2"></path>
+                            <path d="M7 11l5 5l5 -5"></path>
+                            <path d="M12 4l0 12"></path>
+                        </svg>
+                        Crop
+                    </h5>
+                    <button type="button" class="nkd-btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="nkd-modal-body">
+                    <div>
+                        <input type="hidden" name="image_id">
+                        <input type="hidden" name="crop_data">
+                        <div class="nkd-row">
+                            <div class="nkd-col-lg-9">
+                                <div id="crop-image">
 
+                                </div>
+                            </div>
+                            <div class="nkd-col-lg-3">
+                                <div class="nkd-mt-3">
+                                    <div class="nkd-mb-3 nkd-position-relative">
+                                        <label class="nkd-form-label" for="dataHeight">
+                                            Height
+                                        </label>
+                                        <input class="nkd-form-control" type="text" name="dataHeight" id="dataHeight">
+                                    </div>
+                                </div>
+                                <div class="nkd-mt-3">
+                                    <div class="nkd-mb-3 nkd-position-relative">
+                                        <label class="nkd-form-label" for="dataWidth">
+                                            Width
+                                        </label>
+                                        <input class="nkd-form-control" type="text" name="dataWidth" id="dataWidth">
+                                    </div>
+                                </div>
+                                <label class="nkd-form-check">
+                                    <input type="checkbox"
+                                           id="aspectRatio"
+                                           name="aspectRatio"
+                                           class="nkd-form-check-input">
+                                    <span class="nkd-form-check-label">
+                                        Aspect ratio?
+                                    </span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="nkd-modal-footer">
+                    <button type="button" class="nkd-btn nkd-btn-primary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="nkd-btn nkd-btn-danger js-confirm-crop">Confirm</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
 <script type="text/x-custom-template" id="file">
     <div class="media-details" style="">
         <div class="media-thumbnail">
@@ -549,5 +562,6 @@
 
 <script src="{{ asset('vendor/file-manager/assets/lib/jquery/jquery-3.7.1.min.js') }}"></script>
 <script src="{{ asset('vendor/file-manager/assets/lib/toastr/toastr.min.js') }}"></script>
-<script src="{{ asset('vendor/file-manager/assets/lib/toastr/toastr-setting.js') }}"></script>
+<script src="{{ asset('vendor/file-manager/assets/lib/fslightbox/fslightbox.js') }}"></script>
+<script src="{{ asset('vendor/file-manager/assets/lib/cropper/cropper.min.js') }}"></script>
 <script src="{{ asset('vendor/file-manager/assets/js/CKMedia.js') }}"></script>

@@ -1,8 +1,123 @@
+toastr.options = {
+    "closeButton": false,
+    "debug": false,
+    "newestOnTop": false,
+    "progressBar": true,
+    "positionClass": "toast-bottom-right",
+    "preventDuplicates": false,
+    "onclick": null,
+    "showDuration": "300",
+    "hideDuration": "1000",
+    "timeOut": "5000",
+    "extendedTimeOut": "1000",
+    "showEasing": "swing",
+    "hideEasing": "linear",
+    "showMethod": "fadeIn",
+    "hideMethod": "fadeOut"
+}
+
 var CKMedia = {
     basePath: `/file-manager`,
+    config: {
+        icons: {
+            folder: `<svg xmlns="http://www.w3.org/2000/svg" class="nkd-icon" width="24" height="24"
+                                 viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                                 stroke-linecap="round" stroke-linejoin="round">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                <path d="M15 8h.01"></path>
+                                <path
+                                    d="M3 6a3 3 0 0 1 3 -3h12a3 3 0 0 1 3 3v12a3 3 0 0 1 -3 3h-12a3 3 0 0 1 -3 -3v-12z"></path>
+                                <path d="M3 16l5 -5c.928 -.893 2.072 -.893 3 0l5 5"></path>
+                                <path d="M14 14l1 -1c.928 -.893 2.072 -.893 3 0l3 3"></path>
+                            </svg>`,
+            file: ''
+        },
+        actions: {
+            detail: [
+                {
+                    icon: `<svg xmlns="http://www.w3.org/2000/svg" class="nkd-icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                            <path d="M9 15l6 -6"></path>
+                            <path d="M11 6l.463 -.536a5 5 0 0 1 7.071 7.072l-.534 .464"></path>
+                            <path d="M13 18l-.397 .534a5.068 5.068 0 0 1 -7.127 0a4.972 4.972 0 0 1 0 -7.071l.524 -.463"></path>
+                        </svg>`,
+                    name: 'Copy link',
+                    action: 'copy_link',
+                    order: 0,
+                    class: 'js-action-copy-link',
+                },
+                {
+                    icon: `<svg xmlns="http://www.w3.org/2000/svg" class="nkd-icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                <path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1"></path>
+                                <path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z"></path>
+                                <path d="M16 5l3 3"></path>
+                            </svg>`,
+                    name: 'Rename',
+                    action: 'rename',
+                    order: 1,
+                    class: 'js-action-rename',
+                },
+                {
+                    icon: `<svg xmlns="http://www.w3.org/2000/svg" class="nkd-icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                <path d="M4 7l16 0"></path>
+                                <path d="M10 11l0 6"></path>
+                                <path d="M14 11l0 6"></path>
+                                <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"></path>
+                                <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"></path>
+                            </svg>`,
+                    name: 'Move to trash',
+                    action: 'trash',
+                    order: 9,
+                    class: 'js-action-move-to-trash',
+                },
+            ],
+            file: [
+                {
+                    icon: `<svg xmlns="http://www.w3.org/2000/svg" class="nkd-icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0"></path>
+                                <path d="M21 12c-2.4 4 -5.4 6 -9 6c-3.6 0 -6.6 -2 -9 -6c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6"></path>
+                            </svg>`,
+                    name: 'Preview',
+                    action: 'preview',
+                    order: 0,
+                    class: 'js-action-preview',
+                },
+                {
+                    icon: `<svg xmlns="http://www.w3.org/2000/svg" class="nkd-icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                <path d="M8 5v10a1 1 0 0 0 1 1h10"></path>
+                                <path d="M5 8h10a1 1 0 0 1 1 1v10"></path>
+                            </svg>`,
+                    name: 'Crop',
+                    action: 'crop',
+                    order: 1,
+                    class: 'js-action-crop',
+                },
+                {
+                    icon: `<svg xmlns="http://www.w3.org/2000/svg" class="nkd-icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                <path d="M15 8h.01"></path>
+                                <path d="M11 20h-4a3 3 0 0 1 -3 -3v-10a3 3 0 0 1 3 -3h10a3 3 0 0 1 3 3v4"></path>
+                                <path d="M4 15l4 -4c.928 -.893 2.072 -.893 3 0l3 3"></path>
+                                <path d="M14 14l1 -1c.31 -.298 .644 -.497 .987 -.596"></path>
+                                <path d="M18.42 15.61a2.1 2.1 0 0 1 2.97 2.97l-3.39 3.42h-3v-3l3.42 -3.39z"></path>
+                            </svg>`,
+                    name: 'Alt text',
+                    action: 'alt_text',
+                    order: 3,
+                    class: 'js-action-alt-text',
+                },
+            ]
+        }
+    },
 
     __init() {
-        this.setAjax()
+        this.$body = $('body');
+        this.setupAjax()
+        this.setupDropdownAction()
         this.container = $('.nkd-media-container')
         this.boxAction = $('.nkd-dropdown-actions').find('button.nkd-dropdown-toggle')
         this.url = this.container.data('ajax')
@@ -23,6 +138,8 @@ var CKMedia = {
         this.bindActionSort() //action sort
         this.bindActionMoveToTrashModal() //action move to trash
         this.bindActionMoveToTrashConfirm() //action confirm move to trash
+        this.bindActionPreviewFiles() //action preview files
+        this.bindActionSetupCrop() //action setup Crop
         this.bindActionOpenModalUploadURL() //action open modal download image
         this.bindActionUploadByURL() //action upload image by url
         this.bindActionCopyLinkDetail() //action copy link detail
@@ -32,7 +149,8 @@ var CKMedia = {
         this.bindActionCloseModal() //action close modal
         this.bindActionDocumentActionBox() //action Document Close Box
     },
-    setAjax() {
+
+    setupAjax() {
 
         $.ajaxSetup({
             headers: {
@@ -40,24 +158,45 @@ var CKMedia = {
             }
         });
     },
+
+    setupDropdownAction(list = ['detail']) {
+
+        let config = []
+
+        list.forEach(item => {
+            config.push(CKMedia.config.actions[item])
+        })
+        let dropdown = Object.values(config)
+            .reduce((acc, curr) => acc.concat(curr), [])
+            .sort((a, b) => a.order - b.order);
+
+        let _menusDropdown = CKMedia.$body.find('.nkd-dropdown-actions > .nkd-dropdown-menu')
+
+        let html = ''
+
+        dropdown.forEach(element => {
+            html += `<button class="nkd-dropdown-item js-files-action ${element.class}"
+                                        data-action="${element.action}">
+                                        <span class="nkd-dropdown-item-icon">
+                                            <span class="nkd-dropdown-item-icon">
+                                                ${element.icon}
+                                            </span>
+                                        </span>
+                                        ${element.name}
+                                    </button>`
+        })
+        _menusDropdown.empty().append(html)
+
+    },
+
     loading() {
         return `<div id="status_processing" class="processing card" role="status" ><div><div></div><div></div><div></div><div></div></div></div>`;
     },
+
     getSearchInput() {
         return $('.nkd-media-search').find('input').val();
     },
-    responseAction(response, modal) {
-        modal.find('#status_processing').remove()
-        if (response.success) {
-            modal.removeClass('show')
-            toastr.success(response.message);
-            setTimeout(function () {
-                loadMedia('all', getSortBy(), getFolderID(), getSearchInput(), false, 1, 30)
-            }, 1000);
-            return this;
-        }
-        toastr.error(response.message);
-    },
+
     getImageSize(size) {
         let units = ['B', 'KB', 'MB', 'GB', 'TB', 'PB']
         let i = 0
@@ -66,10 +205,12 @@ var CKMedia = {
         }
         return size.toFixed(1) + ' ' + units[i]
     },
+
     getSortBy() {
         let detail = $('.js-media-change-filter.active');
         return detail.data('value')
     },
+
     getFolderID(prev = null) {
         let countBreadcrumbs = CKMedia.container.attr('data-breadcrumbs-count');
         let folder_id = 0
@@ -80,31 +221,78 @@ var CKMedia = {
         }
         return folder_id
     },
-    restAction() {
+
+    getSelectedItems() {
+        let selected = []
+
+        $('[data-context=file] input[type=checkbox]:checked').each((index, el) => {
+            let $box = $(el).closest('.js-media-list-title')
+            let data = $box.data('item') || {}
+            data.index_key = $box.index()
+            selected.push(data)
+        })
+
+        return selected
+    },
+
+    setupCropAction(item) {
+        let img = item.find('img')[0]
+        let aspectRatio = item.find('#aspectRatio')
+        let options = {
+            crop(event) {
+                CKMedia.setupCropData(item, event.detail)
+                CKMedia.setupCropDataWidth(item, event.detail.width)
+                CKMedia.setupCropDataHeight(item, event.detail.height)
+            }
+        };
+        aspectRatio.is(':checked') ? options.aspectRatio = '16/9' : '';
+
+        const cropper = new Cropper(document.getElementById('image'), options);
+
+    },
+    setupCropData(item, data) {
+        item.find('input[name="crop_data"]').val(JSON.stringify(data))
+    },
+
+    setupCropDataWidth(item, width) {
+        item.find('#dataWidth').val(width)
+    },
+
+    setupCropDataHeight(item, height) {
+        item.find('#dataHeight').val(height)
+    },
+
+    handleResponseAction(response, modal) {
+        modal.find('#status_processing').remove()
+        if (response.success) {
+            modal.removeClass('show')
+            toastr.success(response.message);
+            setTimeout(function () {
+                CKMedia.loadMedia('all', CKMedia.getSortBy(), CKMedia.getFolderID(), CKMedia.getSearchInput(), false, 1, 30)
+            }, 1000);
+            return this;
+        }
+        toastr.error(response.message);
+    },
+
+    handleResetDropdown() {
         if (!CKMedia.boxAction.hasClass('nkd-disabled')) {
             CKMedia.boxAction.addClass('nkd-disabled');
             CKMedia.boxAction.attr('disabled', 'disabled');
         }
     },
-    resetThumbColumn() {
+
+    handleResetThumbColumn() {
         let thumb = `<div class="media-details" style="">
                         <div class="media-thumbnail">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="nkd-icon" width="24" height="24"
-                                 viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-                                 stroke-linecap="round" stroke-linejoin="round">
-                                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                                <path d="M15 8h.01"></path>
-                                <path
-                                    d="M3 6a3 3 0 0 1 3 -3h12a3 3 0 0 1 3 3v12a3 3 0 0 1 -3 3h-12a3 3 0 0 1 -3 -3v-12z"></path>
-                                <path d="M3 16l5 -5c.928 -.893 2.072 -.893 3 0l5 5"></path>
-                                <path d="M14 14l1 -1c.928 -.893 2.072 -.893 3 0l3 3"></path>
-                            </svg>
+                            ${CKMedia.config.icons.folder}
                         </div>
                         <div class="media-description"></div>
                     </div>`;
         $('.column-thumbnail').empty().append(thumb)
     },
-    createBreadcrumbs(breadcrumbs) {
+
+    handleCreateBreadcrumbs(breadcrumbs) {
         let bread = Array.from(breadcrumbs)
         let html = '';
         bread.forEach(item => {
@@ -117,7 +305,8 @@ var CKMedia = {
         })
         return html;
     },
-    createItemElements(folder, file) {
+
+    handleCreateItemElements(folder, file) {
         let listItemFolders = Array.from(folder)
         let listItemFiles = Array.from(file)
         let html = `<li class="media-list-title up-one-level js-up-one-level" >
@@ -174,11 +363,13 @@ var CKMedia = {
         })
         return html;
     },
+
     actionBoxToggle(element, add = false) {
         $('.nkd-dropdown-menu.show').removeClass('show')
         element.hasClass('show') ? element.removeClass('show') : (add ? element.addClass('show') : '');
         return this;
     },
+
     loadMedia(view_in = 'all', sort_by = this.getSortBy(), folder_id = this.getFolderID(), search = this.getSearchInput(), load_more = false, paged = 1, posts_per_page = 30) {
         $.ajax({
             url: CKMedia.url,
@@ -196,13 +387,17 @@ var CKMedia = {
             },
             success: function (response) {
                 $(document).find('.nkd-media-container #status_processing').remove();
-                CKMedia.resetThumbColumn();
+                CKMedia.handleResetThumbColumn();
                 if (response.success) {
-                    let breadcrumbs = CKMedia.createBreadcrumbs(response.data.breadcrumbs);
+                    let breadcrumbs = CKMedia.handleCreateBreadcrumbs(response.data.breadcrumbs);
 
                     CKMedia.container.attr('data-breadcrumbs-count', response.data.breadcrumbs.length);
-                    CKMedia.container.find(`ul.breadcrumb`).empty().append(breadcrumbs);
-                    CKMedia.container.find('.media-grid > ul').empty().append(CKMedia.createItemElements(response.data.folders, response.data.files));
+                    CKMedia.container.find(`ul.breadcrumb`)
+                        .empty()
+                        .append(breadcrumbs);
+                    CKMedia.container.find('.media-grid > ul')
+                        .empty()
+                        .append(CKMedia.handleCreateItemElements(response.data.folders, response.data.files));
                 }
             },
             error(error) {
@@ -210,7 +405,8 @@ var CKMedia = {
             }
         })
     },
-    createPreviewFolder(element) {
+
+    handleCreatePreviewFolder(element) {
         let template = $('#folder').text()
         let $element = $(element)
         let itemData = $element.data('item')
@@ -223,7 +419,8 @@ var CKMedia = {
 
         $('.column-thumbnail').empty().append(item)
     },
-    createPreviewFile(element) {
+
+    handleCreatePreviewFile(element) {
         let template = $('#file').text()
         let $element = $(element)
         let itemData = $element.data('item')
@@ -243,16 +440,17 @@ var CKMedia = {
 
         $('.column-thumbnail').empty().append(item)
     },
+
     getParameter(paramName) {
         var reParam = new RegExp('(?:[\?&]|&)' + paramName + '=([^&]+)', 'i');
         var match = window.location.search.match(reParam);
 
         return (match && match.length > 1) ? match[1] : null;
     },
+
     handleCKEditorFile(_item) {
         let funcNum = this.getParameter('CKEditorFuncNum')
-        if (funcNum)
-        {
+        if (funcNum) {
             if (typeof window.opener.CKEDITOR !== 'undefined') {
 
                 let item = _item.detail[0]
@@ -278,21 +476,21 @@ var CKMedia = {
     },
 
     fileChosen(_files) {
-        let files = _files;
         let allFiles = []
-        Array.from(files).forEach(element => {
+        Array.from(_files).forEach(element => {
             let parentItem = $(element).parent();
             let dataItem = JSON.parse(parentItem.attr('data-item'));
             let fileUrl = `${window.origin}/uploads${dataItem.permalink}`
             let alt = dataItem.alt
             allFiles.push({
-                fileUrl : fileUrl,
+                fileUrl: fileUrl,
                 alt: alt
             });
         })
         const event = new CustomEvent('files:choose', {detail: allFiles});
         document.dispatchEvent(event);
     },
+
     popup({width = 1200, height = 850, isMultiple = false, isChoose = true, onInit = null}) {
         let connectPath = `${this.basePath}?isMultiple=${isMultiple}&isChoose=${isChoose}`;
         let popupWindow = window.open(
@@ -316,20 +514,23 @@ var CKMedia = {
             };
         }
     },
+
     bindRefreshLayout() {
         $(document).on('click', 'button[data-type="refresh"]', function (e) {
             e.preventDefault();
             CKMedia.loadMedia('all', CKMedia.getSortBy(), CKMedia.getFolderID(), CKMedia.getSearchInput(), false, 1, 30)
         })
     },
+
     bindResetAction() {
         $(document).on('click', '.column-item-grid', function (e) {
             e.preventDefault();
             $('.media-list-title input').prop('checked', false);
-            CKMedia.restAction();
-            CKMedia.resetThumbColumn()
+            CKMedia.handleResetDropdown();
+            CKMedia.handleResetThumbColumn()
         })
     },
+
     bindActionClickFileAndFolder() {
         $(document).on('click', 'li[data-context="folder"],li[data-context="file"]', function (e) {
             e.stopPropagation()
@@ -337,7 +538,7 @@ var CKMedia = {
             let $this = $(this);
             let input = $this.find('input');
             let isMultiple = CKMedia.getParameter('isMultiple')
-
+            $this.data('context') === 'file' ? CKMedia.setupDropdownAction(['detail', 'file']) : CKMedia.setupDropdownAction(['detail']);
             if (!isMultiple) {
                 $('.media-list-title input').prop('checked', false);
 
@@ -346,7 +547,9 @@ var CKMedia = {
                     CKMedia.boxAction.removeClass('nkd-disabled');
                     CKMedia.boxAction.removeAttr('disabled');
                 }
-                $(this).data('context') === 'file' ? CKMedia.createPreviewFile($(this)) : CKMedia.createPreviewFolder($(this))
+                $(this).data('context') === 'file' ?
+                    CKMedia.handleCreatePreviewFile($(this)) :
+                    CKMedia.handleCreatePreviewFolder($(this))
 
                 return this;
             }
@@ -354,15 +557,18 @@ var CKMedia = {
             return this;
         })
     },
+
     bindActionBackOrFolderClick() {
         $(document).on('dblclick', 'li[data-context="folder"],.js-up-one-level', function (e) {
             e.preventDefault();
             let folder_id = $(this).data('id');
             folder_id = typeof folder_id !== 'undefined' ? folder_id : CKMedia.getFolderID(true)
-            CKMedia.bindResetAction()
+            CKMedia.handleResetDropdown();
+            CKMedia.handleResetThumbColumn()
             CKMedia.loadMedia('all', CKMedia.getSortBy(), folder_id, CKMedia.getSearchInput(), false, 1, 30)
         })
     },
+
     bindActionCreateFolder() {
         $(document).on('click', '.js-create-folder-action', function (e) {
             e.preventDefault();
@@ -370,6 +576,7 @@ var CKMedia = {
             modal.addClass('show')
         })
     },
+
     bindActionConfirmCreateFolder() {
         $(document).on('click', '.js-create-folder', function (e) {
             e.preventDefault();
@@ -387,23 +594,20 @@ var CKMedia = {
                     modal.find('.nkd-modal-content').append(CKMedia.loading())
                 },
                 success: function (response) {
-                    CKMedia.responseAction(response, modal)
+                    CKMedia.handleResponseAction(response, modal)
                 }
             })
         })
 
     },
+
     bindActionCopyLink() {
         $(document).on('click', '.js-files-action[data-action="copy_link"]', function (e) {
             e.preventDefault();
 
-            let inputChecked = $('.media-list-title input:checked');
+            let item = CKMedia.getSelectedItems()
 
-            let parentItem = inputChecked.parent()
-
-            let dataItem = parentItem.data('item')
-
-            let permalink = window.origin + '/uploads/' + dataItem.permalink;
+            let permalink = window.origin + '/uploads/' + item[0].permalink;
 
             var $temp = $("<input>");
 
@@ -418,15 +622,12 @@ var CKMedia = {
             toastr.success('These links have been copied to clipboard')
         })
     },
+
     bindActionRenameModal() {
         $(document).on('click', '.js-files-action[data-action="rename"]', function (e) {
             e.preventDefault();
 
-            let inputChecked = $('.media-list-title input:checked');
-
-            let parentItem = inputChecked.parent()
-
-            let dataItem = parentItem.data('item')
+            let dataItem = CKMedia.getSelectedItems()[0]
 
             let modal = $('#modal-rename-item')
 
@@ -442,15 +643,10 @@ var CKMedia = {
             modal.addClass('show')
         })
     },
+
     bindActionRenameConfirm() {
         $(document).on('click', '.js-update-folder', function (e) {
             e.preventDefault();
-
-            let inputChecked = $('.media-list-title input:checked');
-
-            let parentItem = inputChecked.parent()
-
-            let dataItem = parentItem.data('item')
 
             let modal = $(this).closest('#modal-rename-item')
             let name = modal.find('input').val()
@@ -468,11 +664,12 @@ var CKMedia = {
                     modal.find('.nkd-modal-content').append(CKMedia.loading())
                 },
                 success: function (response) {
-                    CKMedia.responseAction(response, modal)
+                    CKMedia.handleResponseAction(response, modal)
                 }
             })
         })
     },
+
     bindActionSort() {
         $(document).on('click', '.js-media-change-filter', function (e) {
 
@@ -489,11 +686,8 @@ var CKMedia = {
         $(document).on('click', '.js-files-action[data-action="trash"]', function (e) {
             e.preventDefault();
 
-            let inputChecked = $('.media-list-title input:checked');
 
-            let parentItem = inputChecked.parent()
-
-            let dataItem = parentItem.data('item')
+            let dataItem = CKMedia.getSelectedItems()[0]
 
             let modal = $('#modal-remove-item')
 
@@ -529,9 +723,30 @@ var CKMedia = {
                     modal.find('.nkd-modal-content').append(CKMedia.loading())
                 },
                 success: function (response) {
-                    CKMedia.responseAction(response, modal)
+                    CKMedia.handleResponseAction(response, modal)
                 }
             })
+        })
+    },
+    bindActionPreviewFiles() {
+        $(document).on('click', '.js-files-action[data-action="preview"]', function (e) {
+            let dataItem = CKMedia.getSelectedItems()[0]
+            let lightbox = new FsLightbox();
+            lightbox.props.sources = [`${window.origin}/uploads${dataItem.permalink}`];
+            lightbox.open();
+        })
+    },
+    bindActionSetupCrop() {
+        $(document).on('click', '.js-files-action[data-action="crop"]', function (e) {
+            let dataItem = CKMedia.getSelectedItems()[0]
+            let modal = CKMedia.$body.find('#modal-crop-image')
+
+            modal.find('#crop-image').append(`<img id="image" class="nkd-w-100" src="${window.origin}/uploads${dataItem.permalink}" />`)
+            modal.find('input[name="image_id"]').val(dataItem.id)
+
+            CKMedia.setupCropAction(modal)
+            modal.addClass('show')
+
         })
     },
     bindActionOpenModalUploadURL() {
@@ -566,7 +781,7 @@ var CKMedia = {
                     modal.append(CKMedia.loading())
                 },
                 success: function (response) {
-                    CKMedia.responseAction(response, modal)
+                    CKMedia.handleResponseAction(response, modal)
                 }
             })
         })
@@ -614,7 +829,7 @@ var CKMedia = {
                     container.append(CKMedia.loading())
                 },
                 success: function (response) {
-                    CKMedia.responseAction(response, container)
+                    CKMedia.handleResponseAction(response, container)
                 }
             })
         })
@@ -664,6 +879,7 @@ var CKMedia = {
             CKMedia.actionBoxToggle($('.nkd-dropdown-menu'))
         })
     },
+
     handleCommand() {
         $(document).on('files:choose', function (files) {
             CKMedia.handleCKEditorFile(files);
