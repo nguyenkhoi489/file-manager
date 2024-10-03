@@ -358,7 +358,7 @@ var CKMedia = {
                                     </svg>
                                 </span>
                                 <div class="item-media-thumbnail">
-                                    <img src="/uploads/${item.permalink}" alt="15">
+                                    <img src="/uploads${item.permalink}?v=${new Date().getMilliseconds()}" alt="15">
                                 </div>
                                 <div class="item-media-description">
                                     <div class="title">${item.name}</div>
