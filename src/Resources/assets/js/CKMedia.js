@@ -430,20 +430,22 @@ var CKMedia = {
         let $element = $(element)
         let itemData = $element.data('item')
         let image_path = window.origin + `/uploads${itemData.permalink}`
-        const image = new Image()
+        let image = new Image()
         image.src = image_path
-        let item = template
-            .replaceAll('__icon__', `<img src="${image_path}" alt="${itemData.alt}">`)
-            .replaceAll('__name__', itemData.name)
-            .replaceAll('__full_url__', image_path)
-            .replaceAll('__alt__', itemData.alt)
-            .replaceAll('__width__', image.width)
-            .replaceAll('__height__', image.height)
-            .replaceAll('__size__', CKMedia.getImageSize(itemData.size))
-            .replaceAll('__uploaded__', itemData.created_at)
-            .replaceAll('__modified__', itemData.updated_at)
+        image.onload = function () {
+            let item = template
+                .replaceAll('__icon__', `<img src="${image_path}" alt="${itemData.alt}">`)
+                .replaceAll('__name__', itemData.name)
+                .replaceAll('__full_url__', image_path)
+                .replaceAll('__alt__', itemData.alt)
+                .replaceAll('__width__', image.width)
+                .replaceAll('__height__', image.height)
+                .replaceAll('__size__', CKMedia.getImageSize(itemData.size))
+                .replaceAll('__uploaded__', itemData.created_at)
+                .replaceAll('__modified__', itemData.updated_at)
 
-        $('.column-thumbnail').empty().append(item)
+            $('.column-thumbnail').empty().append(item)
+        }
     },
 
     getParameter(paramName) {
