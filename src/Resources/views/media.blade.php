@@ -361,6 +361,31 @@
         </div>
     </div>
 </div>
+<div class="nkd-modal nkd-modal-blur nkd-fade" id="modal-change-alt-item">
+    <div class="nkd-modal-dialog nkd-modal-dialog-centered">
+        <form action="{{ route('media.file.updateData') }}" method="post">
+            @csrf
+            @method('put')
+            <input type="hidden" name="id">
+            <div class="nkd-modal-content">
+                <div class="nkd-modal-header">
+                    <h5 class="nkd-modal-title">Update Alt</h5>
+                    <button type="button" class="nkd-btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="nkd-modal-body">
+                    <div class="nkd-mb-3 nkd-position-relative">
+                        <div class="nkd-input-group">
+                            <input class="nkd-form-control" type="text" name="alt" id="alt" placeholder="Folder name">
+                            <button class="nkd-btn nkd-btn-primary" type="submit">
+                                Update
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
 <div class="nkd-modal nkd-modal-blur nkd-fade" id="modal-remove-item"
      data-action="{{ route('media.destroy') }}">
     <div class="nkd-modal-dialog nkd-modal-dialog-centered">
@@ -412,10 +437,9 @@
         </div>
     </div>
 </div>
-<div class="nkd-modal nkd-modal-blur nkd-fade" id="modal-crop-image"
-     data-action="{{ route('media.file.uploadMultiple') }}">
+<div class="nkd-modal nkd-modal-blur nkd-fade" id="modal-crop-image">
     <div class="nkd-modal-dialog nkd-modal-xl nkd-modal-dialog-centered">
-        <form action="{{ route('media.file.uploadMultiple') }}" class="nkd-w-100" method="post">
+        <form action="{{ route('media.file.updateCropImage') }}" class="nkd-w-100" method="post">
             @csrf
             <div class="nkd-modal-content">
                 <div class="nkd-modal-header">
@@ -460,7 +484,7 @@
                                         <input class="nkd-form-control" type="text" name="dataWidth" id="dataWidth">
                                     </div>
                                 </div>
-                                <label class="nkd-form-check">
+                                <label class="nkd-form-check js-action-aspect">
                                     <input type="checkbox"
                                            id="aspectRatio"
                                            name="aspectRatio"
@@ -562,6 +586,8 @@
 
 <script src="{{ asset('vendor/file-manager/assets/lib/jquery/jquery-3.7.1.min.js') }}"></script>
 <script src="{{ asset('vendor/file-manager/assets/lib/toastr/toastr.min.js') }}"></script>
+<script src="{{ asset('vendor/file-manager/assets/lib/toastr/toastr-setting.js') }}"></script>
 <script src="{{ asset('vendor/file-manager/assets/lib/fslightbox/fslightbox.js') }}"></script>
 <script src="{{ asset('vendor/file-manager/assets/lib/cropper/cropper.min.js') }}"></script>
+<script src="{{ asset('vendor/file-manager/assets/lib/cropper/jquery-cropper.min.js') }}"></script>
 <script src="{{ asset('vendor/file-manager/assets/js/CKMedia.js') }}"></script>

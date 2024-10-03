@@ -2,28 +2,24 @@
 
 namespace NguyenKhoi\FileManager\Services;
 
-use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use NguyenKhoi\FileManager\Repositories\Files\MediaFileRepositoryInterface;
+use NguyenKhoi\FileManager\Services\Trait\DiskServices;
 
 class FolderServices
 {
-    protected $path;
-    private $disk;
+    use DiskServices;
 
+    protected $path;
+    protected  $disk;
     protected $fileRepository;
 
     public function __construct(
         public MediaFileRepositoryInterface $fileRepo
     )
     {
-
-        $this->disk = Storage::build([
-            'driver' => file_manager_setting('default_disk', 'local'),
-            'root' => public_path(\config('file-manager.path_folder')),
-        ]);
+        $this->disk = $this->getDisk();
         $this->fileRepository = $fileRepo;
     }
 

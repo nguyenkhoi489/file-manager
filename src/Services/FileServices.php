@@ -3,25 +3,43 @@
 namespace NguyenKhoi\FileManager\Services;
 
 use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use NguyenKhoi\FileManager\Services\Trait\DiskServices;
 
 class FileServices
 {
+    use DiskServices;
+
     protected $folderService;
-    protected $disk;
+    protected $resizeService;
     protected $path;
+    protected $disk;
 
     public function __construct(
-        public FolderServices $folderServices
+        public FolderServices $folderServices,
+        public ResizeImage    $resizeImage
     )
     {
         $this->folderService = $this->folderServices;
+        $this->resizeService = $resizeImage;
+        $this->disk = $this->getDisk();
 
-        $this->disk = Storage::build([
-            'driver' => file_manager_setting('default_disk', 'local'),
-            'root' => public_path(\config('file-manager.path_folder')),
-        ]);
+    }
+
+    public function cropImage(string $file_path, string $crop_data): array
+    {
+
+        $file = $this->disk->exists($file_path);
+        if (!$file) {
+            return [
+                'success' => false,
+                'message' => "The file not found.",
+            ];
+        }
+        $this->resizeService->setImageData(array_merge(['path' => $file_path], json_decode($crop_data, true)));
+
+        return $this->resizeService->resize();
+
     }
 
     public function uploadMultipleFile($files, $folder): array
@@ -36,7 +54,7 @@ class FileServices
         ];
 
         if (count($files) > config('file-manager.limit_upload_files')) {
-            return  [
+            return [
                 'success' => false,
                 'message' => 'File Upload Limit Exceeded'
             ];
@@ -59,7 +77,7 @@ class FileServices
                 'message' => 'No files were uploaded.'
             ];
         }
-        if (! in_array($file->getClientMimeType(), config('file-manager.mime_types'))) {
+        if (!in_array($file->getClientMimeType(), config('file-manager.mime_types'))) {
             return [
                 'success' => false,
                 'message' => 'The filetype you are attempting to upload is not allowed.'
@@ -82,7 +100,7 @@ class FileServices
         $fileName = $folder_path . '/' . $file->getClientOriginalName();
 
         if ($this->disk->exists($fileName)) {
-            $fileName = $folder_path . '/' .time() .'_'. $file->getClientOriginalName();
+            $fileName = $folder_path . '/' . time() . '_' . $file->getClientOriginalName();
         }
 
         $isUpload = $this->disk->put($fileName, $file->getContent());
@@ -93,8 +111,8 @@ class FileServices
                 'success' => true,
                 'message' => "The file has been uploaded",
                 'data' => [
-                    'name' =>  File::name($fileUploaded),
-                    'alt' =>  File::name($fileUploaded),
+                    'name' => File::name($fileUploaded),
+                    'alt' => File::name($fileUploaded),
                     'permalink' => $fileName,
                     'mine_type' => File::mimeType($fileUploaded),
                     'size' => File::size($fileUploaded),

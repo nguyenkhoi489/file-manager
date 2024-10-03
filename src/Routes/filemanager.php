@@ -27,6 +27,8 @@ Route::group(
         Route::controller(FileController::class)->group(function () {
             Route::post('upload-from-url', 'uploadFileUrl')->name('file.uploadMultiple');
             Route::post('upload-file', 'uploadFile')->name('file.uploadFile');
+            Route::post('update-crop-image','saveCropImage')->name('file.updateCropImage');
+            Route::put('update-data', 'updateData')->name('file.updateData');
         });
         Route::group([
             'prefix' => 'ckeditor4',

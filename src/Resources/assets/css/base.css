@@ -24,7 +24,7 @@ body {
     padding: 10px;
 }
 .nkd-media-container {
-    height: calc(100vh - 8rem);
+    height: calc(100vh - 2rem);
     position: relative;
     background: white;
     overflow: hidden;

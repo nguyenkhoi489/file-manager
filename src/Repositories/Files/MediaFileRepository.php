@@ -88,4 +88,30 @@ class MediaFileRepository extends MediaBaseRepository implements MediaFileReposi
             'message' => "The files has been uploaded.",
         ];
     }
+
+    public function updateSize($id, array $size): array
+    {
+        $file = $this->find($id);
+
+        if (! $file)
+        {
+            return [
+                'success' => false,
+                'message' => "The file not be found.",
+            ];
+        }
+
+        $isUpdated = $this->update($id, $size);
+
+        if (! $isUpdated) {
+            return [
+                'success' => false,
+                'message' => "The file not be found.",
+            ];
+        }
+        return [
+            'success' => true,
+            'message' => "The file has been updated.",
+        ];
+    }
 }

@@ -6,7 +6,9 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Validator;
+use NguyenKhoi\FileManager\Http\Request\FileCropRequest;
 use NguyenKhoi\FileManager\Http\Request\FileRequest;
+use NguyenKhoi\FileManager\Http\Request\FileUpdateRequest;
 use NguyenKhoi\FileManager\Repositories\Files\MediaFileRepositoryInterface;
 use NguyenKhoi\FileManager\Repositories\Folders\MediaFolderRepositoryInterface;
 use NguyenKhoi\FileManager\Services\FileServices;
@@ -57,7 +59,7 @@ class FileController extends Controller
 
         $filePath = $this->fileService->uploadByURL(trim($request->get('url')), $folder);
 
-        return response()->json($this->fileRepository->updateFile($filePath,$request));
+        return response()->json($this->fileRepository->updateFile($filePath, $request));
     }
 
     public function uploadFile(FileRequest $request): JsonResponse
@@ -77,7 +79,55 @@ class FileController extends Controller
 
         $files = $this->fileService->uploadMultipleFile($data['files'], $folder);
 
-        return response()->json($this->fileRepository->updateFile($files,$request));
+        return response()->json($this->fileRepository->updateFile($files, $request));
     }
 
+    public function saveCropImage(FileCropRequest $request): JsonResponse
+    {
+
+        $validate = $request->validated();
+
+        $file = $this->fileRepository->find($validate['image_id']);
+
+        if (!$file) {
+            return response()->json([
+                'success' => false,
+                'message' => "The file not found.",
+            ]);
+        }
+        $cropResult = $this->fileService->cropImage($file->permalink, $validate['crop_data']);
+
+        if (!$cropResult['success']) {
+            return response()->json($cropResult);
+        }
+        return response()->json($this->fileRepository->updateSize($validate['image_id'], $cropResult['data']));
+
+    }
+
+    public function updateData(FileUpdateRequest $request): JsonResponse
+    {
+        $validate = $request->validated();
+
+        $file = $this->fileRepository->find($validate['id']);
+
+        if (!$file) {
+            return response()->json([
+                'success' => false,
+                'message' => "The file not found.",
+            ]);
+        }
+
+        $updated = $this->fileRepository->update($validate['id'], $validate);
+        if (!$updated) {
+            return response()->json([
+                'success' => false,
+                'message' => "The file not be found.",
+            ]);
+        }
+
+        return response()->json([
+            'success' => true,
+            'message' => "The file has been updated.",
+        ]);
+    }
 }

@@ -14,4 +14,6 @@ interface MediaFileRepositoryInterface extends MediaBaseRepositoryInterface
     public function updateFileByPermalink($permalink, array $data);
 
     public function updateFile(array $data, $request);
+
+    public function updateSize($id,array $size);
 }
