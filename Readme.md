@@ -54,7 +54,16 @@ Open file composer.json in root folder app & adding config
 
 Use command "Composer update"
 
+## Step 5
+
+```php
+php artisan vendor:publish --tag=nkd-file-manager-assets
+```
 ## USE
+
+```html
+<script src="{{ asset('vendor/file-manager/assets/js/CKMedia.js') }}"></script>
+```
 
 ```javascript
     CKMedia.popup({
@@ -69,7 +78,7 @@ Use command "Composer update"
 ```
 ## CKEDITOR 4
 
-```bash
+```javascript
   CKEDITOR.replace( 'editor1',
         {
             filebrowserImageBrowseUrl: '{{ route('media.file-manager',['isChoose' => true]) }}',
