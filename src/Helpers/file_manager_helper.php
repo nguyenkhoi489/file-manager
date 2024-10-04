@@ -1,6 +1,4 @@
 <?php
-
-
 use NguyenKhoi\FileManager\Repositories\Settings\MediaSettingRepositoryInterface;
 
 if (!function_exists('file_manager_setting')) {

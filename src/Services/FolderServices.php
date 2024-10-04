@@ -7,9 +7,8 @@ use Illuminate\Support\Str;
 use NguyenKhoi\FileManager\Repositories\Files\MediaFileRepositoryInterface;
 use NguyenKhoi\FileManager\Services\Trait\DiskServices;
 
-class FolderServices
+class FolderServices extends BaseServices
 {
-    use DiskServices;
 
     protected $path;
     protected  $disk;
@@ -19,6 +18,7 @@ class FolderServices
         public MediaFileRepositoryInterface $fileRepo
     )
     {
+        parent::__construct();
         $this->disk = $this->getDisk();
         $this->fileRepository = $fileRepo;
     }

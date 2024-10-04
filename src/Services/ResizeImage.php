@@ -6,9 +6,8 @@ use Imagick;
 use ImagickException;
 use NguyenKhoi\FileManager\Services\Trait\DiskServices;
 
-class ResizeImage
+class ResizeImage extends BaseServices
 {
-    use DiskServices;
 
     public $image;
     public string $path;
@@ -20,6 +19,7 @@ class ResizeImage
 
     public function __construct()
     {
+        parent::__construct();
         $this->disk = $this->getDisk();
     }
 

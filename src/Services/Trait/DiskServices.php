@@ -9,6 +9,11 @@ trait DiskServices
 {
     protected $disk;
 
+    public function __construct()
+    {
+        $this->setDisk();
+    }
+
     protected function setDisk(): static
     {
         $this->disk = Storage::build([
@@ -20,7 +25,6 @@ trait DiskServices
 
     public function getDisk()
     {
-        $this->setDisk();
         return $this->disk;
     }
 }

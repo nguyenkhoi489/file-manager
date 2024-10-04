@@ -6,9 +6,8 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 use NguyenKhoi\FileManager\Services\Trait\DiskServices;
 
-class FileServices
+class FileServices extends BaseServices
 {
-    use DiskServices;
 
     protected $folderService;
     protected $resizeService;
@@ -20,6 +19,7 @@ class FileServices
         public ResizeImage    $resizeImage
     )
     {
+        parent::__construct();
         $this->folderService = $this->folderServices;
         $this->resizeService = $resizeImage;
         $this->disk = $this->getDisk();
