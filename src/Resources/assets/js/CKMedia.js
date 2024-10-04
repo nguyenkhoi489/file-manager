@@ -878,7 +878,7 @@ var CKMedia = {
 
             let modal = $this.closest('#modal-upload-link');
 
-            let folderId = getFolderID()
+            let folderId = CKMedia.getFolderID()
 
             $this.append(`<input type="hidden" name="folderId" value="${folderId}">`);
 
