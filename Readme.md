@@ -67,7 +67,16 @@ Use command "Composer update"
         }
     })
 ```
+## CKEDITOR 4
 
+```bash
+  CKEDITOR.replace( 'editor1',
+        {
+            filebrowserImageBrowseUrl: '{{ route('media.file-manager',['isChoose' => true]) }}',
+            filebrowserImageUploadUrl: '{{ route('media.ckeditor4.upload', ['_token' => csrf_token()]) }}'
+        }
+    );
+```
 ## License
 
 [MIT](https://choosealicense.com/licenses/mit/)
