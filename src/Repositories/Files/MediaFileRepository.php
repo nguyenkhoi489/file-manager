@@ -68,13 +68,21 @@ class MediaFileRepository extends MediaBaseRepository implements MediaFileReposi
             ];
         }
 
-        $data = collect($data)->map(function ($item) use ($request) {
-            $data = $item['data'];
-            $data['user_id'] = $request->user()->id;
-            $data['folder_id'] = $request->get('folderId');
-            return $data;
+        $data = collect($data)->filter(function ($item) use ($request) {
+            if (isset($item['data'])) {
+                $data = $item['data'];
+                $data['user_id'] = $request->user()->id;
+                $data['folder_id'] = $request->get('folderId');
+                return $data;
+            }
         })->toArray();
 
+        if (!count($data)) {
+            return [
+                'success' => false,
+                'message' => "The files could not be uploaded.",
+            ];
+        }
         $insertItem = $this->insert($data);
 
         if (!$insertItem) {
@@ -93,8 +101,7 @@ class MediaFileRepository extends MediaBaseRepository implements MediaFileReposi
     {
         $file = $this->find($id);
 
-        if (! $file)
-        {
+        if (!$file) {
             return [
                 'success' => false,
                 'message' => "The file not be found.",
@@ -103,7 +110,7 @@ class MediaFileRepository extends MediaBaseRepository implements MediaFileReposi
 
         $isUpdated = $this->update($id, $size);
 
-        if (! $isUpdated) {
+        if (!$isUpdated) {
             return [
                 'success' => false,
                 'message' => "The file not be found.",
