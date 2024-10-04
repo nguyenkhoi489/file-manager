@@ -57,7 +57,12 @@ Use command "Composer update"
 ## Step 5
 
 ```php
-php artisan vendor:publish --tag=nkd-file-manager-assets
+php artisan vendor:publish --tag=nkd-file-manager
+```
+## Step 6
+
+```php
+php artisan migrate
 ```
 ## USE
 

@@ -28,7 +28,6 @@ return [
         'mpeg',
         'ogv'
     ],
-
     'max_file_size' => file_manager_setting('default_file_size',2097152),
     'limit_upload_files' => file_manager_setting('default_limit_file_upload',20),
     'path_folder' => 'uploads',

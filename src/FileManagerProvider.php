@@ -49,7 +49,7 @@ class FileManagerProvider extends ServiceProvider
         //Load migrations
         $this->publishes(array(
             __DIR__ . '/Database/migrations/' => database_path('migrations')
-        ), 'nkd-file-manager-migrations');
+        ), 'nkd-file-manager');
 
         //Load Routes
         $this->loadRoutesFrom(__DIR__ . '/Routes/filemanager.php');
@@ -58,7 +58,7 @@ class FileManagerProvider extends ServiceProvider
         $this->publishes([
             __DIR__
             . '/Resources/assets' => public_path('vendor/file-manager'),
-        ], 'nkd-file-manager-assets');
+        ], 'nkd-file-manager');
 
         //Load Config
         $this->publishes([
