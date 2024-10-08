@@ -7,30 +7,21 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Validator;
 use NguyenKhoi\FileManager\Repositories\Files\MediaFileRepositoryInterface;
-use NguyenKhoi\FileManager\Repositories\Folders\MediaFolderRepositoryInterface;
 use NguyenKhoi\FileManager\Services\FileServices;
-use NguyenKhoi\FileManager\Services\FolderServices;
-use NguyenKhoi\FileManager\Http\Request\CKEditorRequest;
+
 
 class CKEditorController extends Controller
 {
-    protected $folderService;
-    protected $fileService;
+    protected FileServices $fileService;
+    protected MediaFileRepositoryInterface $fileRepository;
 
-    protected $fileRepository;
-
-    protected $folderRepository;
 
     public function __construct(
-        public MediaFolderRepositoryInterface $mediaFolderRepository,
         public MediaFileRepositoryInterface   $mediaFileRepository,
-        public FolderServices                 $folderServices,
         public FileServices                   $fileServices,
     )
     {
-        $this->folderService = $folderServices;
         $this->fileRepository = $mediaFileRepository;
-        $this->folderRepository = $mediaFolderRepository;
         $this->fileService = $fileServices;
     }
 
@@ -58,7 +49,6 @@ class CKEditorController extends Controller
         $files = $this->fileService->uploadMultipleFile($request->file('upload'), null);
 
         $request->merge(['folderId' => 0]);
-
         $uploadedFiles = $this->fileRepository->updateFile($files, $request);
 
         if (!$uploadedFiles['success']) {
