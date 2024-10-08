@@ -68,22 +68,26 @@ class MediaFileRepository extends MediaBaseRepository implements MediaFileReposi
             ];
         }
 
-        $data = collect($data)->filter(function ($item) use ($request) {
+        $insertData = collect($data)->map(function ($item) use ($request) {
             if (isset($item['data'])) {
                 $data = $item['data'];
                 $data['user_id'] = $request->user()->id;
                 $data['folder_id'] = $request->get('folderId');
                 return $data;
             }
+        })->filter(function ($item) {
+            if (count($item)) {
+                return $item;
+            }
         })->toArray();
 
-        if (!count($data)) {
+        if (!count($insertData)) {
             return [
                 'success' => false,
                 'message' => "The files could not be uploaded.",
             ];
         }
-        $insertItem = $this->insert($data);
+        $insertItem = $this->insert($insertData);
 
         if (!$insertItem) {
             return [
