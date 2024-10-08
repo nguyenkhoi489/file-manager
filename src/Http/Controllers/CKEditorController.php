@@ -49,6 +49,7 @@ class CKEditorController extends Controller
         $files = $this->fileService->uploadMultipleFile($request->file('upload'), null);
 
         $request->merge(['folderId' => 0]);
+
         $uploadedFiles = $this->fileRepository->updateFile($files, $request);
 
         if (!$uploadedFiles['success']) {

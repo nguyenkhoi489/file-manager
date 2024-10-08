@@ -59,7 +59,7 @@ class MediaFileRepository extends MediaBaseRepository implements MediaFileReposi
         return $this->model->where('permalink', $permalink)->update($data);
     }
 
-    public function updateFile(array $data, $request)
+    public function updateFile(array $data, $request): array
     {
         if (!count($data)) {
             return [

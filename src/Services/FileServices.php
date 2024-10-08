@@ -4,7 +4,6 @@ namespace NguyenKhoi\FileManager\Services;
 
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
-use NguyenKhoi\FileManager\Services\Trait\DiskServices;
 
 class FileServices extends BaseServices
 {
