@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use NguyenKhoi\FileManager\Http\Request\MediaRequest;
 use NguyenKhoi\FileManager\Http\Request\MediaUpdateRequest;
+use NguyenKhoi\FileManager\Http\Resources\FileResource;
+use NguyenKhoi\FileManager\Http\Resources\FolderResource;
 use NguyenKhoi\FileManager\Repositories\Files\MediaFileRepositoryInterface;
 use NguyenKhoi\FileManager\Repositories\Folders\MediaFolderRepositoryInterface;
 use NguyenKhoi\FileManager\Services\FileServices;
@@ -75,8 +77,8 @@ class MediaController extends Controller
             'success' => true,
             'data' => [
                 'breadcrumbs' => $breadcrumbs,
-                'folders' => $allFolders,
-                'files' => $allFiles,
+                'folders' => FolderResource::collection($allFolders),
+                'files' => FileResource::collection($allFiles),
             ],
             'load_more' => $countFolders > $limit || $countFiles > $limit,
             'type' => $countFolders > $limit ? 'folder' : 'file'
