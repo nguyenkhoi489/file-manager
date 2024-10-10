@@ -43,10 +43,10 @@ class MediaController extends Controller
 
     public function loadMedia(MediaRequest $request): JsonResponse
     {
-        $paged = 1;
-        $limit = 30;
+        $limit = file_manager_setting('media_limit',30);
 
         $data = $request->validated();
+
         $breadcrumbs = [
             0 => [
                 "id" => 0,
@@ -60,16 +60,19 @@ class MediaController extends Controller
 
         $allFiles = [];
 
-        $data['paged'] = $data['paged'] ?? $paged;
-        $data['posts_per_page'] = $data['posts_per_page'] ?? $limit;
+        $data['paged'] = $data['paged'] ?? 1;
+
+        $limit = $data['posts_per_page'] = $data['posts_per_page'] ?? $limit;
 
         $countFolders = $this->folderRepository->getCount();
+
         $countFiles = $this->fileRepository->getCount();
 
         $allFolders = $this->folderRepository->filter($data);
 
-        if (count($allFolders) < $limit) {
-            $limit = $limit - count($allFolders);
+        if (count($allFolders) < $data['posts_per_page']) {
+            $limit =  $data['posts_per_page'] - count($allFolders);
+
             $data['posts_per_page'] = $limit;
             $allFiles = $this->fileRepository->filter($data);
         }
@@ -81,6 +84,7 @@ class MediaController extends Controller
                 'files' => FileResource::collection($allFiles),
             ],
             'load_more' => $countFolders > $limit || $countFiles > $limit,
+            'next' => (int) $data['paged'] + 1,
             'type' => $countFolders > $limit ? 'folder' : 'file'
         ]);
     }

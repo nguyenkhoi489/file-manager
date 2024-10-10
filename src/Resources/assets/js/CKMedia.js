@@ -93,7 +93,8 @@ var CKMedia = {
                     class: 'js-action-alt-text',
                 },
             ]
-        }
+        },
+        limit: 30
     },
 
     __init() {
@@ -259,7 +260,7 @@ var CKMedia = {
             modal.removeClass('show')
             toastr.success(response.message);
             setTimeout(function () {
-                CKMedia.loadMedia('all', CKMedia.getSortBy(), CKMedia.getFolderID(), CKMedia.getSearchInput(), false, 1, 30)
+                CKMedia.loadMedia('all', CKMedia.getSortBy(), CKMedia.getFolderID(), CKMedia.getSearchInput(), false, 1, CKMedia.config.limit)
             }, 1000);
             return this;
         }
@@ -375,7 +376,7 @@ var CKMedia = {
         return this;
     },
 
-    loadMedia(view_in = 'all', sort_by = this.getSortBy(), folder_id = this.getFolderID(), search = this.getSearchInput(), load_more = false, paged = 1, posts_per_page = 30) {
+    loadMedia(view_in = 'all', sort_by = this.getSortBy(), folder_id = this.getFolderID(), search = this.getSearchInput(), load_more = false, paged = 1, posts_per_page = CKMedia.config.limit) {
         $.ajax({
             url: CKMedia.url,
             data: {
@@ -525,7 +526,7 @@ var CKMedia = {
     bindRefreshLayout() {
         $(document).on('click', 'button[data-type="refresh"]', function (e) {
             e.preventDefault();
-            CKMedia.loadMedia('all', CKMedia.getSortBy(), CKMedia.getFolderID(), CKMedia.getSearchInput(), false, 1, 30)
+            CKMedia.loadMedia('all', CKMedia.getSortBy(), CKMedia.getFolderID(), CKMedia.getSearchInput(), false, 1, CKMedia.config.limit)
         })
     },
 
@@ -544,11 +545,11 @@ var CKMedia = {
             e.preventDefault();
             let $this = $(this);
             let input = $this.find('input');
-            let isMultiple  =  CKMedia.getParameter('isMultiple')
+            let isMultiple = CKMedia.getParameter('isMultiple')
 
             $this.data('context') === 'file' ? CKMedia.setupDropdownAction(['detail', 'file']) : CKMedia.setupDropdownAction(['detail']);
 
-            if (! isMultiple || isMultiple === 'false') {
+            if (!isMultiple || isMultiple === 'false') {
                 $('.media-list-title input').prop('checked', false);
 
                 input.prop('checked', true)
@@ -577,7 +578,7 @@ var CKMedia = {
             folder_id = typeof folder_id !== 'undefined' ? folder_id : CKMedia.getFolderID(true)
             CKMedia.handleResetDropdown();
             CKMedia.handleResetThumbColumn()
-            CKMedia.loadMedia('all', CKMedia.getSortBy(), folder_id, CKMedia.getSearchInput(), false, 1, 30)
+            CKMedia.loadMedia('all', CKMedia.getSortBy(), folder_id, CKMedia.getSearchInput(), false, 1, CKMedia.config.limit)
         })
     },
 
@@ -697,7 +698,7 @@ var CKMedia = {
 
             $(this).addClass('active')
 
-            CKMedia.loadMedia('all', CKMedia.getSortBy(), CKMedia.getFolderID(), CKMedia.getSearchInput(), false, 1, 30)
+            CKMedia.loadMedia('all', CKMedia.getSortBy(), CKMedia.getFolderID(), CKMedia.getSearchInput(), false, 1, CKMedia.config.limit)
         })
     },
 
@@ -751,8 +752,7 @@ var CKMedia = {
         })
     },
 
-    bindActionChangeAltModal()
-    {
+    bindActionChangeAltModal() {
         $(document).on('click', '.js-files-action[data-action="alt_text"]', function (e) {
             e.preventDefault();
 
@@ -770,9 +770,8 @@ var CKMedia = {
         })
     },
 
-    bindActionChangeAltModalConfirm()
-    {
-        $(document).on('submit','#modal-change-alt-item form', function (e) {
+    bindActionChangeAltModalConfirm() {
+        $(document).on('submit', '#modal-change-alt-item form', function (e) {
 
             e.preventDefault();
 
@@ -956,7 +955,7 @@ var CKMedia = {
     bindActionSearch() {
         $(document).on('click', '.js-search-action', function (e) {
             e.preventDefault();
-            CKMedia.loadMedia('all', CKMedia.getSortBy(), CKMedia.getFolderID(), CKMedia.getSearchInput(), false, 1, 30)
+            CKMedia.loadMedia('all', CKMedia.getSortBy(), CKMedia.getFolderID(), CKMedia.getSearchInput(), false, 1, CKMedia.config.limit)
         })
     },
 
