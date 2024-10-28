@@ -57,7 +57,7 @@ class FileManagerProvider extends ServiceProvider
         //Load assets
         $this->publishes([
             __DIR__
-            . '/Resources/assets' => public_path('vendor/file-manager'),
+            . '/Resources/assets' => public_path('vendor/file-manager/assets'),
         ], 'nkd-file-manager');
 
         //Load Config
