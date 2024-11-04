@@ -79,7 +79,17 @@ class FileController extends Controller
 
         $files = $this->fileService->uploadMultipleFile($data['files'], $folder);
 
-        return response()->json($this->fileRepository->updateFile($files, $request));
+        $isError = collect($files)->filter(function ($file) {
+            if (!$file['success']) {
+                return $file;
+            }
+        });
+
+        if ($isError->count() === 0) {
+            return response()->json($this->fileRepository->updateFile($files, $request));
+        }
+
+        return response()->json($isError->first());
     }
 
     public function saveCropImage(FileCropRequest $request): JsonResponse

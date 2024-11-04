@@ -103,7 +103,6 @@ class FileServices extends BaseServices
         }
 
         $isUpload = $this->disk->put($fileName, $file->getContent());
-
         if ($isUpload) {
             $fileUploaded = $this->disk->path($fileName);
             return [

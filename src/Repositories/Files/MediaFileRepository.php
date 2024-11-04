@@ -76,7 +76,7 @@ class MediaFileRepository extends MediaBaseRepository implements MediaFileReposi
                 return $data;
             }
         })->filter(function ($item) {
-            if (count($item)) {
+            if (is_array($item) && count($item)) {
                 return $item;
             }
         })->toArray();

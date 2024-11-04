@@ -13,7 +13,9 @@ return [
         'application/pdf',
         'video/mp4',
         'video/mpeg',
-        'video/ogg'
+        'video/ogg',
+        'image/vnd.microsoft.icon',
+        'image/x-icon'
     ],
     'extensions' => [
         'png',
@@ -26,7 +28,8 @@ return [
         'pdf',
         'mp4',
         'mpeg',
-        'ogv'
+        'ogv',
+        'ico'
     ],
     'max_file_size' => file_manager_setting('default_file_size',2097152),
     'limit_upload_files' => file_manager_setting('default_limit_file_upload',20),
