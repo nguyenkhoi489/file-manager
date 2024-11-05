@@ -488,7 +488,7 @@ var CKMedia = {
         Array.from(_files).forEach(element => {
             let parentItem = $(element).parent();
             let dataItem = JSON.parse(parentItem.attr('data-item'));
-            let fileUrl = `${window.origin}/uploads${dataItem.permalink}`
+            let fileUrl = `/uploads${dataItem.permalink}`
             allFiles.push({
                 fileUrl: fileUrl,
                 alt: dataItem.alt,
