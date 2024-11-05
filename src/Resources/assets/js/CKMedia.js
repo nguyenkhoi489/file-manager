@@ -489,10 +489,10 @@ var CKMedia = {
             let parentItem = $(element).parent();
             let dataItem = JSON.parse(parentItem.attr('data-item'));
             let fileUrl = `${window.origin}/uploads${dataItem.permalink}`
-            let alt = dataItem.alt
             allFiles.push({
                 fileUrl: fileUrl,
-                alt: alt
+                alt: dataItem.alt,
+                id: dataItem.id
             });
         })
         const event = new CustomEvent('files:choose', {detail: allFiles});
