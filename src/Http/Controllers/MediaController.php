@@ -114,6 +114,7 @@ class MediaController extends Controller
             ]);
         }
         $parentFolder = null;
+        
         if ($isExits->parent_id ?? $isExits->folder_id) {
             $findFolder = $this->folderRepository->find($isExits->parent_id ?? $isExits->folder_id);
             $parentFolder = $findFolder->permalink;
@@ -126,6 +127,7 @@ class MediaController extends Controller
             return response()->json($changed);
 
         }
+
         $_updateData = [
             'name' => $data['name'],
             'permalink' => $changed['path']

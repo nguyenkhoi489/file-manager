@@ -137,6 +137,7 @@ var CKMedia = {
     },
 
     setupAjax() {
+        console.log($('[name="nkd-csrf-token"]').attr('value'))
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('[name="nkd-csrf-token"]').attr('value')
@@ -216,7 +217,12 @@ var CKMedia = {
             data.index_key = $box.index()
             selected.push(data)
         })
-
+        $('[data-context=folder] input[type=checkbox]:checked').each((index, el) => {
+            let $box = $(el).closest('.js-media-list-title')
+            let data = $box.data('item') || {}
+            data.index_key = $box.index()
+            selected.push(data)
+        })
         return selected
     },
 
@@ -643,13 +649,14 @@ var CKMedia = {
             e.preventDefault();
 
             let dataItem = CKMedia.getSelectedItems()[0]
-
+            
             let modal = $('#modal-rename-item')
 
-            let type = !'folder_id' in dataItem
 
+            let type = !('folder_id' in dataItem)
+            console.log(type);
+            
             modal.find('input').val(dataItem.name)
-
 
             modal.attr('data-id', dataItem.id)
 
@@ -709,7 +716,7 @@ var CKMedia = {
 
             let modal = $('#modal-remove-item')
 
-            let type = !'folder_id' in dataItem
+            let type = !('folder_id' in dataItem)
 
             modal.attr('data-id', dataItem.id)
 
@@ -758,8 +765,6 @@ var CKMedia = {
             let dataItem = CKMedia.getSelectedItems()[0]
 
             let modal = $('#modal-change-alt-item')
-
-            let type = !'folder_id' in dataItem
 
             modal.find('input[name="id"]').val(dataItem.id)
 
@@ -914,6 +919,7 @@ var CKMedia = {
     bindActionTriggerFileUpload() {
         $(document).on('click', '.js-button-upload', function (e) {
             e.preventDefault();
+            CKMedia.setupAjax();
             $('.nkd-media-container input[type="file"]').click()
         })
     },

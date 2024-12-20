@@ -63,9 +63,8 @@ class FolderServices extends BaseServices
         foreach ($allFiles as $file) {
 
             $this->disk->move($file, $created_new['path'] . '/' . basename($file));
-
             $this->fileRepository->updateFileByPermalink($file, [
-                'permalink' => $created_new['path'] . '/' . basename($file)
+                'permalink' => '/' .$created_new['path'] . '/' . basename($file)
             ]);
 
         }
