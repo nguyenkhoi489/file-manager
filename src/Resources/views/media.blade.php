@@ -314,10 +314,11 @@
                 @include("file-manager::action")
             @endif
         </div>
+        <input type="file" multiple="multiple" class="d-none" tabindex="-1"
+       style="visibility: hidden; position: absolute; top: 0px; left: 0px; height: 0px; width: 0px;">
     </div>
 </div>
-<input type="file" multiple="multiple" class="d-none" tabindex="-1"
-       style="visibility: hidden; position: absolute; top: 0px; left: 0px; height: 0px; width: 0px;">
+
 <div class="nkd-modal nkd-modal-blur nkd-fade" id="modal-create-item"
      data-update="{{ route('media.update') }}"
      data-action="{{ route('media.folder.create') }}">

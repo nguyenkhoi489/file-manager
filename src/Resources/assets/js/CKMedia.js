@@ -137,7 +137,6 @@ var CKMedia = {
     },
 
     setupAjax() {
-
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('[name="nkd-csrf-token"]').attr('value')
@@ -915,12 +914,12 @@ var CKMedia = {
     bindActionTriggerFileUpload() {
         $(document).on('click', '.js-button-upload', function (e) {
             e.preventDefault();
-            $('input[type="file"]').click()
+            $('.nkd-media-container input[type="file"]').click()
         })
     },
 
     bindActionUploadFile() {
-        $(document).on('change', 'input[type="file"]', function (e) {
+        $(document).on('change', '.nkd-media-container input[type="file"]', function (e) {
             e.preventDefault();
             let container = $(document).find('.nkd-media-container');
             let $this = $(this)

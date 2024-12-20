@@ -91,7 +91,7 @@ class FileServices extends BaseServices
         $folder_path = $this->folderServices->getPath();
 
         if ($folder) {
-            $folder_path = $folder->permalink;
+            $folder_path = '/'. $folder->permalink;
         }
         $folder_path = $folder_path ? $folder_path : "";
 
