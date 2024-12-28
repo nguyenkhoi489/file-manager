@@ -85,7 +85,7 @@ class FolderServices extends BaseServices
     {
         $dirPath = $this->setDirPath($name);
         if ($path) {
-            $dirPath = $path . "/" . Str::slug($name, '-');
+            $dirPath =  $path . "/" . Str::slug($name, '-');
         }
         $isExits = $this->checkDirExist($dirPath);
 
@@ -95,10 +95,14 @@ class FolderServices extends BaseServices
                 'message' => "The folder $name already exist"
             ];
         }
+        
 
         $createDirResult = $this->disk->makeDirectory($dirPath);
 
         if ($createDirResult) {
+
+            File::chmod('uploads/'. $dirPath, config('file-manager.permission'));
+
             return [
                 'success' => true,
                 'message' => "The folder $name has been created",
@@ -106,7 +110,7 @@ class FolderServices extends BaseServices
             ];
         }
 
-        File::chmod($dirPath, config('file-manager.permission'));
+        
 
         return [
             'success' => false,
