@@ -34,6 +34,6 @@ return [
     'max_file_size' => file_manager_setting('default_file_size',2097152),
     'limit_upload_files' => file_manager_setting('default_limit_file_upload',20),
     'path_folder' => 'uploads',
-    'permission' => 0775,
+    'permission' => 0755,
     'base_path' => '/uploads',
 ];
