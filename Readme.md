@@ -66,11 +66,20 @@ php artisan migrate
 ```
 ## USE
 
+Include File
+```php
+ @include('file-manager::media')
+```
+Or
+
+Add to your project with this cript
 ```html
 <script src="{{ asset('vendor/file-manager/assets/js/CKMedia.js') }}"></script>
 ```
+
 Or
-```javascript
+Check exists for this script before add to your project
+```html
     <script defer>
         if (!document.querySelector(`script[src="{{ asset('vendor/file-manager/assets/js/CKMedia.js') }}"]`)) {
             let script = document.createElement('script');
@@ -79,6 +88,7 @@ Or
         }
     </script>
 ```
+How to use Function CKMedia
 ```javascript
     CKMedia.popup({
         isMultiple: false,
