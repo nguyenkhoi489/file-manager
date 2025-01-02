@@ -18,4 +18,5 @@ interface MediaFileRepositoryInterface extends MediaBaseRepositoryInterface
 
     public function getCount(array $data);
 
+    public function getDelete();
 }

@@ -2,10 +2,11 @@
 
 namespace NguyenKhoi\FileManager;
 
-
+use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
+use NguyenKhoi\FileManager\Command\HandleMediaDeleted;
 use NguyenKhoi\FileManager\Http\Controllers\MediaController;
 use NguyenKhoi\FileManager\Http\Middleware\AuthMiddlewareHandle;
 use NguyenKhoi\FileManager\Repositories\Files\MediaFileRepository;
@@ -68,5 +69,13 @@ class FileManagerProvider extends ServiceProvider
 
         //Load View
         $this->loadViewsFrom(__DIR__ . '/Resources/views/', 'file-manager');
+
+        $this->commands([
+            HandleMediaDeleted::class
+        ]);
+        $this->app->booted(function () {
+            $schedule = $this->app->make(Schedule::class);
+            $schedule->command('ckmedia:handle-media-deleted')->cron('*/5 * * * *'); // Chạy mỗi 5 phút
+        });
     }
 }

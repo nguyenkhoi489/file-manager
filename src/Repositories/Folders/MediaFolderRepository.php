@@ -61,4 +61,7 @@ class MediaFolderRepository extends MediaBaseRepository implements MediaFolderRe
         }
         return $model->count('id');
     }
+    public function getDelete() {
+        return  $this->model->whereNotNull('deleted_at')->get();
+    }
 }

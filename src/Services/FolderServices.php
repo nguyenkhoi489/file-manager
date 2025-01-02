@@ -101,7 +101,7 @@ class FolderServices extends BaseServices
 
         if ($createDirResult) {
 
-            File::chmod('uploads/'. $dirPath, config('file-manager.permission'));
+            File::chmod(config('file-manager.path_folder') .'/'. $dirPath, config('file-manager.permission'));
 
             return [
                 'success' => true,

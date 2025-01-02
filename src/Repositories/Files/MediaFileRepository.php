@@ -133,4 +133,7 @@ class MediaFileRepository extends MediaBaseRepository implements MediaFileReposi
             'message' => "The file has been updated.",
         ];
     }
+    public function getDelete() {
+        return  $this->model->whereNotNull('deleted_at')->get();
+    }
 }
