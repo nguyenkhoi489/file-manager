@@ -69,7 +69,16 @@ php artisan migrate
 ```html
 <script src="{{ asset('vendor/file-manager/assets/js/CKMedia.js') }}"></script>
 ```
-
+Or
+```javascript
+    <script defer>
+        if (!document.querySelector(`script[src="{{ asset('vendor/file-manager/assets/js/CKMedia.js') }}"]`)) {
+            let script = document.createElement('script');
+            script.src = "{{ asset('vendor/file-manager/assets/js/CKMedia.js') }}";
+            document.body.appendChild(script);
+        }
+    </script>
+```
 ```javascript
     CKMedia.popup({
         isMultiple: false,
