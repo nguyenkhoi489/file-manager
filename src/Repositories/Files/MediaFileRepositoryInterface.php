@@ -15,4 +15,7 @@ interface MediaFileRepositoryInterface extends MediaBaseRepositoryInterface
     public function updateFile(array $data, $request);
 
     public function updateSize($id,array $size);
+
+    public function getCount(array $data);
+
 }

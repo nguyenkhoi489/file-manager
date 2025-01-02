@@ -7,5 +7,6 @@ use NguyenKhoi\FileManager\Repositories\MediaBaseRepositoryInterface;
 interface MediaSettingRepositoryInterface extends MediaBaseRepositoryInterface
 {
     public function getByKey(string $key);
+    public function getCount(array $data);
 
 }

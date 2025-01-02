@@ -27,8 +27,7 @@ class MediaController extends Controller
         public MediaFolderRepositoryInterface $folderRepo,
         public FolderServices                 $folderSer,
         public FileServices                   $fileSer,
-    )
-    {
+    ) {
         $this->fileRepository = $this->fileRepo;
         $this->folderRepository = $this->folderRepo;
         $this->folderServices = $folderSer;
@@ -38,12 +37,12 @@ class MediaController extends Controller
     public function index(Request $request)
     {
         $isChoose = $request->get('isChoose') ?? false;
-        return view('file-manager::master' ,compact('isChoose'));
+        return view('file-manager::master', compact('isChoose'));
     }
 
     public function loadMedia(MediaRequest $request): JsonResponse
     {
-        $limit = file_manager_setting('media_limit',30);
+        $limit = file_manager_setting('media_limit', 30);
 
         $data = $request->validated();
 
@@ -64,28 +63,51 @@ class MediaController extends Controller
 
         $limit = $data['posts_per_page'] = $data['posts_per_page'] ?? $limit;
 
-        $countFolders = $this->folderRepository->getCount();
+        $countFolders = $this->folderRepository->getCount($data);
 
-        $countFiles = $this->fileRepository->getCount();
+        $countFiles = $this->fileRepository->getCount($data);
+        
+        if ($data['load_more'] === 'false') {
 
-        $allFolders = $this->folderRepository->filter($data);
+            $allFolders = $this->folderRepository->filter($data);
+            if (count($allFolders) < $data['posts_per_page']) {
+                $limit =  $data['posts_per_page'] - count($allFolders);
 
-        if (count($allFolders) < $data['posts_per_page']) {
-            $limit =  $data['posts_per_page'] - count($allFolders);
-
-            $data['posts_per_page'] = $limit;
-            $allFiles = $this->fileRepository->filter($data);
+                $data['posts_per_page'] = $limit;
+                $allFiles = $this->fileRepository->filter($data);
+            }
+            return response()->json([
+                'success' => true,
+                'data' => [
+                    'breadcrumbs' => $breadcrumbs,
+                    'folders' => FolderResource::collection($allFolders),
+                    'files' => FileResource::collection($allFiles),
+                ],
+                'load_more' => $countFolders > $limit || $countFiles > $limit,
+                'next' => (int) $data['paged'] + 1,
+                'type' => $countFolders > $limit ? 'folder' : 'file'
+            ]);
         }
+        $dataResponse = [];
+        switch ($data['type']) {
+            case 'file':
+                $dataResponse['file'] = $this->fileRepository->filter($data);
+                break;
+            case 'folder':
+                $dataResponse['folder'] = $this->folderRepository->filter($data);
+                break;
+        }
+  
         return response()->json([
             'success' => true,
             'data' => [
                 'breadcrumbs' => $breadcrumbs,
-                'folders' => FolderResource::collection($allFolders),
-                'files' => FileResource::collection($allFiles),
+                'folders' => isset($dataResponse['folder']) ? FolderResource::collection($dataResponse['folder']) : null,
+                'files' => isset($dataResponse['file']) ? FileResource::collection($dataResponse['file']) : null,
             ],
-            'load_more' => $countFolders > $limit || $countFiles > $limit,
+            'load_more' => ($countFolders > $limit *$data['paged']) || ($countFiles > $limit * $data['paged']),
             'next' => (int) $data['paged'] + 1,
-            'type' => $countFolders > $limit ? 'folder' : 'file'
+            'type' => $data['type']
         ]);
     }
 
@@ -114,7 +136,7 @@ class MediaController extends Controller
             ]);
         }
         $parentFolder = null;
-        
+
         if ($isExits->parent_id ?? $isExits->folder_id) {
             $findFolder = $this->folderRepository->find($isExits->parent_id ?? $isExits->folder_id);
             $parentFolder = $findFolder->permalink;
@@ -125,7 +147,6 @@ class MediaController extends Controller
         if (!$changed['success']) {
 
             return response()->json($changed);
-
         }
 
         $_updateData = [
@@ -139,7 +160,6 @@ class MediaController extends Controller
         $repoUsed->update($isExits->id, $_updateData);
 
         return response()->json($changed);
-
     }
 
     public function removeTrash(MediaUpdateRequest $request): JsonResponse
@@ -165,7 +185,6 @@ class MediaController extends Controller
             'success' => true,
             'message' => 'Moved selected item(s) to trash successfully!'
         ]);
-
     }
 
     private function getBreadcrumbs($folder_id): array
@@ -188,5 +207,4 @@ class MediaController extends Controller
         }
         return $breadcrumbs;
     }
-
 }

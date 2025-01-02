@@ -25,7 +25,7 @@ class MediaFileRepository extends MediaBaseRepository implements MediaFileReposi
 
         $offset = ($paged - 1) * $limit;
 
-        $model->limit($limit)->offset($offset);
+        $model->limit($limit);
 
         $model->where(function ($query) use ($data) {
             if (isset($data['folder_id'])) {
@@ -33,6 +33,9 @@ class MediaFileRepository extends MediaBaseRepository implements MediaFileReposi
             }
             if (isset($data['search']) && $data['search']) {
                 $query->where('name', 'like', '%' . $data['search'] . '%');
+            }
+            if (isset($data['ids']) && count($data['ids'])) {
+                $query->whereNotIn('id', $data['ids']);
             }
         });
 
@@ -44,9 +47,14 @@ class MediaFileRepository extends MediaBaseRepository implements MediaFileReposi
         return $model->get();
     }
 
-    public function getCount()
+    public function getCount($data)
     {
-        return $this->model->whereNull('deleted_at')->count('id');
+        $model =  $this->model->whereNull('deleted_at');
+        
+        if(isset($data['folder_id']) && $data['folder_id']){
+            $model->where('folder_id', $data['folder_id']);
+        }
+        return $model->count('id');
     }
 
     public function findByFolderId($folderId)

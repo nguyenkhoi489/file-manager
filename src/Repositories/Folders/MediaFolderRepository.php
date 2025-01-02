@@ -33,6 +33,9 @@ class MediaFolderRepository extends MediaBaseRepository implements MediaFolderRe
             if (isset($data['search']) && $data['search']) {
                 $query->where('name', 'like', '%' . $data['search'] . '%');
             }
+            if (isset($data['ids']) && count($data['ids'])) {
+                $query->whereNotIn('id', $data['ids']);
+            }
         });
 
         if (isset($data['sort_by'])) {
@@ -45,8 +48,17 @@ class MediaFolderRepository extends MediaBaseRepository implements MediaFolderRe
         return $model->get();
     }
 
-    public function getCount()
+    public function getCount($data)
     {
-        return $this->model->whereNull('deleted_at')->count('id');
+
+        $model =  $this->model->whereNull('deleted_at');
+             
+        if(isset($data['folder_id']) && $data['folder_id']){
+            $model->where(function($query) use ($data){
+                $query->where('id', $data['folder_id']);
+                $query->orWhere('parent_id', $data['folder_id']);
+            });
+        }
+        return $model->count('id');
     }
 }

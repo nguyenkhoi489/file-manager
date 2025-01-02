@@ -29,6 +29,8 @@ class MediaRequest extends FormRequest
             'load_more' => 'required',
             'paged' => 'required|integer',
             'posts_per_page' => 'required|integer',
+            'ids' => 'nullable',
+            'type' => 'nullable',
         ];
     }
 }

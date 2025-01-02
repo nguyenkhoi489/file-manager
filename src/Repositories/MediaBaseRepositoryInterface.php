@@ -13,7 +13,5 @@ interface MediaBaseRepositoryInterface
 
     public function delete($id);
 
-    public function getCount();
-
     public function insert(array $data);
 }

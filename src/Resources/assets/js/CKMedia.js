@@ -134,10 +134,10 @@ var CKMedia = {
         this.bindActionSearch()  //action search
         this.bindActionCloseModal() //action close modal
         this.bindActionDocumentActionBox() //action Document Close Box
+        this.bindActionLoadMore() //actionLoadMore
     },
 
     setupAjax() {
-        console.log($('[name="nkd-csrf-token"]').attr('value'))
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('[name="nkd-csrf-token"]').attr('value')
@@ -273,11 +273,14 @@ var CKMedia = {
     },
 
     handleResponseError(response, modal) {
+
         modal.find('#status_processing').remove()
 
         let _response = response.responseJSON
 
-        toastr.error(_response.message);
+        _response = _response ? _response.message : response.statusText
+
+        toastr.error(_response);
     },
 
     handleResetDropdown() {
@@ -318,23 +321,23 @@ var CKMedia = {
     },
 
     handleCreateItemElements(folder, file) {
-        let listItemFolders = Array.from(folder)
-        let listItemFiles = Array.from(file)
         let html = `<li class="media-list-title up-one-level js-up-one-level" >
-                                <div class="media-item" data-context="__type__" title="Up one level">
-                                    <div class="item-media-thumbnail">
-                                        <svg class="nkd-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                                            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                                            <path d="M18 18v-6a3 3 0 0 0 -3 -3h-10l4 -4m0 8l-4 -4"></path>
-                                        </svg>
-                                    </div>
-                                    <div class="item-media-description">
-                                        <div class="title">...</div>
-                                    </div>
-                                </div>
-                            </li>`;
-        listItemFolders.forEach(item => {
-            html += `<li class="media-list-title js-media-list-title js-context-menu" data-item='${JSON.stringify(item)}' data-context="folder" data-id="${item.id}">
+                    <div class="media-item" data-context="__type__" title="Up one level">
+                        <div class="item-media-thumbnail">
+                            <svg class="nkd-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                <path d="M18 18v-6a3 3 0 0 0 -3 -3h-10l4 -4m0 8l-4 -4"></path>
+                            </svg>
+                        </div>
+                        <div class="item-media-description">
+                            <div class="title">...</div>
+                        </div>
+                    </div>
+                </li>`;
+        if (folder) {
+            let listItemFolders = Array.from(folder)
+            listItemFolders.forEach(item => {
+                html += `<li class="media-list-title js-media-list-title js-context-menu" data-item='${JSON.stringify(item)}' data-context="folder" data-id="${item.id}">
                             <input type="checkbox" class="hidden">
                             <div class="media-item" title="members">
                                 <span class="item-media-item-selected">
@@ -353,25 +356,30 @@ var CKMedia = {
                                 </div>
                             </div>
                         </li>`;
-        })
-        listItemFiles.forEach(item => {
-            html += `<li class="media-list-title js-media-list-title js-context-menu" data-item='${JSON.stringify(item)}'  data-context="file" data-id="${item.id}">
-                            <input type="checkbox" class="hidden">
-                            <div class="media-item" title="members">
-                                <span class="item-media-item-selected">
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-                                        <path d="M186.301 339.893L96 249.461l-32 30.507L186.301 402 448 140.506 416 110z"></path>
-                                    </svg>
-                                </span>
-                                <div class="item-media-thumbnail">
-                                    <img src="/uploads${item.permalink}?v=${new Date().getMilliseconds()}" alt="15">
+            })
+        }
+        if (file) {
+            let listItemFiles = Array.from(file)
+            listItemFiles.forEach(item => {
+                html += `<li class="media-list-title js-media-list-title js-context-menu" data-item='${JSON.stringify(item)}'  data-context="file" data-id="${item.id}">
+                                <input type="checkbox" class="hidden">
+                                <div class="media-item" title="members">
+                                    <span class="item-media-item-selected">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                                            <path d="M186.301 339.893L96 249.461l-32 30.507L186.301 402 448 140.506 416 110z"></path>
+                                        </svg>
+                                    </span>
+                                    <div class="item-media-thumbnail">
+                                        <img src="/uploads${item.permalink}?v=${new Date().getMilliseconds()}" alt="15">
+                                    </div>
+                                    <div class="item-media-description">
+                                        <div class="title">${item.name}</div>
+                                    </div>
                                 </div>
-                                <div class="item-media-description">
-                                    <div class="title">${item.name}</div>
-                                </div>
-                            </div>
-                        </li>`;
-        })
+                            </li>`;
+            })
+        }
+
         return html;
     },
 
@@ -381,7 +389,7 @@ var CKMedia = {
         return this;
     },
 
-    loadMedia(view_in = 'all', sort_by = this.getSortBy(), folder_id = this.getFolderID(), search = this.getSearchInput(), load_more = false, paged = 1, posts_per_page = CKMedia.config.limit) {
+    loadMedia(view_in = 'all', sort_by = this.getSortBy(), folder_id = this.getFolderID(), search = this.getSearchInput(), load_more = false, paged = 1, posts_per_page = CKMedia.config.limit, type = 'file', ids = {}) {
         $.ajax({
             url: CKMedia.url,
             data: {
@@ -391,7 +399,9 @@ var CKMedia = {
                 search,
                 load_more,
                 paged,
-                posts_per_page
+                posts_per_page,
+                type,
+                ids
             },
             beforeSend: function () {
                 CKMedia.container.append(CKMedia.loading())
@@ -406,9 +416,21 @@ var CKMedia = {
                     CKMedia.container.find(`ul.breadcrumb`)
                         .empty()
                         .append(breadcrumbs);
-                    CKMedia.container.find('.media-grid > ul')
-                        .empty()
-                        .append(CKMedia.handleCreateItemElements(response.data.folders, response.data.files));
+                    let MediaGrid = CKMedia.container.find('.media-grid > ul')
+
+                    if (!load_more) {
+                        MediaGrid.empty();
+                    }
+
+                    MediaGrid.append(CKMedia.handleCreateItemElements(response.data.folders, response.data.files));
+
+                    let loadMore = CKMedia.container.find('.media-grid > div > .btn-load_more')
+
+                    loadMore.length ? loadMore.parent().remove() : ''
+                    if (response.load_more) {
+
+                        CKMedia.container.find('.media-grid').append(`<div class="text-center"><button data-target="media-grid" data-type="${response.type}" data-paged="${response.next}" class="btn btn-primary btn-load_more">Xem thêm</button></div>`);
+                    }
                 }
             },
             error(error) {
@@ -500,11 +522,11 @@ var CKMedia = {
                 id: dataItem.id
             });
         })
-        const event = new CustomEvent('files:choose', {detail: allFiles});
+        const event = new CustomEvent('files:choose', { detail: allFiles });
         document.dispatchEvent(event);
     },
 
-    popup({width = 1200, height = 850, isMultiple = false, isChoose = true, onInit = null}) {
+    popup({ width = 1200, height = 850, isMultiple = false, isChoose = true, onInit = null }) {
         let connectPath = `${this.basePath}?isMultiple=${isMultiple}&isChoose=${isChoose}`;
         let popupWindow = window.open(
             connectPath,
@@ -615,7 +637,7 @@ var CKMedia = {
                     CKMedia.handleResponseAction(response, modal)
                 },
                 error: function (error) {
-                    CKMedia.handleResponseError(response, modal)
+                    CKMedia.handleResponseError(error, modal)
                 }
             })
         })
@@ -649,13 +671,13 @@ var CKMedia = {
             e.preventDefault();
 
             let dataItem = CKMedia.getSelectedItems()[0]
-            
+
             let modal = $('#modal-rename-item')
 
 
             let type = !('folder_id' in dataItem)
             console.log(type);
-            
+
             modal.find('input').val(dataItem.name)
 
             modal.attr('data-id', dataItem.id)
@@ -689,7 +711,7 @@ var CKMedia = {
                     CKMedia.handleResponseAction(response, modal)
                 },
                 error: function (error) {
-                    CKMedia.handleResponseError(response, modal)
+                    CKMedia.handleResponseError(error, modal)
                 }
             })
         })
@@ -752,7 +774,7 @@ var CKMedia = {
                     CKMedia.handleResponseAction(response, modal)
                 },
                 error: function (error) {
-                    CKMedia.handleResponseError(response, modal)
+                    CKMedia.handleResponseError(error, modal)
                 }
             })
         })
@@ -896,7 +918,7 @@ var CKMedia = {
                     CKMedia.handleResponseAction(response, modal)
                 },
                 error: function (error) {
-                    CKMedia.handleResponseError(response, modal)
+                    CKMedia.handleResponseError(error, modal)
                 }
             })
         })
@@ -951,7 +973,8 @@ var CKMedia = {
                     CKMedia.handleResponseAction(response, container)
                 },
                 error: function (error) {
-                    CKMedia.handleResponseError(response, modal)
+
+                    CKMedia.handleResponseError(error, container)
                 }
             })
         })
@@ -1006,7 +1029,34 @@ var CKMedia = {
             CKMedia.actionBoxToggle($('.nkd-dropdown-menu'))
         })
     },
+    bindActionLoadMore() {
+        $(document).on('click', '.btn-load_more', function (e) {
+            e.preventDefault()
+            let __self = $(this)
+            let __paged = __self.attr('data-paged')
+            let _target = $(`.${__self.attr('data-target')}`)
+            let type = __self.attr('data-type')
+            let items = _target.find(`li[data-context="${type}"]`)
+            let ids = []
+            for (let item of items) {
+                ids.push($(item).attr('data-id'))
 
+            }
+            CKMedia.loadMedia(
+                'all',
+                CKMedia.getSortBy(),
+                CKMedia.getFolderID(),
+                CKMedia.getSearchInput(),
+                true,
+                __paged,
+                CKMedia.config.limit,
+                type,
+                ids
+            )
+
+
+        })
+    },
     handleCommand() {
         $(document).on('files:choose', function (files) {
             CKMedia.handleCKEditorFile(files);
