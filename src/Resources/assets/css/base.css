@@ -633,6 +633,7 @@ body {
     flex-grow: 1;
     -webkit-user-select: none;
     -moz-user-select: none;
+    max-width: calc(100% - 250px);
     user-select: none;
 }
 .nkd-form-label {

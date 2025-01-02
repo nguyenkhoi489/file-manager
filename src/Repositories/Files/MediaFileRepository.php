@@ -51,8 +51,8 @@ class MediaFileRepository extends MediaBaseRepository implements MediaFileReposi
     {
         $model =  $this->model->whereNull('deleted_at');
         
-        if(isset($data['folder_id']) && $data['folder_id']){
-            $model->where('folder_id', $data['folder_id']);
+        if(isset($data['folder_id']) ){
+          $model =  $model->where('folder_id', $data['folder_id']);
         }
         return $model->count('id');
     }

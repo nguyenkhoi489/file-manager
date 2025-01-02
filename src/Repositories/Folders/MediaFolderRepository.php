@@ -53,8 +53,8 @@ class MediaFolderRepository extends MediaBaseRepository implements MediaFolderRe
 
         $model =  $this->model->whereNull('deleted_at');
              
-        if(isset($data['folder_id']) && $data['folder_id']){
-            $model->where(function($query) use ($data){
+        if(isset($data['folder_id'])){
+            $model= $model->where(function($query) use ($data){
                 $query->where('id', $data['folder_id']);
                 $query->orWhere('parent_id', $data['folder_id']);
             });

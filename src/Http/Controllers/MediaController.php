@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Artisan;
 use NguyenKhoi\FileManager\Http\Request\MediaRequest;
 use NguyenKhoi\FileManager\Http\Request\MediaUpdateRequest;
 use NguyenKhoi\FileManager\Http\Resources\FileResource;
@@ -44,6 +45,8 @@ class MediaController extends Controller
     {
         $limit = file_manager_setting('media_limit', 30);
 
+        Artisan::call('optimize:clear');
+
         $data = $request->validated();
 
         $breadcrumbs = [
@@ -67,7 +70,7 @@ class MediaController extends Controller
 
         $countFiles = $this->fileRepository->getCount($data);
         
-        if ($data['load_more'] === 'false') {
+        if ($data['load_more'] == 'false') {
 
             $allFolders = $this->folderRepository->filter($data);
             if (count($allFolders) < $data['posts_per_page']) {
