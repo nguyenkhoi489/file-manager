@@ -74,9 +74,9 @@ class MediaController extends Controller
 
             $allFolders = $this->folderRepository->filter($data);
             if (count($allFolders) < $data['posts_per_page']) {
-                $limit =  $data['posts_per_page'] - count($allFolders);
+                $limit_post =  $data['posts_per_page'] - count($allFolders);
 
-                $data['posts_per_page'] = $limit;
+                $data['posts_per_page'] = $limit_post;
                 $allFiles = $this->fileRepository->filter($data);
             }
             return response()->json([
@@ -88,7 +88,7 @@ class MediaController extends Controller
                 ],
                 'load_more' => $countFolders > $limit || $countFiles > $limit,
                 'next' => (int) $data['paged'] + 1,
-                'type' => $countFolders > $limit ? 'folder' : 'file'
+                'type' => $countFolders > (int) $limit ? 'folder' : 'file'
             ]);
         }
         $dataResponse = [];
