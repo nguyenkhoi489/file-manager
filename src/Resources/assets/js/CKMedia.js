@@ -390,53 +390,56 @@ var CKMedia = {
     },
 
     loadMedia(view_in = 'all', sort_by = this.getSortBy(), folder_id = this.getFolderID(), search = this.getSearchInput(), load_more = false, paged = 1, posts_per_page = CKMedia.config.limit, type = 'file', ids = {}) {
-        $.ajax({
-            url: CKMedia.url,
-            data: {
-                view_in,
-                sort_by,
-                folder_id,
-                search,
-                load_more,
-                paged,
-                posts_per_page,
-                type,
-                ids
-            },
-            beforeSend: function () {
-                CKMedia.container.append(CKMedia.loading())
-            },
-            success: function (response) {
-                $(document).find('.nkd-media-container #status_processing').remove();
-                CKMedia.handleResetThumbColumn();
-                if (response.success) {
-                    let breadcrumbs = CKMedia.handleCreateBreadcrumbs(response.data.breadcrumbs);
-
-                    CKMedia.container.attr('data-breadcrumbs-count', response.data.breadcrumbs.length);
-                    CKMedia.container.find(`ul.breadcrumb`)
-                        .empty()
-                        .append(breadcrumbs);
-                    let MediaGrid = CKMedia.container.find('.media-grid > ul')
-
-                    if (!load_more) {
-                        MediaGrid.empty();
+        if(this.container.length)
+        {
+            $.ajax({
+                url: CKMedia.url,
+                data: {
+                    view_in,
+                    sort_by,
+                    folder_id,
+                    search,
+                    load_more,
+                    paged,
+                    posts_per_page,
+                    type,
+                    ids
+                },
+                beforeSend: function () {
+                    CKMedia.container.append(CKMedia.loading())
+                },
+                success: function (response) {
+                    $(document).find('.nkd-media-container #status_processing').remove();
+                    CKMedia.handleResetThumbColumn();
+                    if (response.success) {
+                        let breadcrumbs = CKMedia.handleCreateBreadcrumbs(response.data.breadcrumbs);
+    
+                        CKMedia.container.attr('data-breadcrumbs-count', response.data.breadcrumbs.length);
+                        CKMedia.container.find(`ul.breadcrumb`)
+                            .empty()
+                            .append(breadcrumbs);
+                        let MediaGrid = CKMedia.container.find('.media-grid > ul')
+    
+                        if (!load_more) {
+                            MediaGrid.empty();
+                        }
+    
+                        MediaGrid.append(CKMedia.handleCreateItemElements(response.data.folders, response.data.files));
+    
+                        let loadMore = CKMedia.container.find('.media-grid > div > .btn-load_more')
+    
+                        loadMore.length ? loadMore.parent().remove() : ''
+                        if (response.load_more) {
+    
+                            CKMedia.container.find('.media-grid').append(`<div class="text-center"><button data-target="media-grid" data-type="${response.type}" data-paged="${response.next}" class="btn btn-primary btn-load_more">Xem thêm</button></div>`);
+                        }
                     }
-
-                    MediaGrid.append(CKMedia.handleCreateItemElements(response.data.folders, response.data.files));
-
-                    let loadMore = CKMedia.container.find('.media-grid > div > .btn-load_more')
-
-                    loadMore.length ? loadMore.parent().remove() : ''
-                    if (response.load_more) {
-
-                        CKMedia.container.find('.media-grid').append(`<div class="text-center"><button data-target="media-grid" data-type="${response.type}" data-paged="${response.next}" class="btn btn-primary btn-load_more">Xem thêm</button></div>`);
-                    }
+                },
+                error(error) {
+                    $(document).find('.nkd-media-container #status_processing').remove();
                 }
-            },
-            error(error) {
-                $(document).find('.nkd-media-container #status_processing').remove();
-            }
-        })
+            })
+        }
     },
 
     handleCreatePreviewFolder(element) {
