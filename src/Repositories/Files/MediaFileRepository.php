@@ -32,7 +32,10 @@ class MediaFileRepository extends MediaBaseRepository implements MediaFileReposi
                 $query->where('folder_id', $data['folder_id']);
             }
             if (isset($data['search']) && $data['search']) {
-                $query->where('name', 'like', '%' . $data['search'] . '%');
+                $query->where(function($query) use ($data){
+                    $query->where('name', 'like', '%' . $data['search'] . '%');
+                    $query->orWhere('permalink', 'like', '%' . $data['search'] . '%');
+                });
             }
             if (isset($data['ids']) && count($data['ids'])) {
                 $query->whereNotIn('id', $data['ids']);
