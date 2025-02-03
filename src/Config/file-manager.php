@@ -5,7 +5,6 @@ return [
     'mime_types' => [
         'image/png',
         'image/jpeg',
-        'image/svg+xml',
         'image/webp',
         'text/csv',
         'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
@@ -20,7 +19,6 @@ return [
     'extensions' => [
         'png',
         'jpg',
-        'svg',
         'webp',
         'csv',
         'xlsx',
