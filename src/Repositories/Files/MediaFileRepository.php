@@ -82,7 +82,7 @@ class MediaFileRepository extends MediaBaseRepository implements MediaFileReposi
         $insertData = collect($data)->map(function ($item) use ($request) {
             if (isset($item['data'])) {
                 $data = $item['data'];
-                $data['user_id'] = $request->user()->id;
+                $data['user_id'] = $request->user()->id ?? 1;
                 $data['folder_id'] = $request->get('folderId');
                 return $data;
             }
@@ -99,7 +99,7 @@ class MediaFileRepository extends MediaBaseRepository implements MediaFileReposi
             ];
         }
         $insertItem = $this->insert($insertData);
-
+        
         if (!$insertItem) {
             return [
                 'success' => false,
@@ -109,6 +109,7 @@ class MediaFileRepository extends MediaBaseRepository implements MediaFileReposi
         return [
             'success' => true,
             'message' => "The files has been uploaded.",
+            'data' => $data
         ];
     }
 

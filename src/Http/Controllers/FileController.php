@@ -58,7 +58,6 @@ class FileController extends Controller
         $folder = $folder->permalink ?? "";
 
         $filePath = $this->fileService->uploadByURL(trim($request->get('url')), $folder);
-
         return response()->json($this->fileRepository->updateFile($filePath, $request));
     }
 

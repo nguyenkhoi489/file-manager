@@ -3,6 +3,7 @@
 namespace NguyenKhoi\FileManager\Services;
 
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
 
 class FileServices extends BaseServices
@@ -16,13 +17,11 @@ class FileServices extends BaseServices
     public function __construct(
         public FolderServices $folderServices,
         public ResizeImage    $resizeImage
-    )
-    {
+    ) {
         parent::__construct();
         $this->folderService = $this->folderServices;
         $this->resizeService = $resizeImage;
         $this->disk = $this->getDisk();
-
     }
 
     public function cropImage(string $file_path, string $crop_data): array
@@ -38,7 +37,6 @@ class FileServices extends BaseServices
         $this->resizeService->setImageData(array_merge(['path' => $file_path], json_decode($crop_data, true)));
 
         return $this->resizeService->resize();
-
     }
 
     public function uploadMultipleFile($files, $folder): array
@@ -65,7 +63,6 @@ class FileServices extends BaseServices
         }
 
         return $allFiles;
-
     }
 
     protected function uploadFile($file, $folder)
@@ -91,7 +88,7 @@ class FileServices extends BaseServices
         $folder_path = $this->folderServices->getPath();
 
         if ($folder) {
-            $folder_path = '/'. $folder->permalink;
+            $folder_path = '/' . $folder->permalink;
         }
         $folder_path = $folder_path ? $folder_path : "";
 
@@ -171,13 +168,12 @@ class FileServices extends BaseServices
         foreach ($allURL as $file) {
             $uploaded = $this->parseImageByURL($file, $folder_path);
 
-            if ($uploaded) {
+            if (count($uploaded) > 0 && isset($uploaded['data'])) {
                 $allUploaded[] = $uploaded;
             }
         }
 
         return $allUploaded;
-
     }
 
     protected function parseURL($url): array
@@ -189,18 +185,23 @@ class FileServices extends BaseServices
     protected function parseImageByURL($url, $folder): array
     {
         if (!$url) return [];
-
-        $fileContent = file_get_contents($url);
-
+        $context = stream_context_create([
+            "ssl" => [
+                "verify_peer" => false,
+                "verify_peer_name" => false,
+            ]
+        ]);
+        $fileContent = Http::withoutVerifying()->timeout(10)->get($url);
+        
+        if (! $fileContent->successful()) {
+            return [
+                'success' => true,
+                'message' => "The file '$url' could not be created." . error_get_last()
+            ];
+        }
         $filePath = pathinfo($url);
 
-        $mimetype = null;
-
-        foreach ($http_response_header as $v) {
-            if (preg_match('/^content\-type:\s*(image\/[^;\s\n\r]+)/i', $v, $m)) {
-                $mimetype = $m[1];
-            }
-        }
+        $mimetype = $fileContent->header('Content-type');
 
         if (!$mimetype) return [];
 
@@ -218,7 +219,7 @@ class FileServices extends BaseServices
         if ($fileChecked) {
             $fileName = $dirFolder . "/" . time() . "_" . $filePath['basename'];
         }
-        $isFile = $this->disk->put($fileName, $fileContent);
+        $isFile = $this->disk->put($fileName, $fileContent->body());
 
         if ($isFile) {
             return [
@@ -238,5 +239,4 @@ class FileServices extends BaseServices
             'message' => "The file '$url' could not be created"
         ];
     }
-
 }
