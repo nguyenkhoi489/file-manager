@@ -166,7 +166,7 @@ class FileServices extends BaseServices
 
         $allUploaded = [];
         foreach ($allURL as $file) {
-            $uploaded = $this->parseImageByURL($file, $folder_path);
+            $uploaded = $this->parseImageByURL($file, $dir);
 
             if (count($uploaded) > 0 && isset($uploaded['data'])) {
                 $allUploaded[] = $uploaded;
@@ -185,12 +185,6 @@ class FileServices extends BaseServices
     protected function parseImageByURL($url, $folder): array
     {
         if (!$url) return [];
-        $context = stream_context_create([
-            "ssl" => [
-                "verify_peer" => false,
-                "verify_peer_name" => false,
-            ]
-        ]);
         $fileContent = Http::withoutVerifying()->timeout(10)->get($url);
         
         if (! $fileContent->successful()) {

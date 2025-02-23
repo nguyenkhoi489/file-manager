@@ -83,7 +83,7 @@ class MediaFileRepository extends MediaBaseRepository implements MediaFileReposi
             if (isset($item['data'])) {
                 $data = $item['data'];
                 $data['user_id'] = $request->user()->id ?? 1;
-                $data['folder_id'] = $request->get('folderId');
+                $data['folder_id'] = $request->get('folderId') ?? 0;
                 return $data;
             }
         })->filter(function ($item) {
