@@ -225,7 +225,9 @@ body {
     background-color: var(--bg-item);
     overflow: hidden;
 }
-
+.text-center {
+    text-align: center;
+}
 .item-media-thumbnail {
     overflow: hidden;
     position: relative;

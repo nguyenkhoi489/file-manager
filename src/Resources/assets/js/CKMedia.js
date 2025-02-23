@@ -426,12 +426,11 @@ var CKMedia = {
     
                         MediaGrid.append(CKMedia.handleCreateItemElements(response.data.folders, response.data.files));
     
-                        let loadMore = CKMedia.container.find('.media-grid > div > .btn-load_more')
+                        let loadMore = CKMedia.container.find('.column-item-grid > div > .btn-load_more')
     
                         loadMore.length ? loadMore.parent().remove() : ''
                         if (response.load_more) {
-    
-                            CKMedia.container.find('.media-grid').append(`<div class="text-center"><button data-target="media-grid" data-type="${response.type}" data-paged="${response.next}" class="btn btn-primary btn-load_more">Xem thêm</button></div>`);
+                            CKMedia.container.find('.column-item-grid').append(`<div class="text-center"><button data-target="media-grid" data-type="${response.type}" data-paged="${response.next}" class="btn btn-primary nkd-btn btn-load_more">Xem thêm</button></div>`);
                         }
                     }
                 },
