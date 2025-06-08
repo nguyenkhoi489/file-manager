@@ -65,7 +65,7 @@ class FileManagerProvider extends ServiceProvider
         $this->publishes([
             __DIR__
             . '/Config/file-manager.php' => config_path('file-manager.php'),
-        ], 'nkd-file-manager-config');
+        ], 'nkd-file-manager');
 
         //Load View
         $this->loadViewsFrom(__DIR__ . '/Resources/views/', 'file-manager');
