@@ -185,7 +185,7 @@
                                     </button>
                                 </div>
                             </div>
-                            <div class="nkd-dropdown nkd-media-view-filter-group" style="margin-right: 8px;">
+                            <div class="nkd-dropdown nkd-media-type-filter-group" style="margin-right: 8px;">
                                 <button
                                     class="btn nkd-btn-primary dropdown-toggle js-media-change-filter-group js-filter-by-view-in"
                                     type="button" data-bs-toggle="dropdown" data-bs-placement="top" title="View in"

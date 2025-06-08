@@ -12,51 +12,83 @@ var CKMedia = {
                                 <path d="M14 14l1 -1c.928 -.893 2.072 -.893 3 0l3 3"></path>
                             </svg>`, file: ''
         }, actions: {
-            detail: [{
-                icon: `<svg xmlns="http://www.w3.org/2000/svg" class="nkd-icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                            <path d="M9 15l6 -6"></path>
-                            <path d="M11 6l.463 -.536a5 5 0 0 1 7.071 7.072l-.534 .464"></path>
-                            <path d="M13 18l-.397 .534a5.068 5.068 0 0 1 -7.127 0a4.972 4.972 0 0 1 0 -7.071l.524 -.463"></path>
-                        </svg>`, name: 'Copy link', action: 'copy_link', order: 0, class: 'js-action-copy-link',
-            }, {
-                icon: `<svg xmlns="http://www.w3.org/2000/svg" class="nkd-icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            detail: [
+                {
+                    icon: `<svg xmlns="http://www.w3.org/2000/svg" class="nkd-icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                                 <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                                <path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1"></path>
-                                <path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z"></path>
-                                <path d="M16 5l3 3"></path>
-                            </svg>`, name: 'Rename', action: 'rename', order: 1, class: 'js-action-rename',
-            }, {
-                icon: `<svg xmlns="http://www.w3.org/2000/svg" class="nkd-icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                                <path d="M4 7l16 0"></path>
-                                <path d="M10 11l0 6"></path>
-                                <path d="M14 11l0 6"></path>
-                                <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"></path>
-                                <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"></path>
-                            </svg>`, name: 'Move to trash', action: 'trash', order: 9, class: 'js-action-move-to-trash',
-            },], file: [{
-                icon: `<svg xmlns="http://www.w3.org/2000/svg" class="nkd-icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                                <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0"></path>
-                                <path d="M21 12c-2.4 4 -5.4 6 -9 6c-3.6 0 -6.6 -2 -9 -6c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6"></path>
-                            </svg>`, name: 'Preview', action: 'preview', order: 0, class: 'js-action-preview',
-            }, {
-                icon: `<svg xmlns="http://www.w3.org/2000/svg" class="nkd-icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                                <path d="M8 5v10a1 1 0 0 0 1 1h10"></path>
-                                <path d="M5 8h10a1 1 0 0 1 1 1v10"></path>
-                            </svg>`, name: 'Crop', action: 'crop', order: 1, class: 'js-action-crop',
-            }, {
-                icon: `<svg xmlns="http://www.w3.org/2000/svg" class="nkd-icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                                <path d="M15 8h.01"></path>
-                                <path d="M11 20h-4a3 3 0 0 1 -3 -3v-10a3 3 0 0 1 3 -3h10a3 3 0 0 1 3 3v4"></path>
-                                <path d="M4 15l4 -4c.928 -.893 2.072 -.893 3 0l3 3"></path>
-                                <path d="M14 14l1 -1c.31 -.298 .644 -.497 .987 -.596"></path>
-                                <path d="M18.42 15.61a2.1 2.1 0 0 1 2.97 2.97l-3.39 3.42h-3v-3l3.42 -3.39z"></path>
-                            </svg>`, name: 'Alt text', action: 'alt_text', order: 3, class: 'js-action-alt-text',
-            },]
+                                <path d="M9 15l6 -6"></path>
+                                <path d="M11 6l.463 -.536a5 5 0 0 1 7.071 7.072l-.534 .464"></path>
+                                <path d="M13 18l-.397 .534a5.068 5.068 0 0 1 -7.127 0a4.972 4.972 0 0 1 0 -7.071l.524 -.463"></path>
+                            </svg>`, name: 'Copy link', action: 'copy_link', order: 0, class: 'js-action-copy-link',
+                }, {
+                    icon: `<svg xmlns="http://www.w3.org/2000/svg" class="nkd-icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                    <path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1"></path>
+                                    <path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z"></path>
+                                    <path d="M16 5l3 3"></path>
+                                </svg>`, name: 'Rename', action: 'rename', order: 1, class: 'js-action-rename',
+                }, {
+                    icon: `<svg xmlns="http://www.w3.org/2000/svg" class="nkd-icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                    <path d="M4 7l16 0"></path>
+                                    <path d="M10 11l0 6"></path>
+                                    <path d="M14 11l0 6"></path>
+                                    <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"></path>
+                                    <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"></path>
+                                </svg>`,
+                    name: 'Move to trash',
+                    action: 'trash',
+                    order: 9,
+                    class: 'js-action-move-to-trash',
+                },
+            ],
+            file: [
+                {
+                    icon: `<svg xmlns="http://www.w3.org/2000/svg" class="nkd-icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                    <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0"></path>
+                                    <path d="M21 12c-2.4 4 -5.4 6 -9 6c-3.6 0 -6.6 -2 -9 -6c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6"></path>
+                                </svg>`, name: 'Preview', action: 'preview', order: 0, class: 'js-action-preview',
+                }, {
+                    icon: `<svg xmlns="http://www.w3.org/2000/svg" class="nkd-icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                    <path d="M8 5v10a1 1 0 0 0 1 1h10"></path>
+                                    <path d="M5 8h10a1 1 0 0 1 1 1v10"></path>
+                                </svg>`, name: 'Crop', action: 'crop', order: 1, class: 'js-action-crop',
+                }, {
+                    icon: `<svg xmlns="http://www.w3.org/2000/svg" class="nkd-icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                    <path d="M15 8h.01"></path>
+                                    <path d="M11 20h-4a3 3 0 0 1 -3 -3v-10a3 3 0 0 1 3 -3h10a3 3 0 0 1 3 3v4"></path>
+                                    <path d="M4 15l4 -4c.928 -.893 2.072 -.893 3 0l3 3"></path>
+                                    <path d="M14 14l1 -1c.31 -.298 .644 -.497 .987 -.596"></path>
+                                    <path d="M18.42 15.61a2.1 2.1 0 0 1 2.97 2.97l-3.39 3.42h-3v-3l3.42 -3.39z"></path>
+                                </svg>`, name: 'Alt text', action: 'alt_text', order: 3, class: 'js-action-alt-text',
+                },
+            ],
+            trash: [
+                {
+                    icon: `<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                    <path d="M19 20h-10.5l-4.21 -4.3a1 1 0 0 1 0 -1.41l10 -10a1 1 0 0 1 1.41 0l5 5a1 1 0 0 1 0 1.41l-9.2 9.3"></path>
+                    <path d="M18 13.3l-6.3 -6.3"></path>
+                </svg>`,
+                    name: 'Delete permanently',
+                    action: 'deletePermanently',
+                    order: 0,
+                    class: 'js-action-delete-permanently',
+                },
+                {
+                    icon: `<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                    <path d="M9 11l-4 4l4 4m-4 -4h11a4 4 0 0 0 0 -8h-1"></path>
+                </svg>`,
+                    name: 'Restore',
+                    action: 'restore',
+                    order: 0,
+                    class: 'js-action-restore',
+                },
+            ]
         }, limit: 30
     },
 
@@ -67,7 +99,6 @@ var CKMedia = {
         this.container = $('.nkd-media-container')
         this.boxAction = $('.nkd-dropdown-actions')
         this.url = this.container.data('ajax')
-        this.filterType = 'everything';
         this.loadMedia()
         this.handleCommand()
         this.bindInsertCKEditorAction() //bind to insert action
@@ -527,7 +558,12 @@ var CKMedia = {
             let input = $this.find('input');
             let isMultiple = CKMedia.getParameter('isMultiple')
 
-            $this.data('context') === 'file' ? CKMedia.setupDropdownAction(['detail', 'file']) : CKMedia.setupDropdownAction(['detail']);
+            $this.data('context') === 'file' ?
+                ($this.data('item').deleted_at !== null ?
+                        CKMedia.setupDropdownAction(['trash']) :
+                        CKMedia.setupDropdownAction(['detail', 'file'])
+                ) :
+                CKMedia.setupDropdownAction(['detail']);
 
             if (!isMultiple || isMultiple === 'false') {
                 $('.media-list-title input').prop('checked', false);
@@ -659,11 +695,16 @@ var CKMedia = {
         $(document).on('click', '.js-media-change-filter', function (e) {
 
             e.preventDefault();
-
+            let _this = $(this)
+            const fields = ['view_in', 'filter']
             $('.js-media-change-filter.active').removeClass('active')
-
-            $(this).addClass('active')
-
+            let type = _this.data('type')
+            _this.addClass('active')
+            if (fields.includes(type)) {
+                let textButton = _this.html()
+                let buttonFilter = _this.closest('.nkd-media-type-filter-group').find('.js-rv-media-filter-current')
+                buttonFilter.html(`(${textButton})`)
+            }
             CKMedia.loadMedia(CKMedia.getViewIn(), CKMedia.getSortBy(), CKMedia.getFolderID(), CKMedia.getSearchInput(), false, 1, CKMedia.config.limit, 'file', CKMedia.getViewType())
         })
     },
