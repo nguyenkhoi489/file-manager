@@ -27,7 +27,7 @@ cd packages/nguyenkhoi
 Use the git clone repo
 
 ```bash
-git clone https://github.com/nguyenkhoi489/file-manager.git .
+git clone https://github.com/nguyenkhoi489/file-manager.git 
 ```
 
 ## Step 3
@@ -59,57 +59,69 @@ Use command "Composer update"
 ```php
 php artisan vendor:publish --tag=nkd-file-manager
 ```
+
 ## Step 6
 
 ```php
 php artisan migrate
 ```
+
 ## USE
 
 Include File
+
 ```php
  @include('file-manager::media')
 ```
+
 Or
 
 Add to your project with this cript
+
 ```html
+
 <script src="{{ asset('vendor/file-manager/assets/js/CKMedia.js') }}"></script>
 ```
 
 Or
 Check exists for this script before add to your project
+
 ```html
-    <script defer>
-        if (!document.querySelector(`script[src="{{ asset('vendor/file-manager/assets/js/CKMedia.js') }}"]`)) {
-            let script = document.createElement('script');
-            script.src = "{{ asset('vendor/file-manager/assets/js/CKMedia.js') }}";
-            document.body.appendChild(script);
-        }
-    </script>
+
+<script defer>
+    if (!document.querySelector(`script[src="{{ asset('vendor/file-manager/assets/js/CKMedia.js') }}"]`)) {
+        let script = document.createElement('script');
+        script.src = "{{ asset('vendor/file-manager/assets/js/CKMedia.js') }}";
+        document.body.appendChild(script);
+    }
+</script>
 ```
+
 How to use Function CKMedia
+
 ```javascript
     CKMedia.popup({
-        isMultiple: false,
-        isChoose: true,
-        onInit: function (event) {
-            event.on('files:choose', function (files) {
-                //Handle Actions File
-            })
-        }
-    })
+    isMultiple: false,
+    isChoose: true,
+    onInit: function (event) {
+        event.on('files:choose', function (files) {
+            //Handle Actions File
+        })
+    }
+})
 ```
+
 ## CKEDITOR 4
 
 ```javascript
-  CKEDITOR.replace( 'editor1',
-        {
-            filebrowserImageBrowseUrl: '{{ route('media.file-manager',['isChoose' => true]) }}',
-            filebrowserImageUploadUrl: '{{ route('media.ckeditor4.upload', ['_token' => csrf_token()]) }}'
-        }
-    );
+  CKEDITOR.replace('editor1',
+    {
+        filebrowserImageBrowseUrl: '{{ route('media.file - manager',['isChoose' => true]) }}',
+        filebrowserImageUploadUrl: '{{ route('media.ckeditor4.upload', ['_token' => csrf_token()]) }}'
+    }
+);
 ```
+
 ## License
 
 [MIT](https://choosealicense.com/licenses/mit/)
