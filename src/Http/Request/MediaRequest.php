@@ -32,6 +32,7 @@ class MediaRequest extends FormRequest
             'posts_per_page' => 'required|integer',
             'ids' => 'nullable',
             'type' => 'nullable',
+            'filter_type' => 'nullable|string|in:image,video,document,everything',
         ];
     }
 

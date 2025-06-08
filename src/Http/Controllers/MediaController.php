@@ -49,9 +49,7 @@ class MediaController extends Controller
         Artisan::call('optimize:clear');
 
         $data = $request->validated();
-        $filterType = $request->get('filter_type', 'everything');
-        $isTrash = $request->get('is_trash', false);
-        $data['filter_type'] = $filterType;
+        $isTrash = $request->get('view_in') == 'trash';
         $data['is_trash'] = $isTrash;
 
         $breadcrumbs = [
@@ -72,9 +70,7 @@ class MediaController extends Controller
         $limit = $data['posts_per_page'] = $data['posts_per_page'] ?? $limit;
 
         $countFolders = $this->folderRepository->getCount($data);
-
         $countFiles = $this->fileRepository->getCount($data);
-
         if ($data['load_more'] == 'false') {
 
             $allFolders = $this->folderRepository->filter($data);

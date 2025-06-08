@@ -17,7 +17,7 @@
                         <div class="nkd-btn-list">
                             <!--Upload-->
                             <div class="nkd-dropdown">
-                                <button class="nkd-btn btn btn-primary nkd-dropdown-toggle" type="button"
+                                <button class="nkd-btn nkd-btn-primary nkd-dropdown-toggle" type="button"
                                         data-bs-toggle="dropdown"
                                         aria-expanded="false">
                                     <svg class="nkd-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
@@ -61,7 +61,7 @@
                                 </div>
                             </div>
                             <!--Create Folder-->
-                            <button class="nkd-btn btn btn-primary js-create-folder-action" type="button"
+                            <button class="nkd-btn nkd-btn-primary js-create-folder-action" type="button"
                                     data-bs-toggle="tooltip" data-bs-placement="top" aria-label="Create folder"
                                     data-bs-original-title="Create folder">
                                 <svg class="nkd-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
@@ -76,7 +76,8 @@
 
                             </button>
                             <!--Reload-->
-                            <button class="nkd-btn btn btn-primary js-change-action" type="button" data-type="refresh"
+                            <button class="nkd-btn nkd-btn-primary js-change-action" type="button"
+                                    data-type="refresh"
                                     data-bs-toggle="tooltip" data-bs-placement="top" aria-label="Refresh"
                                     data-bs-original-title="Refresh">
                                 <svg class="nkd-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
@@ -91,7 +92,7 @@
                             <!-- 2 filter dropdowns -->
                             <div class="nkd-dropdown nkd-media-type-filter-group" style="margin-right: 8px;">
                                 <button
-                                    class="btn btn-primary dropdown-toggle js-rv-media-change-filter-group js-filter-by-type"
+                                    class="btn nkd-btn-primary dropdown-toggle "
                                     type="button" data-bs-toggle="dropdown" data-bs-placement="top" title="Filter"
                                     aria-expanded="false">
                                     <svg class="icon icon-left" xmlns="http://www.w3.org/2000/svg" width="24"
@@ -121,7 +122,8 @@
 
                                 </button>
                                 <div class="dropdown-menu" style="">
-                                    <button class="dropdown-item js-rv-media-change-filter active" data-type="filter"
+                                    <button class="dropdown-item js-media-change-filter"
+                                            data-type="filter"
                                             data-value="everything">
                                         <svg class="icon dropdown-item-icon" xmlns="http://www.w3.org/2000/svg"
                                              width="24" height="24" viewBox="0 0 24 24" stroke-width="2"
@@ -138,7 +140,7 @@
                                         </svg>
                                         {{ trans('file-manager::media.everything') }}
                                     </button>
-                                    <button class="dropdown-item js-rv-media-change-filter" data-type="filter"
+                                    <button class="dropdown-item js-media-change-filter" data-type="filter"
                                             data-value="image">
                                         <svg class="icon dropdown-item-icon" xmlns="http://www.w3.org/2000/svg"
                                              width="24" height="24" viewBox="0 0 24 24" stroke-width="2"
@@ -154,7 +156,7 @@
                                         {{ trans('file-manager::media.image') }}
 
                                     </button>
-                                    <button class="dropdown-item js-rv-media-change-filter" data-type="filter"
+                                    <button class="dropdown-item js-media-change-filter" data-type="filter"
                                             data-value="video">
                                         <svg class="icon dropdown-item-icon" xmlns="http://www.w3.org/2000/svg"
                                              width="24" height="24" viewBox="0 0 24 24" stroke-width="2"
@@ -168,7 +170,7 @@
                                         </svg>
                                         {{ trans('file-manager::media.video') }}
                                     </button>
-                                    <button class="dropdown-item js-rv-media-change-filter" data-type="filter"
+                                    <button class="dropdown-item js-media-change-filter" data-type="filter"
                                             data-value="document">
                                         <svg class="icon dropdown-item-icon" xmlns="http://www.w3.org/2000/svg"
                                              width="24" height="24" viewBox="0 0 24 24" stroke-width="2"
@@ -185,7 +187,7 @@
                             </div>
                             <div class="nkd-dropdown nkd-media-view-filter-group" style="margin-right: 8px;">
                                 <button
-                                    class="btn btn-primary dropdown-toggle js-rv-media-change-filter-group js-filter-by-view-in"
+                                    class="btn nkd-btn-primary dropdown-toggle js-media-change-filter-group js-filter-by-view-in"
                                     type="button" data-bs-toggle="dropdown" data-bs-placement="top" title="View in"
                                     aria-expanded="false">
                                     <svg class="icon icon-left" xmlns="http://www.w3.org/2000/svg" width="24"
@@ -212,7 +214,7 @@
                                     </span>
                                 </button>
                                 <div class="dropdown-menu" style="">
-                                    <button class="dropdown-item js-rv-media-change-filter active" data-type="view_in"
+                                    <button class="dropdown-item js-media-change-filter active" data-type="view_in"
                                             data-value="all_media">
                                         <svg class="icon dropdown-item-icon" xmlns="http://www.w3.org/2000/svg"
                                              width="24" height="24" viewBox="0 0 24 24" stroke-width="2"
@@ -228,7 +230,7 @@
                                         {{ trans('file-manager::media.all_media') }}
                                     </button>
 
-                                    <button class="dropdown-item js-rv-media-change-filter" data-type="view_in"
+                                    <button class="dropdown-item js-media-change-filter" data-type="view_in"
                                             data-value="trash">
                                         <svg class="icon dropdown-item-icon" xmlns="http://www.w3.org/2000/svg"
                                              width="24" height="24" viewBox="0 0 24 24" stroke-width="2"
@@ -252,7 +254,7 @@
                     <div class="nkd-media-search">
                         <div class="nkd-input-group">
                             <input type="search" class="nkd-form-control" name="search"
-                                   placeholder="Search in current folder">
+                                   placeholder="{{ trans('file-manager::media.search_file_and_folder') }}">
                             <button class="nkd-btn js-search-action" type="submit">
                                 <svg class="icon icon-left" xmlns="http://www.w3.org/2000/svg" width="24"
                                      height="24"
@@ -492,7 +494,7 @@
                     <div class="nkd-input-group">
                         <input class="nkd-form-control" type="text" name="name" id="name"
                                placeholder="{{ trans('file-manager::media.folder_name') }}">
-                        <button class="nkd-btn nkd-btn-primary js-create-folder" type="submit">
+                        <button class="nkd-btn nkd-nkd-btn-primary js-create-folder" type="submit">
                             {{ trans('file-manager::media.create') }}
                         </button>
                     </div>
@@ -513,7 +515,7 @@
                 <div class="nkd-mb-3 nkd-position-relative">
                     <div class="nkd-input-group">
                         <input class="nkd-form-control" type="text" name="name" id="name" placeholder="Folder name">
-                        <button class="nkd-btn nkd-btn-primary js-update-folder" type="submit">
+                        <button class="nkd-btn nkd-nkd-btn-primary js-update-folder" type="submit">
                             {{ trans('file-manager::media.update') }}
                         </button>
                     </div>
@@ -538,7 +540,7 @@
                         <div class="nkd-input-group">
                             <input class="nkd-form-control" type="text" name="alt" id="alt"
                                    placeholder="{{ trans('file-manager::media.alt_text') }}">
-                            <button class="nkd-btn nkd-btn-primary" type="submit">
+                            <button class="nkd-btn nkd-nkd-btn-primary" type="submit">
                                 {{ trans('file-manager::media.update') }}
                             </button>
                         </div>
@@ -560,7 +562,7 @@
                 <p>{{ trans('file-manager::media.confirm_trash') }}</p>
             </div>
             <div class="nkd-modal-footer">
-                <button type="button" class="nkd-btn nkd-btn-primary"
+                <button type="button" class="nkd-btn nkd-nkd-btn-primary"
                         data-bs-dismiss="modal">{{ trans('file-manager::media.close') }}</button>
                 <button type="submit" class="nkd-btn nkd-btn-danger js-move-trash">
                     {{ trans('file-manager::media.confirm') }}
@@ -664,7 +666,7 @@
                     </div>
                 </div>
                 <div class="nkd-modal-footer">
-                    <button type="button" class="nkd-btn nkd-btn-primary"
+                    <button type="button" class="nkd-btn nkd-nkd-btn-primary"
                             data-bs-dismiss="modal">{{ trans('file-manager::media.cropper.close') }}</button>
                     <button type="submit"
                             class="nkd-btn nkd-btn-danger js-confirm-crop">{{ trans('file-manager::media.cropper.confirm') }}</button>

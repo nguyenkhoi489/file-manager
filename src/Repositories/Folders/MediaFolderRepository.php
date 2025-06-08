@@ -31,7 +31,7 @@ class MediaFolderRepository extends MediaBaseRepository implements MediaFolderRe
                 $query->where('parent_id', $data['folder_id']);
             }
             if (isset($data['search']) && $data['search']) {
-                $query->where(function($query) use ($data){
+                $query->where(function ($query) use ($data) {
                     $query->where('name', 'like', '%' . $data['search'] . '%');
                     $query->orWhere('permalink', 'like', '%' . $data['search'] . '%');
                 });
@@ -40,7 +40,6 @@ class MediaFolderRepository extends MediaBaseRepository implements MediaFolderRe
                 $query->whereNotIn('id', $data['ids']);
             }
         });
-
         if (isset($data['sort_by'])) {
             $order = explode('-', $data['sort_by']);
             if ($order[0] !== 'size') {
@@ -54,17 +53,23 @@ class MediaFolderRepository extends MediaBaseRepository implements MediaFolderRe
     public function getCount($data)
     {
 
-        $model =  $this->model->whereNull('deleted_at');
-             
-        if(isset($data['folder_id'])){
-            $model= $model->where(function($query) use ($data){
+        $model = $this->model->whereNull('deleted_at');
+
+        if (isset($data['is_trash']) && $data['is_trash']) {
+            $model = $this->model->whereNotNull('deleted_at');
+        }
+
+        if (isset($data['folder_id'])) {
+            $model = $model->where(function ($query) use ($data) {
                 $query->where('id', $data['folder_id']);
                 $query->orWhere('parent_id', $data['folder_id']);
             });
         }
         return $model->count('id');
     }
-    public function getDelete() {
-        return  $this->model->whereNotNull('deleted_at')->get();
+
+    public function getDelete()
+    {
+        return $this->model->whereNotNull('deleted_at')->get();
     }
 }

@@ -1,6 +1,5 @@
 var CKMedia = {
-    basePath: `/file-manager`,
-    config: {
+    basePath: `/file-manager`, config: {
         icons: {
             folder: `<svg xmlns="http://www.w3.org/2000/svg" class="nkd-icon" width="24" height="24"
                                  viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
@@ -11,90 +10,54 @@ var CKMedia = {
                                     d="M3 6a3 3 0 0 1 3 -3h12a3 3 0 0 1 3 3v12a3 3 0 0 1 -3 3h-12a3 3 0 0 1 -3 -3v-12z"></path>
                                 <path d="M3 16l5 -5c.928 -.893 2.072 -.893 3 0l5 5"></path>
                                 <path d="M14 14l1 -1c.928 -.893 2.072 -.893 3 0l3 3"></path>
-                            </svg>`,
-            file: ''
-        },
-        actions: {
-            detail: [
-                {
-                    icon: `<svg xmlns="http://www.w3.org/2000/svg" class="nkd-icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            </svg>`, file: ''
+        }, actions: {
+            detail: [{
+                icon: `<svg xmlns="http://www.w3.org/2000/svg" class="nkd-icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                             <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                             <path d="M9 15l6 -6"></path>
                             <path d="M11 6l.463 -.536a5 5 0 0 1 7.071 7.072l-.534 .464"></path>
                             <path d="M13 18l-.397 .534a5.068 5.068 0 0 1 -7.127 0a4.972 4.972 0 0 1 0 -7.071l.524 -.463"></path>
-                        </svg>`,
-                    name: 'Copy link',
-                    action: 'copy_link',
-                    order: 0,
-                    class: 'js-action-copy-link',
-                },
-                {
-                    icon: `<svg xmlns="http://www.w3.org/2000/svg" class="nkd-icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                        </svg>`, name: 'Copy link', action: 'copy_link', order: 0, class: 'js-action-copy-link',
+            }, {
+                icon: `<svg xmlns="http://www.w3.org/2000/svg" class="nkd-icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                                 <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                                 <path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1"></path>
                                 <path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z"></path>
                                 <path d="M16 5l3 3"></path>
-                            </svg>`,
-                    name: 'Rename',
-                    action: 'rename',
-                    order: 1,
-                    class: 'js-action-rename',
-                },
-                {
-                    icon: `<svg xmlns="http://www.w3.org/2000/svg" class="nkd-icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            </svg>`, name: 'Rename', action: 'rename', order: 1, class: 'js-action-rename',
+            }, {
+                icon: `<svg xmlns="http://www.w3.org/2000/svg" class="nkd-icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                                 <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                                 <path d="M4 7l16 0"></path>
                                 <path d="M10 11l0 6"></path>
                                 <path d="M14 11l0 6"></path>
                                 <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"></path>
                                 <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"></path>
-                            </svg>`,
-                    name: 'Move to trash',
-                    action: 'trash',
-                    order: 9,
-                    class: 'js-action-move-to-trash',
-                },
-            ],
-            file: [
-                {
-                    icon: `<svg xmlns="http://www.w3.org/2000/svg" class="nkd-icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            </svg>`, name: 'Move to trash', action: 'trash', order: 9, class: 'js-action-move-to-trash',
+            },], file: [{
+                icon: `<svg xmlns="http://www.w3.org/2000/svg" class="nkd-icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                                 <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                                 <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0"></path>
                                 <path d="M21 12c-2.4 4 -5.4 6 -9 6c-3.6 0 -6.6 -2 -9 -6c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6"></path>
-                            </svg>`,
-                    name: 'Preview',
-                    action: 'preview',
-                    order: 0,
-                    class: 'js-action-preview',
-                },
-                {
-                    icon: `<svg xmlns="http://www.w3.org/2000/svg" class="nkd-icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            </svg>`, name: 'Preview', action: 'preview', order: 0, class: 'js-action-preview',
+            }, {
+                icon: `<svg xmlns="http://www.w3.org/2000/svg" class="nkd-icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                                 <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                                 <path d="M8 5v10a1 1 0 0 0 1 1h10"></path>
                                 <path d="M5 8h10a1 1 0 0 1 1 1v10"></path>
-                            </svg>`,
-                    name: 'Crop',
-                    action: 'crop',
-                    order: 1,
-                    class: 'js-action-crop',
-                },
-                {
-                    icon: `<svg xmlns="http://www.w3.org/2000/svg" class="nkd-icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            </svg>`, name: 'Crop', action: 'crop', order: 1, class: 'js-action-crop',
+            }, {
+                icon: `<svg xmlns="http://www.w3.org/2000/svg" class="nkd-icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                                 <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                                 <path d="M15 8h.01"></path>
                                 <path d="M11 20h-4a3 3 0 0 1 -3 -3v-10a3 3 0 0 1 3 -3h10a3 3 0 0 1 3 3v4"></path>
                                 <path d="M4 15l4 -4c.928 -.893 2.072 -.893 3 0l3 3"></path>
                                 <path d="M14 14l1 -1c.31 -.298 .644 -.497 .987 -.596"></path>
                                 <path d="M18.42 15.61a2.1 2.1 0 0 1 2.97 2.97l-3.39 3.42h-3v-3l3.42 -3.39z"></path>
-                            </svg>`,
-                    name: 'Alt text',
-                    action: 'alt_text',
-                    order: 3,
-                    class: 'js-action-alt-text',
-                },
-            ]
-        },
-        limit: 30
+                            </svg>`, name: 'Alt text', action: 'alt_text', order: 3, class: 'js-action-alt-text',
+            },]
+        }, limit: 30
     },
 
     __init() {
@@ -135,7 +98,6 @@ var CKMedia = {
         this.bindActionCloseModal() //action close modal
         this.bindActionDocumentActionBox() //action Document Close Box
         this.bindActionLoadMore() //actionLoadMore
-        this.bindActionFilterType() //bind filter type
     },
 
     setupAjax() {
@@ -194,10 +156,17 @@ var CKMedia = {
     },
 
     getSortBy() {
-        let detail = $('.js-media-change-filter.active');
+        let detail = $('.js-media-change-filter.active[data-type="sort_by"]');
         return detail.data('value')
     },
-
+    getViewIn() {
+        let detail = $('.js-media-change-filter.active[data-type="view_in"]');
+        return detail.data('value')
+    },
+    getViewType() {
+        let detail = $('.js-media-change-filter.active[data-type="filter"]');
+        return detail.data('value')
+    },
     getFolderID(prev = null) {
         let countBreadcrumbs = CKMedia.container.attr('data-breadcrumbs-count');
         let folder_id = 0
@@ -266,7 +235,7 @@ var CKMedia = {
             modal.removeClass('show')
             toastr.success(response.message);
             setTimeout(function () {
-                CKMedia.loadMedia('all', CKMedia.getSortBy(), CKMedia.getFolderID(), CKMedia.getSearchInput(), false, 1, CKMedia.config.limit)
+                CKMedia.loadMedia(CKMedia.getViewIn(), CKMedia.getSortBy(), CKMedia.getFolderID(), CKMedia.getSearchInput(), false, 1, CKMedia.config.limit, 'file', CKMedia.getViewType())
             }, 1000);
             return this;
         }
@@ -390,57 +359,40 @@ var CKMedia = {
         return this;
     },
 
-    loadMedia(view_in = 'all', sort_by = this.getSortBy(), folder_id = this.getFolderID(), search = this.getSearchInput(), load_more = false, paged = 1, posts_per_page = CKMedia.config.limit, type = 'file', ids = {}) {
-        if(this.container.length)
-        {
+    loadMedia(view_in = this.getViewIn(), sort_by = this.getSortBy(), folder_id = this.getFolderID(), search = this.getSearchInput(), load_more = false, paged = 1, posts_per_page = CKMedia.config.limit, type = 'file', filter_type = this.getViewType(), ids = {}) {
+        if (this.container.length) {
             let data = {
-                view_in,
-                sort_by,
-                folder_id,
-                search,
-                load_more,
-                paged,
-                posts_per_page,
-                type,
-                ids,
-                filter_type: this.filterType
+                view_in, sort_by, folder_id, search, load_more, paged, posts_per_page, type, filter_type, ids,
             };
-            if(this.filterType === 'trash') {
-                data.is_trash = true;
-            }
             $.ajax({
-                url: CKMedia.url,
-                data: data,
-                beforeSend: function () {
+                url: CKMedia.url, data: data, beforeSend: function () {
                     CKMedia.container.append(CKMedia.loading())
-                },
-                success: function (response) {
+                }, success: function (response) {
                     $(document).find('.nkd-media-container #status_processing').remove();
                     CKMedia.handleResetThumbColumn();
                     if (response.success) {
                         let breadcrumbs = CKMedia.handleCreateBreadcrumbs(response.data.breadcrumbs);
-    
+
                         CKMedia.container.attr('data-breadcrumbs-count', response.data.breadcrumbs.length);
                         CKMedia.container.find(`ul.breadcrumb`)
                             .empty()
                             .append(breadcrumbs);
                         let MediaGrid = CKMedia.container.find('.media-grid > ul')
-    
+
                         if (!load_more) {
                             MediaGrid.empty();
                         }
-    
+
                         MediaGrid.append(CKMedia.handleCreateItemElements(response.data.folders, response.data.files));
-    
+
                         let loadMore = CKMedia.container.find('.column-item-grid > div > .btn-load_more')
-    
+
                         loadMore.length ? loadMore.parent().remove() : ''
                         if (response.load_more) {
                             CKMedia.container.find('.column-item-grid').append(`<div class="text-center mb-3"><button data-target="media-grid" data-type="${response.type}" data-paged="${response.next}" class="btn btn-primary nkd-btn btn-load_more">Xem thêm</button></div>`);
                         }
                     }
-                },
-                error(error) {
+                }, error(error) {
                     $(document).find('.nkd-media-container #status_processing').remove();
                 }
             })
@@ -506,8 +458,7 @@ var CKMedia = {
 
                         var element = dialog.getContentElement('info', 'txtAlt');
 
-                        if (element)
-                            element.setValue(item.alt);
+                        if (element) element.setValue(item.alt);
                     }
 
                 });
@@ -525,22 +476,16 @@ var CKMedia = {
             let dataItem = JSON.parse(parentItem.attr('data-item'));
             let fileUrl = `/uploads${dataItem.permalink}`
             allFiles.push({
-                fileUrl: fileUrl,
-                alt: dataItem.alt,
-                id: dataItem.id
+                fileUrl: fileUrl, alt: dataItem.alt, id: dataItem.id
             });
         })
-        const event = new CustomEvent('files:choose', { detail: allFiles });
+        const event = new CustomEvent('files:choose', {detail: allFiles});
         document.dispatchEvent(event);
     },
 
-    popup({ width = 1200, height = 850, isMultiple = false, isChoose = true, onInit = null }) {
+    popup({width = 1200, height = 850, isMultiple = false, isChoose = true, onInit = null}) {
         let connectPath = `${this.basePath}?isMultiple=${isMultiple}&isChoose=${isChoose}`;
-        let popupWindow = window.open(
-            connectPath,
-            "_blank",
-            `menubar=1,resizable=1,width=${width},height=${height}`
-        );
+        let popupWindow = window.open(connectPath, "_blank", `menubar=1,resizable=1,width=${width},height=${height}`);
 
         if (typeof onInit === 'function') {
             popupWindow.onload = function () {
@@ -561,7 +506,7 @@ var CKMedia = {
     bindRefreshLayout() {
         $(document).on('click', 'button[data-type="refresh"]', function (e) {
             e.preventDefault();
-            CKMedia.loadMedia('all', CKMedia.getSortBy(), CKMedia.getFolderID(), CKMedia.getSearchInput(), false, 1, CKMedia.config.limit)
+            CKMedia.loadMedia(CKMedia.getViewIn(), CKMedia.getSortBy(), CKMedia.getFolderID(), CKMedia.getSearchInput(), false, 1, CKMedia.config.limit, 'file', CKMedia.getViewType())
         })
     },
 
@@ -595,9 +540,7 @@ var CKMedia = {
                     button.removeClass('nkd-disabled');
                     button.removeAttr('disabled');
                 }
-                $(this).data('context') === 'file' ?
-                    CKMedia.handleCreatePreviewFile($(this)) :
-                    CKMedia.handleCreatePreviewFolder($(this))
+                $(this).data('context') === 'file' ? CKMedia.handleCreatePreviewFile($(this)) : CKMedia.handleCreatePreviewFolder($(this))
 
                 return this;
             }
@@ -613,7 +556,7 @@ var CKMedia = {
             folder_id = typeof folder_id !== 'undefined' ? folder_id : CKMedia.getFolderID(true)
             CKMedia.handleResetDropdown();
             CKMedia.handleResetThumbColumn()
-            CKMedia.loadMedia('all', CKMedia.getSortBy(), folder_id, CKMedia.getSearchInput(), false, 1, CKMedia.config.limit)
+            CKMedia.loadMedia(CKMedia.getViewIn(), CKMedia.getSortBy(), CKMedia.getFolderID(), CKMedia.getSearchInput(), false, 1, CKMedia.config.limit, 'file', CKMedia.getViewType())
         })
     },
 
@@ -632,19 +575,13 @@ var CKMedia = {
             let modal = $(this).closest('#modal-create-item')
             let name = $(this).parent().find('input[name="name"]').val()
             $.ajax({
-                url: modal.data('action'),
-                data: {
-                    'parent_id': CKMedia.getFolderID(),
-                    'name': name,
-                },
-                method: 'POST',
-                beforeSend: function () {
+                url: modal.data('action'), data: {
+                    'parent_id': CKMedia.getFolderID(), 'name': name,
+                }, method: 'POST', beforeSend: function () {
                     modal.find('.nkd-modal-content').append(CKMedia.loading())
-                },
-                success: function (response) {
+                }, success: function (response) {
                     CKMedia.handleResponseAction(response, modal)
-                },
-                error: function (error) {
+                }, error: function (error) {
                     CKMedia.handleResponseError(error, modal)
                 }
             })
@@ -705,20 +642,13 @@ var CKMedia = {
             let id = modal.attr('data-id')
             let type = modal.attr('data-folder')
             $.ajax({
-                url: modal.data('update'),
-                data: {
-                    'id': id,
-                    'name': name,
-                    'is_folder': type
-                },
-                method: 'POST',
-                beforeSend: function () {
+                url: modal.data('update'), data: {
+                    'id': id, 'name': name, 'is_folder': type
+                }, method: 'POST', beforeSend: function () {
                     modal.find('.nkd-modal-content').append(CKMedia.loading())
-                },
-                success: function (response) {
+                }, success: function (response) {
                     CKMedia.handleResponseAction(response, modal)
-                },
-                error: function (error) {
+                }, error: function (error) {
                     CKMedia.handleResponseError(error, modal)
                 }
             })
@@ -734,7 +664,7 @@ var CKMedia = {
 
             $(this).addClass('active')
 
-            CKMedia.loadMedia('all', CKMedia.getSortBy(), CKMedia.getFolderID(), CKMedia.getSearchInput(), false, 1, CKMedia.config.limit)
+            CKMedia.loadMedia(CKMedia.getViewIn(), CKMedia.getSortBy(), CKMedia.getFolderID(), CKMedia.getSearchInput(), false, 1, CKMedia.config.limit, 'file', CKMedia.getViewType())
         })
     },
 
@@ -768,20 +698,13 @@ var CKMedia = {
             let type = modal.attr('data-folder')
 
             $.ajax({
-                url: modal.data('action'),
-                data: {
-                    'id': id,
-                    'is_folder': type,
-                    '_method': 'delete'
-                },
-                method: 'POST',
-                beforeSend: function () {
+                url: modal.data('action'), data: {
+                    'id': id, 'is_folder': type, '_method': 'delete'
+                }, method: 'POST', beforeSend: function () {
                     modal.find('.nkd-modal-content').append(CKMedia.loading())
-                },
-                success: function (response) {
+                }, success: function (response) {
                     CKMedia.handleResponseAction(response, modal)
-                },
-                error: function (error) {
+                }, error: function (error) {
                     CKMedia.handleResponseError(error, modal)
                 }
             })
@@ -813,16 +736,11 @@ var CKMedia = {
             let modal = __self.closest('.nkd-modal')
 
             $.ajax({
-                url: __self.attr('action'),
-                data: __self.serialize(),
-                type: 'POST',
-                beforeSend: function () {
+                url: __self.attr('action'), data: __self.serialize(), type: 'POST', beforeSend: function () {
                     modal.append(CKMedia.loading())
-                },
-                success: function (response) {
+                }, success: function (response) {
                     CKMedia.handleResponseAction(response, modal)
-                },
-                error: function (error) {
+                }, error: function (error) {
                     CKMedia.handleResponseError(error, modal)
                 }
             })
@@ -873,16 +791,11 @@ var CKMedia = {
             let modal = __self.closest('.nkd-modal')
 
             $.ajax({
-                url: __self.attr('action'),
-                data: __self.serialize(),
-                type: 'POST',
-                beforeSend: function () {
+                url: __self.attr('action'), data: __self.serialize(), type: 'POST', beforeSend: function () {
                     modal.append(CKMedia.loading())
-                },
-                success: function (response) {
+                }, success: function (response) {
                     CKMedia.handleResponseAction(response, modal)
-                },
-                error: function (error) {
+                }, error: function (error) {
                     CKMedia.handleResponseError(error, modal)
                 }
             })
@@ -991,7 +904,7 @@ var CKMedia = {
     bindActionSearch() {
         $(document).on('click', '.js-search-action', function (e) {
             e.preventDefault();
-            CKMedia.loadMedia('all', CKMedia.getSortBy(), CKMedia.getFolderID(), CKMedia.getSearchInput(), false, 1, CKMedia.config.limit)
+            CKMedia.loadMedia(CKMedia.getViewIn(), CKMedia.getSortBy(), CKMedia.getFolderID(), CKMedia.getSearchInput(), false, 1, CKMedia.config.limit, 'file', CKMedia.getViewType())
         })
     },
 
@@ -1036,8 +949,7 @@ var CKMedia = {
         $(document).on('click', function (e) {
             CKMedia.actionBoxToggle($('.nkd-dropdown-menu'))
         })
-    },
-    bindActionLoadMore() {
+    }, bindActionLoadMore() {
         $(document).on('click', '.btn-load_more', function (e) {
             e.preventDefault()
             let __self = $(this)
@@ -1050,35 +962,14 @@ var CKMedia = {
                 ids.push($(item).attr('data-id'))
 
             }
-            CKMedia.loadMedia(
-                'all',
-                CKMedia.getSortBy(),
-                CKMedia.getFolderID(),
-                CKMedia.getSearchInput(),
-                true,
-                __paged,
-                CKMedia.config.limit,
-                type,
-                ids
-            )
-
+            CKMedia.loadMedia(CKMedia.getViewIn(), CKMedia.getSortBy(), CKMedia.getFolderID(), CKMedia.getSearchInput(), false, 1, CKMedia.config.limit, 'file', CKMedia.getViewType())
 
         })
-    },
-    handleCommand() {
+    }, handleCommand() {
         $(document).on('files:choose', function (files) {
             CKMedia.handleCKEditorFile(files);
         })
     },
-    bindActionFilterType() {
-        $(document).on('click', '.js-media-type-filter', function (e) {
-            e.preventDefault();
-            $('.js-media-type-filter').removeClass('active');
-            $(this).addClass('active');
-            CKMedia.filterType = $(this).data('type');
-            CKMedia.loadMedia('all', CKMedia.getSortBy(), CKMedia.getFolderID(), CKMedia.getSearchInput(), false, 1, CKMedia.config.limit);
-        });
-    }
 
 }
 

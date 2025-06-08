@@ -85,6 +85,10 @@ class MediaFileRepository extends MediaBaseRepository implements MediaFileReposi
     {
         $model = $this->model->whereNull('deleted_at');
 
+        if (isset($data['is_trash']) && $data['is_trash']) {
+            $model = $this->model->whereNotNull('deleted_at');
+        }
+
         if (isset($data['folder_id'])) {
             $model = $model->where('folder_id', $data['folder_id']);
         }
@@ -113,7 +117,9 @@ class MediaFileRepository extends MediaBaseRepository implements MediaFileReposi
         $insertData = collect($data)->map(function ($item) use ($request) {
             if (isset($item['data'])) {
                 $data = $item['data'];
-                $data['user_id'] = $request->user()->id ?? 1;
+                if ($request->user() && isset($request->user()->role_id) && $request->user()->role_id !== 1) {
+                    $data['user_id'] = $request->user()->id;
+                }
                 $data['folder_id'] = $request->get('folderId') ?? 0;
                 return $data;
             }
