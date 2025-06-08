@@ -6,7 +6,7 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class FileUpdateRequest extends FormRequest
 {
-    public function authorize():bool
+    public function authorize(): bool
     {
         return true;
     }
@@ -18,5 +18,14 @@ class FileUpdateRequest extends FormRequest
             'name' => 'nullable|string',
             'alt' => 'nullable|string',
         ];
+    }
+
+    public function messages(): array
+    {
+        return [
+            'id.required' => trans('file-manager::file-manager.validation.file_required'),
+            'id.numeric' => trans('file-manager::file-manager.validation.file_id_required'),
+        ];
+
     }
 }

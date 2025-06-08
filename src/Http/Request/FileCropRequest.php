@@ -18,12 +18,13 @@ class FileCropRequest extends FormRequest
             'crop_data' => 'required',
         ];
     }
+
     public function messages(): array
     {
         return [
-            'image_id.required' => 'The image id field is required.',
-            'image_id.integer' => 'The image id field must be an integer.',
-            'crop_data.required' => 'The crop data field is required.',
+            'image_id.required' => trans('file-manager::file-manager.validation.image_required'),
+            'image_id.integer' => trans('file-manager::file-manager.validation.image_id_integer'),
+            'crop_data.required' => trans('file-manager::file-manager.validation.crop_data_required'),
         ];
     }
 }

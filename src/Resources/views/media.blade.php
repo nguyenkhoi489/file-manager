@@ -17,7 +17,8 @@
                         <div class="nkd-btn-list">
                             <!--Upload-->
                             <div class="nkd-dropdown">
-                                <button class="nkd-btn nkd-dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                                <button class="nkd-btn btn btn-primary nkd-dropdown-toggle" type="button"
+                                        data-bs-toggle="dropdown"
                                         aria-expanded="false">
                                     <svg class="nkd-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                          viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
@@ -27,7 +28,7 @@
                                         <path d="M7 9l5 -5l5 5"></path>
                                         <path d="M12 4l0 12"></path>
                                     </svg>
-                                    Upload
+                                    {{ trans('file-manager::media.upload') }}
                                 </button>
                                 <div class="nkd-dropdown-menu" style="">
                                     <button class="nkd-dropdown-item js-button-upload">
@@ -40,7 +41,7 @@
                                             <path d="M7 9l5 -5l5 5"></path>
                                             <path d="M12 4l0 12"></path>
                                         </svg>
-                                        Upload from local
+                                        {{ trans('file-manager::media.upload_from_local') }}
                                     </button>
 
                                     <button class="nkd-dropdown-item js-download-action dropdown-item"
@@ -55,12 +56,12 @@
                                             <path
                                                 d="M13 18l-.397 .534a5.068 5.068 0 0 1 -7.127 0a4.972 4.972 0 0 1 0 -7.071l.524 -.463"></path>
                                         </svg>
-                                        Upload from URL
+                                        {{ trans('file-manager::media.upload_from_url') }}
                                     </button>
                                 </div>
                             </div>
                             <!--Create Folder-->
-                            <button class="nkd-btn js-create-folder-action" type="button"
+                            <button class="nkd-btn btn btn-primary js-create-folder-action" type="button"
                                     data-bs-toggle="tooltip" data-bs-placement="top" aria-label="Create folder"
                                     data-bs-original-title="Create folder">
                                 <svg class="nkd-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
@@ -75,7 +76,7 @@
 
                             </button>
                             <!--Reload-->
-                            <button class="nkd-btn js-change-action" type="button" data-type="refresh"
+                            <button class="nkd-btn btn btn-primary js-change-action" type="button" data-type="refresh"
                                     data-bs-toggle="tooltip" data-bs-placement="top" aria-label="Refresh"
                                     data-bs-original-title="Refresh">
                                 <svg class="nkd-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
@@ -87,6 +88,164 @@
                                 </svg>
 
                             </button>
+                            <!-- 2 filter dropdowns -->
+                            <div class="nkd-dropdown nkd-media-type-filter-group" style="margin-right: 8px;">
+                                <button
+                                    class="btn btn-primary dropdown-toggle js-rv-media-change-filter-group js-filter-by-type"
+                                    type="button" data-bs-toggle="dropdown" data-bs-placement="top" title="Filter"
+                                    aria-expanded="false">
+                                    <svg class="icon icon-left" xmlns="http://www.w3.org/2000/svg" width="24"
+                                         height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
+                                         fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                        <path
+                                            d="M4 4h16v2.172a2 2 0 0 1 -.586 1.414l-4.414 4.414v7l-6 2v-8.5l-4.48 -4.928a2 2 0 0 1 -.52 -1.345v-2.227z"></path>
+                                    </svg>
+                                    <span class="js-rv-media-filter-current">(
+                                        <svg class="icon dropdown-item-icon" xmlns="http://www.w3.org/2000/svg"
+                                             width="24" height="24"
+                                             viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                                             stroke-linecap="round"
+                                             stroke-linejoin="round">
+                                          <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                          <path d="M12 17l-2 2l2 2"></path>
+                                          <path d="M10 19h9a2 2 0 0 0 1.75 -2.75l-.55 -1"></path>
+                                          <path d="M8.536 11l-.732 -2.732l-2.732 .732"></path>
+                                          <path d="M7.804 8.268l-4.5 7.794a2 2 0 0 0 1.506 2.89l1.141 .024"></path>
+                                          <path d="M15.464 11l2.732 .732l.732 -2.732"></path>
+                                          <path d="M18.196 11.732l-4.5 -7.794a2 2 0 0 0 -3.256 -.14l-.591 .976"></path>
+                                        </svg>
+                                            {{ trans('file-manager::media.everything') }}
+                                        )
+                                    </span>
+
+                                </button>
+                                <div class="dropdown-menu" style="">
+                                    <button class="dropdown-item js-rv-media-change-filter active" data-type="filter"
+                                            data-value="everything">
+                                        <svg class="icon dropdown-item-icon" xmlns="http://www.w3.org/2000/svg"
+                                             width="24" height="24" viewBox="0 0 24 24" stroke-width="2"
+                                             stroke="currentColor" fill="none" stroke-linecap="round"
+                                             stroke-linejoin="round">
+                                            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                            <path d="M12 17l-2 2l2 2"></path>
+                                            <path d="M10 19h9a2 2 0 0 0 1.75 -2.75l-.55 -1"></path>
+                                            <path d="M8.536 11l-.732 -2.732l-2.732 .732"></path>
+                                            <path d="M7.804 8.268l-4.5 7.794a2 2 0 0 0 1.506 2.89l1.141 .024"></path>
+                                            <path d="M15.464 11l2.732 .732l.732 -2.732"></path>
+                                            <path
+                                                d="M18.196 11.732l-4.5 -7.794a2 2 0 0 0 -3.256 -.14l-.591 .976"></path>
+                                        </svg>
+                                        {{ trans('file-manager::media.everything') }}
+                                    </button>
+                                    <button class="dropdown-item js-rv-media-change-filter" data-type="filter"
+                                            data-value="image">
+                                        <svg class="icon dropdown-item-icon" xmlns="http://www.w3.org/2000/svg"
+                                             width="24" height="24" viewBox="0 0 24 24" stroke-width="2"
+                                             stroke="currentColor" fill="none" stroke-linecap="round"
+                                             stroke-linejoin="round">
+                                            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                            <path d="M15 8h.01"></path>
+                                            <path
+                                                d="M3 6a3 3 0 0 1 3 -3h12a3 3 0 0 1 3 3v12a3 3 0 0 1 -3 3h-12a3 3 0 0 1 -3 -3v-12z"></path>
+                                            <path d="M3 16l5 -5c.928 -.893 2.072 -.893 3 0l5 5"></path>
+                                            <path d="M14 14l1 -1c.928 -.893 2.072 -.893 3 0l3 3"></path>
+                                        </svg>
+                                        {{ trans('file-manager::media.image') }}
+
+                                    </button>
+                                    <button class="dropdown-item js-rv-media-change-filter" data-type="filter"
+                                            data-value="video">
+                                        <svg class="icon dropdown-item-icon" xmlns="http://www.w3.org/2000/svg"
+                                             width="24" height="24" viewBox="0 0 24 24" stroke-width="2"
+                                             stroke="currentColor" fill="none" stroke-linecap="round"
+                                             stroke-linejoin="round">
+                                            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                            <path
+                                                d="M15 10l4.553 -2.276a1 1 0 0 1 1.447 .894v6.764a1 1 0 0 1 -1.447 .894l-4.553 -2.276v-4z"></path>
+                                            <path
+                                                d="M3 6m0 2a2 2 0 0 1 2 -2h8a2 2 0 0 1 2 2v8a2 2 0 0 1 -2 2h-8a2 2 0 0 1 -2 -2z"></path>
+                                        </svg>
+                                        {{ trans('file-manager::media.video') }}
+                                    </button>
+                                    <button class="dropdown-item js-rv-media-change-filter" data-type="filter"
+                                            data-value="document">
+                                        <svg class="icon dropdown-item-icon" xmlns="http://www.w3.org/2000/svg"
+                                             width="24" height="24" viewBox="0 0 24 24" stroke-width="2"
+                                             stroke="currentColor" fill="none" stroke-linecap="round"
+                                             stroke-linejoin="round">
+                                            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                            <path d="M14 3v4a1 1 0 0 0 1 1h4"></path>
+                                            <path
+                                                d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z"></path>
+                                        </svg>
+                                        {{ trans('file-manager::media.document') }}
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="nkd-dropdown nkd-media-view-filter-group" style="margin-right: 8px;">
+                                <button
+                                    class="btn btn-primary dropdown-toggle js-rv-media-change-filter-group js-filter-by-view-in"
+                                    type="button" data-bs-toggle="dropdown" data-bs-placement="top" title="View in"
+                                    aria-expanded="false">
+                                    <svg class="icon icon-left" xmlns="http://www.w3.org/2000/svg" width="24"
+                                         height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
+                                         fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                        <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0"></path>
+                                        <path
+                                            d="M21 12c-2.4 4 -5.4 6 -9 6c-3.6 0 -6.6 -2 -9 -6c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6"></path>
+                                    </svg>
+                                    <span class="js-rv-media-filter-current">(
+                                        <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                             viewBox="0 0 24 24" stroke-width="2"
+                                             stroke="currentColor" fill="none" stroke-linecap="round"
+                                             stroke-linejoin="round">
+                                          <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                          <path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0"></path>
+                                          <path d="M3.6 9h16.8"></path>
+                                          <path d="M3.6 15h16.8"></path>
+                                          <path d="M11.5 3a17 17 0 0 0 0 18"></path>
+                                          <path d="M12.5 3a17 17 0 0 1 0 18"></path>
+                                        </svg>
+                                        {{ trans('file-manager::media.all_media') }})
+                                    </span>
+                                </button>
+                                <div class="dropdown-menu" style="">
+                                    <button class="dropdown-item js-rv-media-change-filter active" data-type="view_in"
+                                            data-value="all_media">
+                                        <svg class="icon dropdown-item-icon" xmlns="http://www.w3.org/2000/svg"
+                                             width="24" height="24" viewBox="0 0 24 24" stroke-width="2"
+                                             stroke="currentColor" fill="none" stroke-linecap="round"
+                                             stroke-linejoin="round">
+                                            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                            <path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0"></path>
+                                            <path d="M3.6 9h16.8"></path>
+                                            <path d="M3.6 15h16.8"></path>
+                                            <path d="M11.5 3a17 17 0 0 0 0 18"></path>
+                                            <path d="M12.5 3a17 17 0 0 1 0 18"></path>
+                                        </svg>
+                                        {{ trans('file-manager::media.all_media') }}
+                                    </button>
+
+                                    <button class="dropdown-item js-rv-media-change-filter" data-type="view_in"
+                                            data-value="trash">
+                                        <svg class="icon dropdown-item-icon" xmlns="http://www.w3.org/2000/svg"
+                                             width="24" height="24" viewBox="0 0 24 24" stroke-width="2"
+                                             stroke="currentColor" fill="none" stroke-linecap="round"
+                                             stroke-linejoin="round">
+                                            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                            <path d="M4 7l16 0"></path>
+                                            <path d="M10 11l0 6"></path>
+                                            <path d="M14 11l0 6"></path>
+                                            <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"></path>
+                                            <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"></path>
+                                        </svg>
+                                        {{ trans('file-manager::media.trash') }}
+                                    </button>
+
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <!--Input Form Search-->
@@ -122,7 +281,7 @@
                                         <path d="M3 16l5 -5c.928 -.893 2.072 -.893 3 0l5 5"></path>
                                         <path d="M14 14l1 -1c.928 -.893 2.072 -.893 3 0l3 3"></path>
                                     </svg>
-                                    All media
+                                    {{ trans('file-manager::media.all_media') }}
                                 </a>
                             </li>
                         </ul>
@@ -141,7 +300,7 @@
                                         <path d="M4 13h4"></path>
                                         <path d="M11 12h2"></path>
                                     </svg>
-                                    Sort
+                                    {{ trans('file-manager::media.sort') }}
                                 </button>
 
                                 <div class="nkd-dropdown-menu">
@@ -157,7 +316,7 @@
                                             <path d="M4 15l3 3l3 -3"></path>
                                             <path d="M7 6v12"></path>
                                         </svg>
-                                        File name - ASC
+                                        {{ trans('file-manager::media.file_name_asc') }}
 
                                     </button>
                                     <button class="nkd-dropdown-item js-media-change-filter active" data-type="sort_by"
@@ -172,7 +331,7 @@
                                             <path d="M4 15l3 3l3 -3"></path>
                                             <path d="M7 6v12"></path>
                                         </svg>
-                                        File name - DESC
+                                        {{ trans('file-manager::media.file_name_desc') }}
 
                                     </button>
                                     <button class="nkd-dropdown-item js-media-change-filter" data-type="sort_by"
@@ -188,7 +347,7 @@
                                             <path d="M17 16m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"></path>
                                             <path d="M19 16v3a2 2 0 0 1 -2 2h-1.5"></path>
                                         </svg>
-                                        Uploaded date - ASC
+                                        {{ trans('file-manager::media.uploaded_date_asc') }}
 
                                     </button>
                                     <button class="nkd-dropdown-item js-media-change-filter" data-type="sort_by"
@@ -204,7 +363,7 @@
                                             <path d="M17 5m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"></path>
                                             <path d="M19 5v3a2 2 0 0 1 -2 2h-1.5"></path>
                                         </svg>
-                                        Uploaded date - DESC
+                                        {{ trans('file-manager::media.uploaded_date_desc') }}
 
                                     </button>
                                     <button class="nkd-dropdown-item js-media-change-filter" data-type="sort_by"
@@ -221,7 +380,7 @@
                                                 d="M5 14m0 .5a.5 .5 0 0 1 .5 -.5h4a.5 .5 0 0 1 .5 .5v4a.5 .5 0 0 1 -.5 .5h-4a.5 .5 0 0 1 -.5 -.5z"></path>
                                             <path d="M17 6v12"></path>
                                         </svg>
-                                        Size - ASC
+                                        {{ trans('file-manager::media.size_asc') }}
 
                                     </button>
                                     <button class="nkd-dropdown-item js-media-change-filter" data-type="sort_by"
@@ -238,7 +397,7 @@
                                             <path d="M14 15l3 3l3 -3"></path>
                                             <path d="M17 18v-12"></path>
                                         </svg>
-                                        Size - DESC
+                                        {{ trans('file-manager::media.size_desc') }}
 
                                     </button>
                                 </div>
@@ -258,7 +417,7 @@
                                         <path
                                             d="M17 11.5a1.5 1.5 0 0 1 3 0v4.5a6 6 0 0 1 -6 6h-2h.208a6 6 0 0 1 -5.012 -2.7a69.74 69.74 0 0 1 -.196 -.3c-.312 -.479 -1.407 -2.388 -3.286 -5.728a1.5 1.5 0 0 1 .536 -2.022a1.867 1.867 0 0 1 2.28 .28l1.47 1.47"></path>
                                     </svg>
-                                    Actions
+                                    {{ trans('file-manager::media.actions') }}
                                 </button>
 
                                 <div class="nkd-dropdown-menu">
@@ -315,7 +474,7 @@
             @endif
         </div>
         <input type="file" multiple="multiple" class="d-none" tabindex="-1"
-       style="visibility: hidden; position: absolute; top: 0px; left: 0px; height: 0px; width: 0px;">
+               style="visibility: hidden; position: absolute; top: 0px; left: 0px; height: 0px; width: 0px;">
     </div>
 </div>
 
@@ -325,15 +484,16 @@
     <div class="nkd-modal-dialog nkd-modal-dialog-centered">
         <div class="nkd-modal-content">
             <div class="nkd-modal-header">
-                <h5 class="nkd-modal-title">Create Folder</h5>
+                <h5 class="nkd-modal-title">{{ trans('file-manager::media.create_folder') }}</h5>
                 <button type="button" class="nkd-btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="nkd-modal-body">
                 <div class="nkd-mb-3 nkd-position-relative">
                     <div class="nkd-input-group">
-                        <input class="nkd-form-control" type="text" name="name" id="name" placeholder="Folder name">
+                        <input class="nkd-form-control" type="text" name="name" id="name"
+                               placeholder="{{ trans('file-manager::media.folder_name') }}">
                         <button class="nkd-btn nkd-btn-primary js-create-folder" type="submit">
-                            Create
+                            {{ trans('file-manager::media.create') }}
                         </button>
                     </div>
                 </div>
@@ -346,7 +506,7 @@
     <div class="nkd-modal-dialog nkd-modal-dialog-centered">
         <div class="nkd-modal-content">
             <div class="nkd-modal-header">
-                <h5 class="nkd-modal-title">Rename</h5>
+                <h5 class="nkd-modal-title">{{ trans('file-manager::media.rename') }}</h5>
                 <button type="button" class="nkd-btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="nkd-modal-body">
@@ -354,7 +514,7 @@
                     <div class="nkd-input-group">
                         <input class="nkd-form-control" type="text" name="name" id="name" placeholder="Folder name">
                         <button class="nkd-btn nkd-btn-primary js-update-folder" type="submit">
-                            Update
+                            {{ trans('file-manager::media.update') }}
                         </button>
                     </div>
                 </div>
@@ -370,15 +530,16 @@
             <input type="hidden" name="id">
             <div class="nkd-modal-content">
                 <div class="nkd-modal-header">
-                    <h5 class="nkd-modal-title">Update Alt</h5>
+                    <h5 class="nkd-modal-title"> {{ trans('file-manager::media.alt_text') }}</h5>
                     <button type="button" class="nkd-btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="nkd-modal-body">
                     <div class="nkd-mb-3 nkd-position-relative">
                         <div class="nkd-input-group">
-                            <input class="nkd-form-control" type="text" name="alt" id="alt" placeholder="Folder name">
+                            <input class="nkd-form-control" type="text" name="alt" id="alt"
+                                   placeholder="{{ trans('file-manager::media.alt_text') }}">
                             <button class="nkd-btn nkd-btn-primary" type="submit">
-                                Update
+                                {{ trans('file-manager::media.update') }}
                             </button>
                         </div>
                     </div>
@@ -392,15 +553,18 @@
     <div class="nkd-modal-dialog nkd-modal-dialog-centered">
         <div class="nkd-modal-content">
             <div class="nkd-modal-header">
-                <h5 class="nkd-modal-title">Move items to trash</h5>
+                <h5 class="nkd-modal-title">{{ trans('file-manager::media.move_to_trash') }}</h5>
                 <button type="button" class="nkd-btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="nkd-modal-body">
-                <p>Are you sure you want to move these items to trash?</p>
+                <p>{{ trans('file-manager::media.confirm_trash') }}</p>
             </div>
             <div class="nkd-modal-footer">
-                <button type="button" class="nkd-btn nkd-btn-primary" data-bs-dismiss="modal">Close</button>
-                <button type="submit" class="nkd-btn nkd-btn-danger js-move-trash">Confirm</button>
+                <button type="button" class="nkd-btn nkd-btn-primary"
+                        data-bs-dismiss="modal">{{ trans('file-manager::media.close') }}</button>
+                <button type="submit" class="nkd-btn nkd-btn-danger js-move-trash">
+                    {{ trans('file-manager::media.confirm') }}
+                </button>
             </div>
         </div>
     </div>
@@ -419,7 +583,7 @@
                         <path d="M7 11l5 5l5 -5"></path>
                         <path d="M12 4l0 12"></path>
                     </svg>
-                    Download
+                    {{ trans('file-manager::media.download_link') }}
                 </h5>
                 <button type="button" class="nkd-btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
@@ -429,9 +593,10 @@
                     <div class="nkd-mb-3">
                         <textarea name="url" class="nkd-form-control" id="url-upload"
                                   placeholder="http://example.com/image1.jpg"></textarea>
-                        <small class="form-hint">Enter one URL per line.</small>
+                        <small class="form-hint">{{ trans('file-manager::media.download_explain') }}</small>
                     </div>
-                    <button type="submit" class="nkd-btn nkd-w-100 nkd-btn-outline-primary js-confirm-upload">Upload
+                    <button type="submit"
+                            class="nkd-btn nkd-w-100 nkd-btn-outline-primary js-confirm-upload">{{ trans('file-manager::media.upload') }}
                     </button>
                 </form>
             </div>
@@ -454,7 +619,7 @@
                             <path d="M7 11l5 5l5 -5"></path>
                             <path d="M12 4l0 12"></path>
                         </svg>
-                        Crop
+                        {{ trans('file-manager::media.crop') }}
                     </h5>
                     <button type="button" class="nkd-btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
@@ -472,7 +637,7 @@
                                 <div class="nkd-mt-3">
                                     <div class="nkd-mb-3 nkd-position-relative">
                                         <label class="nkd-form-label" for="dataHeight">
-                                            Height
+                                            {{ trans('file-manager::media.cropper.height') }}
                                         </label>
                                         <input class="nkd-form-control" type="text" name="dataHeight" id="dataHeight">
                                     </div>
@@ -480,7 +645,7 @@
                                 <div class="nkd-mt-3">
                                     <div class="nkd-mb-3 nkd-position-relative">
                                         <label class="nkd-form-label" for="dataWidth">
-                                            Width
+                                            {{ trans('file-manager::media.cropper.width') }}
                                         </label>
                                         <input class="nkd-form-control" type="text" name="dataWidth" id="dataWidth">
                                     </div>
@@ -491,7 +656,7 @@
                                            name="aspectRatio"
                                            class="nkd-form-check-input">
                                     <span class="nkd-form-check-label">
-                                        Aspect ratio?
+                                        {{ trans('file-manager::media.cropper.aspect_ratio') }}
                                     </span>
                                 </label>
                             </div>
@@ -499,8 +664,10 @@
                     </div>
                 </div>
                 <div class="nkd-modal-footer">
-                    <button type="button" class="nkd-btn nkd-btn-primary" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" class="nkd-btn nkd-btn-danger js-confirm-crop">Confirm</button>
+                    <button type="button" class="nkd-btn nkd-btn-primary"
+                            data-bs-dismiss="modal">{{ trans('file-manager::media.cropper.close') }}</button>
+                    <button type="submit"
+                            class="nkd-btn nkd-btn-danger js-confirm-crop">{{ trans('file-manager::media.cropper.confirm') }}</button>
                 </div>
             </div>
         </form>

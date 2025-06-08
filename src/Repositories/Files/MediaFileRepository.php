@@ -17,14 +17,15 @@ class MediaFileRepository extends MediaBaseRepository implements MediaFileReposi
     {
         $model = $this->model->query();
 
-        $model->whereNull('deleted_at');
+        if (isset($data['is_trash']) && $data['is_trash']) {
+            $model->whereNotNull('deleted_at');
+        } else {
+            $model->whereNull('deleted_at');
+        }
 
         $paged = $data['paged'] ?? 1;
-
         $limit = $data['posts_per_page'] ?? 30;
-
         $offset = ($paged - 1) * $limit;
-
         $model->limit($limit);
 
         $model->where(function ($query) use ($data) {
@@ -32,13 +33,43 @@ class MediaFileRepository extends MediaBaseRepository implements MediaFileReposi
                 $query->where('folder_id', $data['folder_id']);
             }
             if (isset($data['search']) && $data['search']) {
-                $query->where(function($query) use ($data){
+                $query->where(function ($query) use ($data) {
                     $query->where('name', 'like', '%' . $data['search'] . '%');
                     $query->orWhere('permalink', 'like', '%' . $data['search'] . '%');
                 });
             }
             if (isset($data['ids']) && count($data['ids'])) {
                 $query->whereNotIn('id', $data['ids']);
+            }
+            if (isset($data['filter_type'])) {
+                switch ($data['filter_type']) {
+                    case 'image':
+                        $query->where('mine_type', 'like', 'image/%');
+                        break;
+                    case 'video':
+                        $query->where('mine_type', 'like', 'video/%');
+                        break;
+                    case 'document':
+                        $query->where(function ($q) {
+                            $q->where('mine_type', 'like', 'application/pdf')
+                                ->orWhere('mine_type', 'like', 'application/msword')
+                                ->orWhere('mine_type', 'like', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document')
+                                ->orWhere('mine_type', 'like', 'application/vnd.ms-excel')
+                                ->orWhere('mine_type', 'like', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+                                ->orWhere('mine_type', 'like', 'text/csv');
+                        });
+                        break;
+                    case 'media':
+                        $query->where(function ($q) {
+                            $q->where('mine_type', 'like', 'image/%')
+                                ->orWhere('mine_type', 'like', 'video/%');
+                        });
+                        break;
+                    case 'everything':
+                    default:
+                        // Không filter gì thêm
+                        break;
+                }
             }
         });
 
@@ -52,10 +83,10 @@ class MediaFileRepository extends MediaBaseRepository implements MediaFileReposi
 
     public function getCount($data)
     {
-        $model =  $this->model->whereNull('deleted_at');
-        
-        if(isset($data['folder_id']) ){
-          $model =  $model->where('folder_id', $data['folder_id']);
+        $model = $this->model->whereNull('deleted_at');
+
+        if (isset($data['folder_id'])) {
+            $model = $model->where('folder_id', $data['folder_id']);
         }
         return $model->count('id');
     }
@@ -67,7 +98,7 @@ class MediaFileRepository extends MediaBaseRepository implements MediaFileReposi
 
     public function updateFileByPermalink($permalink, array $data)
     {
-        return $this->model->where('permalink','LIKE', "%$permalink%")->update($data);
+        return $this->model->where('permalink', 'LIKE', "%$permalink%")->update($data);
     }
 
     public function updateFile(array $data, $request): array
@@ -75,7 +106,7 @@ class MediaFileRepository extends MediaBaseRepository implements MediaFileReposi
         if (!count($data)) {
             return [
                 'success' => false,
-                'message' => "The files could not be uploaded.",
+                'message' => trans("file-manager::media.message.file_not_uploaded")
             ];
         }
 
@@ -95,20 +126,20 @@ class MediaFileRepository extends MediaBaseRepository implements MediaFileReposi
         if (!count($insertData)) {
             return [
                 'success' => false,
-                'message' => "The files could not be uploaded.",
+                'message' => trans("file-manager::media.message.file_not_uploaded")
             ];
         }
         $insertItem = $this->insert($insertData);
-        
+
         if (!$insertItem) {
             return [
                 'success' => false,
-                'message' => "The files could not be uploaded.",
+                'message' => trans("file-manager::media.message.file_not_uploaded")
             ];
         }
         return [
             'success' => true,
-            'message' => "The files has been uploaded.",
+            'message' => trans("file-manager::media.message.file_uploaded"),
             'data' => $data
         ];
     }
@@ -120,7 +151,7 @@ class MediaFileRepository extends MediaBaseRepository implements MediaFileReposi
         if (!$file) {
             return [
                 'success' => false,
-                'message' => "The file not be found.",
+                'message' => trans("file-manager::media.message.file_not_found")
             ];
         }
 
@@ -129,15 +160,17 @@ class MediaFileRepository extends MediaBaseRepository implements MediaFileReposi
         if (!$isUpdated) {
             return [
                 'success' => false,
-                'message' => "The file not be found.",
+                'message' => trans("file-manager::media.message.file_not_found")
             ];
         }
         return [
             'success' => true,
-            'message' => "The file has been updated.",
+            'message' => trans("file-manager::media.message.update_success")
         ];
     }
-    public function getDelete() {
-        return  $this->model->whereNotNull('deleted_at')->get();
+
+    public function getDelete()
+    {
+        return $this->model->whereNotNull('deleted_at')->get();
     }
 }

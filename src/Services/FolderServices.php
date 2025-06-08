@@ -11,7 +11,7 @@ class FolderServices extends BaseServices
 {
 
     protected $path;
-    protected  $disk;
+    protected $disk;
     protected $fileRepository;
 
     public function __construct(
@@ -64,7 +64,7 @@ class FolderServices extends BaseServices
 
             $this->disk->move($file, $created_new['path'] . '/' . basename($file));
             $this->fileRepository->updateFileByPermalink($file, [
-                'permalink' => '/' .$created_new['path'] . '/' . basename($file)
+                'permalink' => '/' . $created_new['path'] . '/' . basename($file)
             ]);
 
         }
@@ -77,7 +77,7 @@ class FolderServices extends BaseServices
         }
         return [
             'success' => false,
-            'message' => 'Failed to remove directory'
+            'message' => trans("file-manager::media.message.folder_not_renamed", ['name' => $item->name])
         ];
     }
 
@@ -85,36 +85,35 @@ class FolderServices extends BaseServices
     {
         $dirPath = $this->setDirPath($name);
         if ($path) {
-            $dirPath =  $path . "/" . Str::slug($name, '-');
+            $dirPath = $path . "/" . Str::slug($name, '-');
         }
         $isExits = $this->checkDirExist($dirPath);
 
         if ($isExits) {
             return [
                 'success' => false,
-                'message' => "The folder $name already exist"
+                'message' => trans("file-manager::media.message.folder_already_exists", ['name' => $name])
             ];
         }
-        
+
 
         $createDirResult = $this->disk->makeDirectory($dirPath);
 
         if ($createDirResult) {
 
-            File::chmod(config('file-manager.path_folder') .'/'. $dirPath, config('file-manager.permission'));
+            File::chmod(config('file-manager.path_folder') . '/' . $dirPath, config('file-manager.permission'));
 
             return [
                 'success' => true,
-                'message' => "The folder $name has been created",
+                'message' => trans("file-manager::media.message.folder_created", ['name' => $name]),
                 'path' => $dirPath
             ];
         }
 
-        
 
         return [
             'success' => false,
-            'message' => "The folder $name could not be created"
+            'message' => trans("file-manager::media.message.folder_not_created", ['name' => $name]),
         ];
     }
 }

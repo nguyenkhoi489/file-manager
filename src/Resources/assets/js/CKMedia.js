@@ -104,7 +104,7 @@ var CKMedia = {
         this.container = $('.nkd-media-container')
         this.boxAction = $('.nkd-dropdown-actions')
         this.url = this.container.data('ajax')
-
+        this.filterType = 'everything';
         this.loadMedia()
         this.handleCommand()
         this.bindInsertCKEditorAction() //bind to insert action
@@ -135,6 +135,7 @@ var CKMedia = {
         this.bindActionCloseModal() //action close modal
         this.bindActionDocumentActionBox() //action Document Close Box
         this.bindActionLoadMore() //actionLoadMore
+        this.bindActionFilterType() //bind filter type
     },
 
     setupAjax() {
@@ -392,19 +393,24 @@ var CKMedia = {
     loadMedia(view_in = 'all', sort_by = this.getSortBy(), folder_id = this.getFolderID(), search = this.getSearchInput(), load_more = false, paged = 1, posts_per_page = CKMedia.config.limit, type = 'file', ids = {}) {
         if(this.container.length)
         {
+            let data = {
+                view_in,
+                sort_by,
+                folder_id,
+                search,
+                load_more,
+                paged,
+                posts_per_page,
+                type,
+                ids,
+                filter_type: this.filterType
+            };
+            if(this.filterType === 'trash') {
+                data.is_trash = true;
+            }
             $.ajax({
                 url: CKMedia.url,
-                data: {
-                    view_in,
-                    sort_by,
-                    folder_id,
-                    search,
-                    load_more,
-                    paged,
-                    posts_per_page,
-                    type,
-                    ids
-                },
+                data: data,
                 beforeSend: function () {
                     CKMedia.container.append(CKMedia.loading())
                 },
@@ -1063,6 +1069,15 @@ var CKMedia = {
         $(document).on('files:choose', function (files) {
             CKMedia.handleCKEditorFile(files);
         })
+    },
+    bindActionFilterType() {
+        $(document).on('click', '.js-media-type-filter', function (e) {
+            e.preventDefault();
+            $('.js-media-type-filter').removeClass('active');
+            $(this).addClass('active');
+            CKMedia.filterType = $(this).data('type');
+            CKMedia.loadMedia('all', CKMedia.getSortBy(), CKMedia.getFolderID(), CKMedia.getSearchInput(), false, 1, CKMedia.config.limit);
+        });
     }
 
 }

@@ -10,6 +10,7 @@ class MediaUpdateRequest extends FormRequest
     {
         return true;
     }
+
     public function rules(): array
     {
         return [
@@ -18,4 +19,5 @@ class MediaUpdateRequest extends FormRequest
             'is_folder' => 'required',
         ];
     }
+
 }

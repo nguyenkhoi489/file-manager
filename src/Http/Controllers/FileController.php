@@ -44,7 +44,7 @@ class FileController extends Controller
                 'folderId' => 'nullable|integer',
             ],
             [
-                'url.required' => 'The field "url" is required.',
+                'url.required' => trans('file-manager::media.message.url'),
             ]);
         if ($validator->fails()) {
             return response()->json([
@@ -71,7 +71,7 @@ class FileController extends Controller
             if (!$folder) {
                 return response()->json([
                     'success' => false,
-                    'message' => "The folder not found.",
+                    'message' => trans('file-manager::media.message.folder_not_found'),
                 ]);
             }
         }
@@ -101,7 +101,7 @@ class FileController extends Controller
         if (!$file) {
             return response()->json([
                 'success' => false,
-                'message' => "The file not found.",
+                'message' => trans('file-manager::media.message.file_not_found'),
             ]);
         }
         $cropResult = $this->fileService->cropImage($file->permalink, $validate['crop_data']);
@@ -122,7 +122,7 @@ class FileController extends Controller
         if (!$file) {
             return response()->json([
                 'success' => false,
-                'message' => "The file not found.",
+                'message' => trans('file-manager::media.message.file_not_found'),
             ]);
         }
 
@@ -130,13 +130,13 @@ class FileController extends Controller
         if (!$updated) {
             return response()->json([
                 'success' => false,
-                'message' => "The file not be found.",
+                'message' => trans('file-manager::media.message.file_not_found'),
             ]);
         }
 
         return response()->json([
             'success' => true,
-            'message' => "The file has been updated.",
+            'message' => trans('file-manager::media.message.update_success'),
         ]);
     }
 }

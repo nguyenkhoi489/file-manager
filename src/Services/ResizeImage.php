@@ -55,7 +55,7 @@ class ResizeImage extends BaseServices
     {
         if (!$data) return [
             'success' => false,
-            'message' => 'File crop error',
+            'message' => trans("file-manager::media.message.file_crop_error")
         ];
         $isPut = $this->disk->put($path, $data);
         if ($isPut) {
@@ -68,7 +68,7 @@ class ResizeImage extends BaseServices
         }
         return [
             'success' => false,
-            'message' => 'File crop error',
+            'message' => trans("file-manager::media.message.file_crop_error")
         ];
     }
 }

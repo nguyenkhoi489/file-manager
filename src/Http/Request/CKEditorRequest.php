@@ -22,8 +22,12 @@ class CKEditorRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'upload.required' => 'The file upload field is required.',
-            'upload.mimetypes' => 'The file upload must be type :values.',
+            'upload.required' => trans('file-manager::file-manager.validation.file_required'),
+            'upload.mimetypes' => trans('file-manager::file-manager.validation.file_mime_types',
+                [
+                    'values' => implode(', ', config('file-manager.mime_types'))
+                ]
+            ),
         ];
     }
 }

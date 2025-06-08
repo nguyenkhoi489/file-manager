@@ -28,7 +28,8 @@ class MediaController extends Controller
         public MediaFolderRepositoryInterface $folderRepo,
         public FolderServices                 $folderSer,
         public FileServices                   $fileSer,
-    ) {
+    )
+    {
         $this->fileRepository = $this->fileRepo;
         $this->folderRepository = $this->folderRepo;
         $this->folderServices = $folderSer;
@@ -48,6 +49,10 @@ class MediaController extends Controller
         Artisan::call('optimize:clear');
 
         $data = $request->validated();
+        $filterType = $request->get('filter_type', 'everything');
+        $isTrash = $request->get('is_trash', false);
+        $data['filter_type'] = $filterType;
+        $data['is_trash'] = $isTrash;
 
         $breadcrumbs = [
             0 => [
@@ -69,12 +74,12 @@ class MediaController extends Controller
         $countFolders = $this->folderRepository->getCount($data);
 
         $countFiles = $this->fileRepository->getCount($data);
-        
+
         if ($data['load_more'] == 'false') {
 
             $allFolders = $this->folderRepository->filter($data);
             if (count($allFolders) < $data['posts_per_page']) {
-                $limit_post =  $data['posts_per_page'] - count($allFolders);
+                $limit_post = $data['posts_per_page'] - count($allFolders);
 
                 $data['posts_per_page'] = $limit_post;
                 $allFiles = $this->fileRepository->filter($data);
@@ -87,8 +92,8 @@ class MediaController extends Controller
                     'files' => FileResource::collection($allFiles),
                 ],
                 'load_more' => $countFolders > $limit || $countFiles > $limit,
-                'next' => (int) $data['paged'] + 1,
-                'type' => $countFolders > (int) $limit ? 'folder' : 'file'
+                'next' => (int)$data['paged'] + 1,
+                'type' => $countFolders > (int)$limit ? 'folder' : 'file'
             ]);
         }
         $dataResponse = [];
@@ -100,7 +105,7 @@ class MediaController extends Controller
                 $dataResponse['folder'] = $this->folderRepository->filter($data);
                 break;
         }
-  
+
         return response()->json([
             'success' => true,
             'data' => [
@@ -108,8 +113,8 @@ class MediaController extends Controller
                 'folders' => isset($dataResponse['folder']) ? FolderResource::collection($dataResponse['folder']) : null,
                 'files' => isset($dataResponse['file']) ? FileResource::collection($dataResponse['file']) : null,
             ],
-            'load_more' => ($countFolders > $limit *$data['paged']) || ($countFiles > $limit * $data['paged']),
-            'next' => (int) $data['paged'] + 1,
+            'load_more' => ($countFolders > $limit * $data['paged']) || ($countFiles > $limit * $data['paged']),
+            'next' => (int)$data['paged'] + 1,
             'type' => $data['type']
         ]);
     }
@@ -127,7 +132,7 @@ class MediaController extends Controller
         if (!$isExits) {
             return response()->json([
                 'success' => false,
-                'message' => 'Not found'
+                'message' => trans('file-manager::media.not_found')
             ]);
         }
         $isChecked = $serUsed->find($isExits->permalink);
@@ -135,7 +140,7 @@ class MediaController extends Controller
         if (!$isChecked) {
             return response()->json([
                 'success' => false,
-                'message' => 'Not found'
+                'message' => trans('file-manager::media.not_found')
             ]);
         }
         $parentFolder = null;
@@ -176,17 +181,17 @@ class MediaController extends Controller
         if (!$isExits) {
             return response()->json([
                 'success' => false,
-                'message' => 'Not found'
+                'message' => trans('file-manager::media.not_found')
             ]);
         }
 
         $repoUsed->update($isExits->id, [
-            'deleted_at' => Carbon::now()->addHours(24)->toDateTimeString()
+            'deleted_at' => Carbon::now()->addDays(7)
         ]);
 
         return response()->json([
             'success' => true,
-            'message' => 'Moved selected item(s) to trash successfully!'
+            'message' => trans('file-manager::media.trash_success')
         ]);
     }
 

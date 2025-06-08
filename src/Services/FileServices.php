@@ -17,7 +17,8 @@ class FileServices extends BaseServices
     public function __construct(
         public FolderServices $folderServices,
         public ResizeImage    $resizeImage
-    ) {
+    )
+    {
         parent::__construct();
         $this->folderService = $this->folderServices;
         $this->resizeService = $resizeImage;
@@ -31,7 +32,7 @@ class FileServices extends BaseServices
         if (!$file) {
             return [
                 'success' => false,
-                'message' => "The file not found.",
+                'message' => trans("file-manager::media.message.file_not_found")
             ];
         }
         $this->resizeService->setImageData(array_merge(['path' => $file_path], json_decode($crop_data, true)));
@@ -53,7 +54,7 @@ class FileServices extends BaseServices
         if (count($files) > config('file-manager.limit_upload_files')) {
             return [
                 'success' => false,
-                'message' => 'File Upload Limit Exceeded'
+                'message' => trans("file-manager::media.message.file_upload_limit")
             ];
         }
         $allFiles = [];
@@ -76,13 +77,15 @@ class FileServices extends BaseServices
         if (!in_array($file->getClientMimeType(), config('file-manager.mime_types'))) {
             return [
                 'success' => false,
-                'message' => 'The filetype you are attempting to upload is not allowed.'
+                'message' => trans("file-manager::media.message.can_not_detect_file_type")
             ];
         }
         if ($file->getSize() > config('file-manager.max_file_size')) {
             return [
                 'success' => false,
-                'message' => 'The file is too large.'
+                'message' => trans("file-manager::media.message.file_too_big", [
+                    'size' => config('file-manager.max_file_size')
+                ])
             ];
         }
         $folder_path = $this->folderServices->getPath();
@@ -116,7 +119,7 @@ class FileServices extends BaseServices
         }
         return [
             'success' => false,
-            'message' => 'The file could not be uploaded.'
+            'message' => trans("file-manager::media.message.file_not_uploaded")
         ];
     }
 
@@ -132,7 +135,7 @@ class FileServices extends BaseServices
         if (!$isExits) {
             return [
                 'success' => false,
-                'message' => 'File Not found'
+                'message' => trans("file-manager::media.message.file_not_found")
             ];
         }
         $file = File::extension($item->permalink);
@@ -141,7 +144,9 @@ class FileServices extends BaseServices
 
         return [
             'success' => true,
-            'message' => "The $name has been updated",
+            'message' => trans("file-manager::media.message.file_not_found", [
+                'name' => $name
+            ]),
             'path' => $path_folder . '/' . Str::slug($name) . '.' . $file,
             'alt' => $name
         ];
@@ -161,7 +166,7 @@ class FileServices extends BaseServices
 
         if (!count($allURL)) return [
             'success' => false,
-            'message' => 'File not found'
+            'message' => trans("file-manager::media.message.file_not_found")
         ];
 
         $allUploaded = [];
@@ -186,11 +191,14 @@ class FileServices extends BaseServices
     {
         if (!$url) return [];
         $fileContent = Http::withoutVerifying()->timeout(10)->get($url);
-        
-        if (! $fileContent->successful()) {
+
+        if (!$fileContent->successful()) {
             return [
                 'success' => true,
-                'message' => "The file '$url' could not be created." . error_get_last()
+                'message' => trans("file-manager::media.message.file_url_cannot_upload_with_error", [
+                    'url' => $url,
+                    'error' => error_get_last()
+                ])
             ];
         }
         $filePath = pathinfo($url);
@@ -218,7 +226,9 @@ class FileServices extends BaseServices
         if ($isFile) {
             return [
                 'success' => true,
-                'message' => "The file '$url' has been created",
+                'message' => trans("file-manager::media.message.file_url_uploaded", [
+                    'url' => $url
+                ]),
                 'data' => [
                     'name' => $filePath['filename'],
                     'alt' => $filePath['filename'],
@@ -230,7 +240,9 @@ class FileServices extends BaseServices
         }
         return [
             'success' => true,
-            'message' => "The file '$url' could not be created"
+            'message' => trans("file-manager::media.message.file_url_cannot_upload", [
+                'url' => $url
+            ])
         ];
     }
 }

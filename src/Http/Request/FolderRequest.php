@@ -19,4 +19,12 @@ class FolderRequest extends FormRequest
             'parent_id' => 'nullable|integer',
         ];
     }
+
+    public function messages(): array
+    {
+        return [
+            'name.required' => trans('file-manager::file-manager.validation.folder_name_required'),
+        ];
+
+    }
 }

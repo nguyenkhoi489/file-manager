@@ -61,6 +61,13 @@ class FileManagerProvider extends ServiceProvider
             . '/Resources/assets' => public_path('vendor/file-manager/assets'),
         ], 'nkd-file-manager');
 
+        $this->publishes([
+            __DIR__ . '/Resources/lang' => resource_path('lang/vendor/file-manager'),
+        ], 'nkd-file-manager');
+
+        // Load translations
+        $this->loadTranslationsFrom(__DIR__ . '/Resources/lang', 'file-manager');
+
         //Load Config
         $this->publishes([
             __DIR__
