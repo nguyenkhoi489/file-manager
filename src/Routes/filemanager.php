@@ -19,6 +19,9 @@ Route::group(
         Route::get('load-media', 'loadMedia')->name('loadMedia');
         Route::post('update-options', 'updateName')->name('update');
         Route::delete('remove-trash', 'removeTrash')->name('destroy');
+        Route::put('restore-trash', 'restoreTrash')->name('restore');
+        Route::delete('empty-trash', 'removeNotRestore')->name('destroyFinally');
+        Route::delete('empty-all-trash', 'emptyAllTrash')->name('emptyAllTrash');
     });
 
     Route::controller(FolderController::class)->group(function () {

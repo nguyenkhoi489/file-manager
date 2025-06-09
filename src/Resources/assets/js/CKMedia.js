@@ -1,5 +1,6 @@
 var CKMedia = {
-    basePath: `/file-manager`, config: {
+    basePath: `/file-manager`,
+    config: {
         icons: {
             folder: `<svg xmlns="http://www.w3.org/2000/svg" class="nkd-icon" width="24" height="24"
                                  viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
@@ -115,6 +116,12 @@ var CKMedia = {
         this.bindActionSort() //action sort
         this.bindActionMoveToTrashModal() //action move to trash
         this.bindActionMoveToTrashConfirm() //action confirm move to trash
+        this.bindActionRestoreFromTrashModal()
+        this.bindActionRestoreFromTrashConfirm()
+        this.bindActionEmptyTrashModal()
+        this.bindActionEmptyTrashModalConfirm()
+        this.bindActionEmptyAllTrashModal()
+        this.bindActionEmptyAllTrashModalConfirm()
         this.bindActionChangeAltModal() //action open changel alt modal
         this.bindActionChangeAltModalConfirm() //action confirm changel alt modal
         this.bindActionPreviewFiles() //action preview files
@@ -259,11 +266,13 @@ var CKMedia = {
     setupCropDataHeight(item, height) {
         item.find('#dataHeight').val(height)
     },
-
+    handleRemoveBackdrop() {
+        $(document).find('.modal-backdrop').remove();
+    },
     handleResponseAction(response, modal) {
         modal.find('#status_processing').remove()
         if (response.success) {
-            modal.removeClass('show')
+            modal.removeClass('show');
             toastr.success(response.message);
             setTimeout(function () {
                 CKMedia.loadMedia(CKMedia.getViewIn(), CKMedia.getSortBy(), CKMedia.getFolderID(), CKMedia.getSearchInput(), false, 1, CKMedia.config.limit, 'file', CKMedia.getViewType())
@@ -274,13 +283,10 @@ var CKMedia = {
     },
 
     handleResponseError(response, modal) {
-
+        modal.removeClass('show');
         modal.find('#status_processing').remove()
-
         let _response = response.responseJSON
-
         _response = _response ? _response.message : response.statusText
-
         toastr.error(_response);
     },
 
@@ -464,6 +470,15 @@ var CKMedia = {
                 .replaceAll('__modified__', itemData.updated_at)
 
             $('.column-thumbnail').empty().append(item)
+        }
+    },
+    handleShowEmptyTrash(type = 'show') {
+        let btnAction = $(document).find('.js-empty-trash-action');
+        if (type === 'show') {
+
+            btnAction.removeClass('nkd-disabled');
+        } else {
+            btnAction.addClass('nkd-disabled');
         }
     },
 
@@ -704,6 +719,12 @@ var CKMedia = {
                 let textButton = _this.html()
                 let buttonFilter = _this.closest('.nkd-media-type-filter-group').find('.js-rv-media-filter-current')
                 buttonFilter.html(`(${textButton})`)
+                CKMedia.handleResetDropdown();
+            }
+            if (type == 'view_in' && _this.data('value') == 'trash') {
+                CKMedia.handleShowEmptyTrash('show')
+            } else {
+                CKMedia.handleShowEmptyTrash('hide')
             }
             CKMedia.loadMedia(CKMedia.getViewIn(), CKMedia.getSortBy(), CKMedia.getFolderID(), CKMedia.getSearchInput(), false, 1, CKMedia.config.limit, 'file', CKMedia.getViewType())
         })
@@ -714,6 +735,8 @@ var CKMedia = {
             e.preventDefault();
 
             let dataItem = CKMedia.getSelectedItems()[0]
+
+            if (!dataItem) return;
 
             let modal = $('#modal-remove-item')
 
@@ -741,6 +764,125 @@ var CKMedia = {
             $.ajax({
                 url: modal.data('action'), data: {
                     'id': id, 'is_folder': type, '_method': 'delete'
+                }, method: 'POST', beforeSend: function () {
+                    modal.find('.nkd-modal-content').append(CKMedia.loading())
+                }, success: function (response) {
+                    CKMedia.handleResponseAction(response, modal)
+                }, error: function (error) {
+                    CKMedia.handleResponseError(error, modal)
+                }
+            })
+        })
+    },
+    bindActionEmptyTrashModal() {
+        $(document).on('click', '.js-files-action[data-action="deletePermanently"]', function (e) {
+            e.preventDefault();
+
+            let dataItem = CKMedia.getSelectedItems()[0]
+
+            if (!dataItem) return;
+
+            let modal = $('#modal-remove-not-restore-item')
+
+            let type = !('folder_id' in dataItem)
+
+            modal.attr('data-id', dataItem.id)
+
+            modal.attr('data-folder', type)
+
+            modal.addClass('show')
+        })
+    },
+
+    bindActionEmptyTrashModalConfirm() {
+        $(document).on('click', '.js-move-trash-finally', function (e) {
+
+            e.preventDefault();
+
+            let modal = $(this).closest('#modal-remove-not-restore-item')
+
+            let id = modal.attr('data-id')
+
+            let type = modal.attr('data-folder')
+
+            $.ajax({
+                url: modal.data('action'), data: {
+                    'id': id, 'is_folder': type, '_method': 'delete'
+                }, method: 'POST', beforeSend: function () {
+                    modal.find('.nkd-modal-content').append(CKMedia.loading())
+                }, success: function (response) {
+                    CKMedia.handleResponseAction(response, modal)
+                }, error: function (error) {
+                    CKMedia.handleResponseError(error, modal)
+                }
+            })
+        })
+    },
+    bindActionEmptyAllTrashModal() {
+        $(document).on('click', '.js-empty-trash-action', function (e) {
+            e.preventDefault();
+
+            let modal = $('#modal-empty-trash')
+
+            modal.addClass('show')
+        })
+    },
+
+    bindActionEmptyAllTrashModalConfirm() {
+        $(document).on('click', '.js-empty-all-trash', function (e) {
+
+            e.preventDefault();
+
+            let modal = $(this).closest('#modal-empty-trash')
+
+            $.ajax({
+                url: modal.data('action'),
+                data: {
+                    '_method': 'delete'
+                }, method: 'POST', beforeSend: function () {
+                    modal.find('.nkd-modal-content').append(CKMedia.loading())
+                }, success: function (response) {
+                    CKMedia.handleResponseAction(response, modal)
+                }, error: function (error) {
+                    CKMedia.handleResponseError(error, modal)
+                }
+            })
+        })
+    },
+    bindActionRestoreFromTrashModal() {
+        $(document).on('click', '.js-files-action[data-action="restore"]', function (e) {
+            e.preventDefault();
+
+            let dataItem = CKMedia.getSelectedItems()[0]
+
+            if (!dataItem) return;
+
+            let modal = $('#modal-restore-item')
+
+            let type = !('folder_id' in dataItem)
+
+            modal.attr('data-id', dataItem.id)
+
+            modal.attr('data-folder', type)
+
+            modal.addClass('show')
+        })
+    },
+
+    bindActionRestoreFromTrashConfirm() {
+        $(document).on('click', '.js-restore-from-trash', function (e) {
+
+            e.preventDefault();
+
+            let modal = $(this).closest('#modal-restore-item')
+
+            let id = modal.attr('data-id')
+
+            let type = modal.attr('data-folder')
+
+            $.ajax({
+                url: modal.data('action'), data: {
+                    'id': id, 'is_folder': type, '_method': 'put'
                 }, method: 'POST', beforeSend: function () {
                     modal.find('.nkd-modal-content').append(CKMedia.loading())
                 }, success: function (response) {
@@ -990,7 +1132,8 @@ var CKMedia = {
         $(document).on('click', function (e) {
             CKMedia.actionBoxToggle($('.nkd-dropdown-menu'))
         })
-    }, bindActionLoadMore() {
+    },
+    bindActionLoadMore() {
         $(document).on('click', '.btn-load_more', function (e) {
             e.preventDefault()
             let __self = $(this)
@@ -1006,7 +1149,10 @@ var CKMedia = {
             CKMedia.loadMedia(CKMedia.getViewIn(), CKMedia.getSortBy(), CKMedia.getFolderID(), CKMedia.getSearchInput(), false, 1, CKMedia.config.limit, 'file', CKMedia.getViewType())
 
         })
-    }, handleCommand() {
+    },
+
+
+    handleCommand() {
         $(document).on('files:choose', function (files) {
             CKMedia.handleCKEditorFile(files);
         })

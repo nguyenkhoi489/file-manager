@@ -39,6 +39,7 @@ abstract class MediaBaseRepository implements MediaBaseRepositoryInterface
     {
         return $this->model->insert($data);
     }
+
     public function create($data = [])
     {
         return $this->model->create($data);
@@ -65,5 +66,16 @@ abstract class MediaBaseRepository implements MediaBaseRepositoryInterface
         }
 
         return false;
+    }
+
+    public function getQuery()
+    {
+        return $this->model->query();
+    }
+
+    public function getAllTrash()
+    {
+        return $this->model->whereNotNull('deleted_at')->get();
+
     }
 }

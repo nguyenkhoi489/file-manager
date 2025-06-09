@@ -905,3 +905,7 @@ body {
 .js-rv-media-filter-current svg {
     margin-right: 2px !important;
 }
+
+.nkd-disabled {
+    display: none;
+}

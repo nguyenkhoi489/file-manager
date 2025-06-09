@@ -45,7 +45,7 @@
                                     </button>
 
                                     <button class="nkd-dropdown-item js-download-action dropdown-item"
-                                            data-bs-toggle="modal" data-bs-target="#modal-upload-link">
+                                            data-bs-target="#modal-upload-link">
                                         <svg class="icon dropdown-item-icon" xmlns="http://www.w3.org/2000/svg"
                                              width="24"
                                              height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
@@ -248,6 +248,25 @@
 
                                 </div>
                             </div>
+
+                            <button class="nkd-btn nkd-btn-danger nkd-text-white js-empty-trash-action nkd-disabled"
+                                    type="button"
+                                    data-bs-toggle="tooltip" data-bs-placement="top"
+                                    aria-label="{{ trans('file-manager::media.empty_trash_title') }}"
+                                    data-bs-original-title="{{ trans('file-manager::media.empty_trash_title') }}">
+                                <svg class="nkd-icon" xmlns="http://www.w3.org/2000/svg"
+                                     width="24"
+                                     height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                                     stroke-linecap="round" stroke-linejoin="round">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                    <path d="M4 7l16 0"></path>
+                                    <path d="M10 11l0 6"></path>
+                                    <path d="M14 11l0 6"></path>
+                                    <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"></path>
+                                    <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"></path>
+                                </svg>
+                                {{ trans('file-manager::media.empty_trash_title') }}
+                            </button>
                         </div>
                     </div>
                     <!--Input Form Search-->
@@ -480,111 +499,211 @@
     </div>
 </div>
 
-<div class="nkd-modal nkd-modal-blur nkd-fade" id="modal-create-item"
-     data-update="{{ route('media.update') }}"
-     data-action="{{ route('media.folder.create') }}">
-    <div class="nkd-modal-dialog nkd-modal-dialog-centered">
-        <div class="nkd-modal-content">
-            <div class="nkd-modal-header">
-                <h5 class="nkd-modal-title">{{ trans('file-manager::media.create_folder') }}</h5>
-                <button type="button" class="nkd-btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="nkd-modal-body">
-                <div class="nkd-mb-3 nkd-position-relative">
-                    <div class="nkd-input-group">
-                        <input class="nkd-form-control" type="text" name="name" id="name"
-                               placeholder="{{ trans('file-manager::media.folder_name') }}">
-                        <button class="nkd-btn nkd-nkd-btn-primary js-create-folder" type="submit">
-                            {{ trans('file-manager::media.create') }}
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="nkd-modal nkd-modal-blur nkd-fade" id="modal-rename-item"
-     data-update="{{ route('media.update') }}">
-    <div class="nkd-modal-dialog nkd-modal-dialog-centered">
-        <div class="nkd-modal-content">
-            <div class="nkd-modal-header">
-                <h5 class="nkd-modal-title">{{ trans('file-manager::media.rename') }}</h5>
-                <button type="button" class="nkd-btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="nkd-modal-body">
-                <div class="nkd-mb-3 nkd-position-relative">
-                    <div class="nkd-input-group">
-                        <input class="nkd-form-control" type="text" name="name" id="name" placeholder="Folder name">
-                        <button class="nkd-btn nkd-nkd-btn-primary js-update-folder" type="submit">
-                            {{ trans('file-manager::media.update') }}
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="nkd-modal nkd-modal-blur nkd-fade" id="modal-change-alt-item">
-    <div class="nkd-modal-dialog nkd-modal-dialog-centered">
-        <form action="{{ route('media.file.updateData') }}" method="post">
-            @csrf
-            @method('put')
-            <input type="hidden" name="id">
-            <div class="nkd-modal-content">
-                <div class="nkd-modal-header">
-                    <h5 class="nkd-modal-title"> {{ trans('file-manager::media.alt_text') }}</h5>
-                    <button type="button" class="nkd-btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="nkd-modal-body">
-                    <div class="nkd-mb-3 nkd-position-relative">
-                        <div class="nkd-input-group">
-                            <input class="nkd-form-control" type="text" name="alt" id="alt"
-                                   placeholder="{{ trans('file-manager::media.alt_text') }}">
-                            <button class="nkd-btn nkd-nkd-btn-primary" type="submit">
-                                {{ trans('file-manager::media.update') }}
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </form>
-    </div>
-</div>
-<div class="nkd-modal nkd-modal-blur nkd-fade" id="modal-remove-item"
-     data-action="{{ route('media.destroy') }}">
-    <div class="nkd-modal-dialog nkd-modal-dialog-centered">
-        <div class="nkd-modal-content">
-            <div class="nkd-modal-header">
-                <h5 class="nkd-modal-title">{{ trans('file-manager::media.move_to_trash') }}</h5>
-                <button type="button" class="nkd-btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="nkd-modal-body">
-                <p>{{ trans('file-manager::media.confirm_trash') }}</p>
-            </div>
-            <div class="nkd-modal-footer">
-                <button type="button" class="nkd-btn nkd-nkd-btn-primary"
-                        data-bs-dismiss="modal">{{ trans('file-manager::media.close') }}</button>
-                <button type="submit" class="nkd-btn nkd-btn-danger js-move-trash">
-                    {{ trans('file-manager::media.confirm') }}
-                </button>
-            </div>
-        </div>
-    </div>
-</div>
+{{--Tạo thư mục--}}
+<x-file-manager::confirm-modal
+    modalId="modal-create-item"
+    :modalTitle="trans('file-manager::media.create_folder')"
+    :modalAttributes="[
+        'data-update' => route('media.update'),
+        'data-action' => route('media.folder.create')
+    ]"
+    :inputField="[
+        'name' => 'name',
+        'type' => 'text',
+        'id' => 'name',
+        'placeholder' => trans('file-manager::media.folder_name')
+    ]"
+    :buttons="[
+        [
+            'type' => 'submit',
+            'class' => 'nkd-nkd-btn-primary js-create-folder',
+            'text' => trans('file-manager::media.create')
+        ]
+    ]"
+/>
+
+{{--Rename--}}
+<x-file-manager::confirm-modal
+    modalId="modal-rename-item"
+    :modalTitle="trans('file-manager::media.rename')"
+    :modalAttributes="[
+        'data-update' => route('media.update'),
+    ]"
+    :inputField="[
+        'name' => 'name',
+        'type' => 'text',
+        'id' => 'name',
+        'placeholder' => trans('file-manager::media.folder_name')
+    ]"
+    :buttons="[
+        [
+            'type' => 'submit',
+            'class' => 'nkd-nkd-btn-primary js-rename-folder',
+            'text' => trans('file-manager::media.update')
+        ]
+    ]"
+/>
+
+{{--remove--}}
+<x-file-manager::confirm-modal
+    modalId="modal-remove-item"
+    :modalTitle="trans('file-manager::media.move_to_trash')"
+    :modalAttributes="[
+        'data-action' => route('media.destroy'),
+    ]"
+    :addField="true"
+    field="<p>{{ trans('file-manager::media.confirm_trash') }}</p>"
+    :inputField="[]"
+    :buttons="[
+        [
+            'type' => 'button',
+            'class' => 'nkd-nkd-btn-primary',
+            'attrs' => [
+                'data-bs-dismiss' => 'modal',
+            ],
+            'text' => trans('file-manager::media.close')
+        ],
+        [
+            'type' => 'submit',
+            'class' => 'nkd-btn-danger js-move-trash',
+            'text' => trans('file-manager::media.confirm')
+        ]
+    ]"
+/>
+
+{{--empty all trash--}}
+<x-file-manager::confirm-modal
+    modalId="modal-empty-trash"
+    :modalTitle="trans('file-manager::media.empty_trash_title')"
+    :modalAttributes="[
+        'data-action' => route('media.emptyAllTrash'),
+    ]"
+    :addField="true"
+    field="<p>{{ trans('file-manager::media.empty_trash_title_confirm') }}</p>"
+    :inputField="[]"
+    :buttons="[
+        [
+            'type' => 'button',
+            'class' => 'nkd-nkd-btn-primary',
+            'attrs' => [
+                'data-bs-dismiss' => 'modal',
+            ],
+            'text' => trans('file-manager::media.close')
+        ],
+        [
+            'type' => 'submit',
+            'class' => 'nkd-btn-danger js-empty-all-trash',
+            'text' => trans('file-manager::media.confirm')
+        ]
+    ]"
+/>
+{{--remove final--}}
+<x-file-manager::confirm-modal
+    modalId="modal-remove-not-restore-item"
+    :modalTitle="trans('file-manager::media.move_to_trash')"
+    :modalAttributes="[
+        'data-action' => route('media.destroyFinally'),
+    ]"
+    :addField="true"
+    field="<p>{{ trans('file-manager::media.confirm_trash') }}</p>"
+    :inputField="[]"
+    :buttons="[
+        [
+            'type' => 'button',
+            'class' => 'nkd-nkd-btn-primary',
+            'attrs' => [
+                'data-bs-dismiss' => 'modal',
+            ],
+            'text' => trans('file-manager::media.close')
+        ],
+        [
+            'type' => 'submit',
+            'class' => 'nkd-btn-danger js-move-trash-finally',
+            'text' => trans('file-manager::media.confirm')
+        ]
+    ]"
+/>
+{{--restore--}}
+<x-file-manager::confirm-modal
+    modalId="modal-restore-item"
+    :modalTitle="trans('file-manager::media.restore_from_trash')"
+    :modalAttributes="[
+        'data-action' => route('media.restore'),
+    ]"
+    :addField="true"
+    field="<p>{{ trans('file-manager::media.restore_from_trash_confirm') }}</p>"
+    :inputField="[]"
+    :buttons="[
+        [
+            'type' => 'button',
+            'class' => 'nkd-nkd-btn-primary',
+            'attrs' => [
+                'data-bs-dismiss' => 'modal',
+            ],
+            'text' => trans('file-manager::media.close')
+        ],
+        [
+            'type' => 'submit',
+            'class' => 'nkd-btn-danger js-restore-from-trash',
+            'text' => trans('file-manager::media.confirm')
+        ]
+    ]"
+/>
+{{--change alt text--}}
+<x-file-manager::confirm-modal
+    modalId="modal-change-alt-item"
+    :modalTitle="trans('file-manager::media.alt_text')"
+    :inputField="[
+        'name' => 'alt',
+        'type' => 'text',
+        'id' => 'alt',
+        'placeholder' => trans('file-manager::media.alt_text')
+    ]"
+    :buttons="[
+        [
+            'type' => 'submit',
+            'class' => 'nkd-nkd-btn-primary',
+            'text' => trans('file-manager::media.update')
+        ]
+    ]"
+    :isForm="true"
+    :formFields="[
+        'action' => route('media.file.updateData'),
+        'method' => 'put',
+    ]"
+/>
+
+
+{{--change alt text--}}
+<x-file-manager::confirm-modal
+    modalId="modal-change-alt-item"
+    :modalTitle="trans('file-manager::media.alt_text')"
+    :inputField="[
+        'name' => 'alt',
+        'type' => 'text',
+        'id' => 'alt',
+        'placeholder' => trans('file-manager::media.alt_text')
+    ]"
+    :buttons="[
+        [
+            'type' => 'submit',
+            'class' => 'nkd-nkd-btn-primary',
+            'text' => trans('file-manager::media.update')
+        ]
+    ]"
+    :isForm="true"
+    :formFields="[
+        'action' => route('media.file.updateData'),
+        'method' => 'put',
+    ]"
+/>
+
 <div class="nkd-modal nkd-modal-blur nkd-fade" id="modal-upload-link"
      data-action="{{ route('media.file.uploadMultiple') }}">
     <div class="nkd-modal-dialog nkd-modal-dialog-centered">
         <div class="nkd-modal-content">
             <div class="nkd-modal-header">
                 <h5 class="nkd-modal-title">
-                    <svg class="nkd-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                         stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"
-                         stroke-linejoin="round">
-                        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                        <path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2"></path>
-                        <path d="M7 11l5 5l5 -5"></path>
-                        <path d="M12 4l0 12"></path>
-                    </svg>
                     {{ trans('file-manager::media.download_link') }}
                 </h5>
                 <button type="button" class="nkd-btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -605,6 +724,7 @@
         </div>
     </div>
 </div>
+
 <div class="nkd-modal nkd-modal-blur nkd-fade" id="modal-crop-image">
     <div class="nkd-modal-dialog nkd-modal-xl nkd-modal-dialog-centered">
         <form action="{{ route('media.file.updateCropImage') }}" class="nkd-w-100" method="post">

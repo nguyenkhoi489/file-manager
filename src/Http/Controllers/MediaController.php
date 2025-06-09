@@ -69,6 +69,9 @@ class MediaController extends Controller
 
         $limit = $data['posts_per_page'] = $data['posts_per_page'] ?? $limit;
 
+        if ($request->user() && isset($request->user()->role_id) && $request->user()->role_id !== 1) {
+            $data['user_id'] = $request->user()->id;
+        }
         $countFolders = $this->folderRepository->getCount($data);
         $countFiles = $this->fileRepository->getCount($data);
         if ($data['load_more'] == 'false') {
@@ -101,7 +104,6 @@ class MediaController extends Controller
                 $dataResponse['folder'] = $this->folderRepository->filter($data);
                 break;
         }
-
         return response()->json([
             'success' => true,
             'data' => [
@@ -188,6 +190,64 @@ class MediaController extends Controller
         return response()->json([
             'success' => true,
             'message' => trans('file-manager::media.trash_success')
+        ]);
+    }
+
+    public function restoreTrash(MediaUpdateRequest $request): JsonResponse
+    {
+        $data = $request->validated();
+
+        $repoUsed = $data['is_folder'] !== 'false' ? $this->folderRepository : $this->fileRepository;
+
+        $isExits = $repoUsed->find($data['id']);
+
+        if (!$isExits) {
+            return response()->json([
+                'success' => false,
+                'message' => trans('file-manager::media.not_found')
+            ]);
+        }
+
+        $repoUsed->update($isExits->id, [
+            'deleted_at' => null
+        ]);
+
+        return response()->json([
+            'success' => true,
+            'message' => trans('file-manager::media.restore_success')
+        ]);
+    }
+
+    public function removeNotRestore(MediaUpdateRequest $request): JsonResponse
+    {
+        $data = $request->validated();
+
+        $repoUsed = $data['is_folder'] !== 'false' ? $this->folderRepository : $this->fileRepository;
+
+        $isExits = $repoUsed->find($data['id']);
+
+        if (!$isExits) {
+            return response()->json([
+                'success' => false,
+                'message' => trans('file-manager::media.not_found')
+            ]);
+        }
+
+        $isExits->delete();
+
+        return response()->json([
+            'success' => true,
+            'message' => trans('file-manager::media.trash_success')
+        ]);
+    }
+
+    public function emptyAllTrash(): JsonResponse
+    {
+        $this->fileRepository->getQuery()->whereNotNull('deleted_at')->delete();
+        $this->folderRepository->getQuery()->whereNotNull('deleted_at')->delete();
+        return response()->json([
+            'success' => true,
+            'message' => trans('file-manager::media.empty_trash_success')
         ]);
     }
 
