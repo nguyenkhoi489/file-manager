@@ -889,22 +889,31 @@
     </div>
 </script>
 <script>
-    const listScripts = [
-        '{{ asset('vendor/file-manager/assets/lib/jquery/jquery-3.7.1.min.js') }}',
-        '{{ asset('vendor/file-manager/assets/lib/toastr/toastr.min.js') }}',
-        '{{ asset('vendor/file-manager/assets/lib/tabler/tabler.min.js') }}',
-        '{{ asset('vendor/file-manager/assets/lib/toastr/toastr-setting.js') }}',
-        '{{ asset('vendor/file-manager/assets/lib/fslightbox/fslightbox.js') }}',
-        '{{ asset('vendor/file-manager/assets/lib/cropper/cropper.min.js') }}',
-        '{{ asset('vendor/file-manager/assets/lib/cropper/jquery-cropper.min.js') }}',
-        '{{ asset('vendor/file-manager/assets/js/CKMedia.js') }}'
-    ];
-    listScripts.forEach(function (item) {
-        if (!document.querySelector(`script[src="${item}"]`)) {
-            let script = document.createElement('script');
-            script.src = item;
-            document.body.appendChild(script);
-        }
+    const loadScript = src => new Promise((resolve, reject) => {
+        if (document.querySelector(`script[src="${src}"]`)) return resolve(); 
+        const script = document.createElement('script');
+        script.src = src;
+        script.onload = resolve;
+        script.onerror = reject;
+        document.body.appendChild(script);
     });
+
+    (async () => {
+        try {
+            await loadScript("{{ asset('vendor/file-manager/assets/lib/jquery/jquery-3.7.1.min.js') }}");
+            await loadScript("{{ asset('vendor/file-manager/assets/lib/toastr/toastr.min.js') }}");
+            await loadScript("{{ asset('vendor/file-manager/assets/lib/tabler/tabler.min.js') }}");
+            await loadScript("{{ asset('vendor/file-manager/assets/lib/fslightbox/fslightbox.js') }}");
+            await loadScript("{{ asset('vendor/file-manager/assets/lib/cropper/cropper.min.js') }}");
+            await loadScript("{{ asset('vendor/file-manager/assets/lib/cropper/jquery-cropper.min.js') }}");
+
+            await loadScript("{{ asset('vendor/file-manager/assets/lib/toastr/toastr-setting.js') }}");
+
+            await loadScript("{{ asset('vendor/file-manager/assets/js/CKMedia.js') }}");
+        } catch (e) {
+            console.error('Script load error:', e);
+        }
+    })();
 </script>
+
 
