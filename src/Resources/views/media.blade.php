@@ -1,15 +1,16 @@
 <script>
     const listStyles = [
-        '{{ asset('vendor/file-manager/assets/lib/toastr/toastr.min.css') }}',
-        'https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css',
-        '{{ asset('vendor/file-manager/assets/lib/cropper/cropper.min.css') }}',
-        '{{ asset('vendor/file-manager/assets/lib/tabler/tabler.min.css') }}',
-        '{{ asset('vendor/file-manager/assets/lib/tabler/tabler-flags.min.css') }}',
-        '{{ asset('vendor/file-manager/assets/lib/tabler/tabler-vendors.min.css') }}',
-        '{{ asset('vendor/file-manager/assets/css/base.css') }}'
+        "{{ asset('vendor/file-manager/assets/lib/toastr/toastr.min.css') }}",
+        "https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css",
+        "{{ asset('vendor/file-manager/assets/lib/cropper/cropper.min.css') }}",
+        "{{ asset('vendor/file-manager/assets/lib/tabler/tabler.min.css') }}",
+        "{{ asset('vendor/file-manager/assets/lib/tabler/tabler-flags.min.css') }}",
+        "{{ asset('vendor/file-manager/assets/lib/tabler/tabler-vendors.min.css') }}",
+        "{{ asset('vendor/file-manager/assets/css/base.css') }}"
     ];
+
     listStyles.forEach(function (item) {
-        if (!document.querySelector(`link[src="${item}"]`)) {
+        if (!document.querySelector(`link[href="${item}"]`)) {
             let link = document.createElement('link');
             link.rel = 'stylesheet';
             link.href = item;
@@ -17,6 +18,7 @@
         }
     });
 </script>
+
 
 <div class="nkd-container">
     <div class="nkd-media-container"
@@ -890,7 +892,7 @@
 </script>
 <script>
     const loadScript = src => new Promise((resolve, reject) => {
-        if (document.querySelector(`script[src="${src}"]`)) return resolve(); 
+        if (document.querySelector(`script[src="${src}"]`)) return resolve();
         const script = document.createElement('script');
         script.src = src;
         script.onload = resolve;
