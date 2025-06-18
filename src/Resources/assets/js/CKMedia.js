@@ -1160,5 +1160,5 @@ var CKMedia = {
 
 }
 
-CKMedia.__init()
+CKMedia.__init($)
 

@@ -3,7 +3,8 @@
     --input-border: #e3dfdf;
     --loading: #206bc4;
     --bg-item: #f6f8fb;
-    --bg-descriptions: #eef3f6
+    --bg-descriptions: #eef3f6;
+    --primary-color: var(--loading)
 }
 
 button, input, optgroup, select, textarea {
