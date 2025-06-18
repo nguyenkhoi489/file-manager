@@ -1092,7 +1092,7 @@ var CKMedia = {
     },
 
     bindActionCloseModal() {
-        $(document).on('click', '.nkd-btn-close', function (e) {
+        $(document).on('click', '.nkd-btn-close,[data-bs-dismiss="modal"]', function (e) {
             e.preventDefault();
             let modal = $(this).closest('.nkd-modal')
 

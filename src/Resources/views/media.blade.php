@@ -1,6 +1,9 @@
 <link rel="stylesheet" href="{{ asset('vendor/file-manager/assets/lib/toastr/toastr.min.css') }}">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css" rel="stylesheet">
 <link rel="stylesheet" href="{{ asset('vendor/file-manager/assets/lib/cropper/cropper.min.css') }}">
+<link rel="stylesheet" href="{{ asset('vendor/file-manager/assets/lib/tabler/tabler.min.css') }}">
+<link rel="stylesheet" href="{{ asset('vendor/file-manager/assets/lib/tabler/tabler-flags.min.css') }}">
+<link rel="stylesheet" href="{{ asset('vendor/file-manager/assets/lib/tabler/tabler-vendors.min.css') }}">
 <link rel="stylesheet" href="{{ asset('vendor/file-manager/assets/css/base.css') }}">
 
 <div class="nkd-container">
@@ -876,6 +879,7 @@
 
 <script src="{{ asset('vendor/file-manager/assets/lib/jquery/jquery-3.7.1.min.js') }}"></script>
 <script src="{{ asset('vendor/file-manager/assets/lib/toastr/toastr.min.js') }}"></script>
+<script src="{{ asset('vendor/file-manager/assets/lib/tabler/tabler.min.js') }}"></script>
 <script src="{{ asset('vendor/file-manager/assets/lib/toastr/toastr-setting.js') }}"></script>
 <script src="{{ asset('vendor/file-manager/assets/lib/fslightbox/fslightbox.js') }}"></script>
 <script src="{{ asset('vendor/file-manager/assets/lib/cropper/cropper.min.js') }}"></script>
