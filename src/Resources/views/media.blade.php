@@ -908,9 +908,7 @@
             await loadScript("{{ asset('vendor/file-manager/assets/lib/fslightbox/fslightbox.js') }}");
             await loadScript("{{ asset('vendor/file-manager/assets/lib/cropper/cropper.min.js') }}");
             await loadScript("{{ asset('vendor/file-manager/assets/lib/cropper/jquery-cropper.min.js') }}");
-
             await loadScript("{{ asset('vendor/file-manager/assets/lib/toastr/toastr-setting.js') }}");
-
             await loadScript("{{ asset('vendor/file-manager/assets/js/CKMedia.js') }}");
         } catch (e) {
             console.error('Script load error:', e);

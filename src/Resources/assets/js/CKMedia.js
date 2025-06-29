@@ -522,7 +522,7 @@ var CKMedia = {
             let dataItem = JSON.parse(parentItem.attr('data-item'));
             let fileUrl = `/uploads${dataItem.permalink}`
             allFiles.push({
-                fileUrl: fileUrl, alt: dataItem.alt, id: dataItem.id
+                fileUrl: fileUrl, alt: dataItem.alt, id: dataItem.id, dataItem: dataItem
             });
         })
         const event = new CustomEvent('files:choose', {detail: allFiles});

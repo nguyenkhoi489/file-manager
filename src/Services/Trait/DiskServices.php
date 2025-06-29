@@ -4,6 +4,7 @@ namespace NguyenKhoi\FileManager\Services\Trait;
 
 
 use Illuminate\Support\Facades\Storage;
+use function config;
 
 trait DiskServices
 {
@@ -17,8 +18,8 @@ trait DiskServices
     protected function setDisk(): static
     {
         $this->disk = Storage::build([
-            'driver' => file_manager_setting('default_disk', 'local'),
-            'root' => public_path(\config('file-manager.path_folder')),
+            'driver' => config('file-manager.diskList'),
+            'root' => public_path(config('file-manager.path_folder')),
         ]);
         return $this;
     }
