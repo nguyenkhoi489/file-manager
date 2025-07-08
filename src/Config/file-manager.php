@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'diskList' => 'public',
+    'diskList' => 'local',
     'mime_types' => [
         'image/png',
         'image/jpeg',

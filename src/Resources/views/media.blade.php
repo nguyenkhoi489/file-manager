@@ -1,25 +1,3 @@
-<script>
-    const listStyles = [
-        "{{ asset('vendor/file-manager/assets/lib/toastr/toastr.min.css') }}",
-        "https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css",
-        "{{ asset('vendor/file-manager/assets/lib/cropper/cropper.min.css') }}",
-        "{{ asset('vendor/file-manager/assets/lib/tabler/tabler.min.css') }}",
-        "{{ asset('vendor/file-manager/assets/lib/tabler/tabler-flags.min.css') }}",
-        "{{ asset('vendor/file-manager/assets/lib/tabler/tabler-vendors.min.css') }}",
-        "{{ asset('vendor/file-manager/assets/css/base.css') }}"
-    ];
-
-    listStyles.forEach(function (item) {
-        if (!document.querySelector(`link[href="${item}"]`)) {
-            let link = document.createElement('link');
-            link.rel = 'stylesheet';
-            link.href = item;
-            document.head.appendChild(link);
-        }
-    });
-</script>
-
-
 <div class="nkd-container">
     <div class="nkd-media-container"
          data-breadcrumbs-count="1"
@@ -34,7 +12,7 @@
                         <div class="nkd-btn-list">
                             <!--Upload-->
                             <div class="nkd-dropdown">
-                                <button class="nkd-btn nkd-btn-primary nkd-dropdown-toggle" type="button"
+                                <button class="nkd-btn nkd-btn-primary dropdown-toggle nkd-dropdown-toggle" type="button"
                                         data-bs-toggle="dropdown"
                                         aria-expanded="false">
                                     <svg class="nkd-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
@@ -47,7 +25,7 @@
                                     </svg>
                                     {{ trans('file-manager::media.upload') }}
                                 </button>
-                                <div class="nkd-dropdown-menu" style="">
+                                <div class="dropdown-menu" style="">
                                     <button class="nkd-dropdown-item js-button-upload">
                                         <svg class="icon dropdown-item-icon" xmlns="http://www.w3.org/2000/svg"
                                              width="24"
@@ -890,30 +868,66 @@
         </div>
     </div>
 </script>
-<script>
-    const loadScript = src => new Promise((resolve, reject) => {
-        if (document.querySelector(`script[src="${src}"]`)) return resolve();
-        const script = document.createElement('script');
-        script.src = src;
-        script.onload = resolve;
-        script.onerror = reject;
-        document.body.appendChild(script);
-    });
+<script defer>
+document.addEventListener('DOMContentLoaded', () => {
+    (() => {
+        const getFileName = path => path.split('/').pop().split('?')[0];
 
-    (async () => {
-        try {
-            await loadScript("{{ asset('vendor/file-manager/assets/lib/jquery/jquery-3.7.1.min.js') }}");
-            await loadScript("{{ asset('vendor/file-manager/assets/lib/toastr/toastr.min.js') }}");
-            await loadScript("{{ asset('vendor/file-manager/assets/lib/tabler/tabler.min.js') }}");
-            await loadScript("{{ asset('vendor/file-manager/assets/lib/fslightbox/fslightbox.js') }}");
-            await loadScript("{{ asset('vendor/file-manager/assets/lib/cropper/cropper.min.js') }}");
-            await loadScript("{{ asset('vendor/file-manager/assets/lib/cropper/jquery-cropper.min.js') }}");
-            await loadScript("{{ asset('vendor/file-manager/assets/lib/toastr/toastr-setting.js') }}");
-            await loadScript("{{ asset('vendor/file-manager/assets/js/CKMedia.js') }}");
-        } catch (e) {
-            console.error('Script load error:', e);
-        }
+        const existingScripts = Array.from(document.querySelectorAll('script[src]'))
+            .map(script => getFileName(script.src));
+
+        const loadScript = src => new Promise((resolve, reject) => {
+            const fileName = getFileName(src);
+            if (existingScripts.includes(fileName)) return resolve();
+            const script = document.createElement('script');
+            script.src = src;
+            script.onload = resolve;
+            script.onerror = reject;
+            document.body.appendChild(script);
+        });
+
+        const existingStyles = Array.from(document.querySelectorAll('link[rel="stylesheet"]'))
+            .map(link => getFileName(link.href));
+
+        const loadStyle = href => {
+            const fileName = getFileName(href);
+            if (existingStyles.includes(fileName)) return;
+            const link = document.createElement('link');
+            link.rel = 'stylesheet';
+            link.href = href;
+            document.head.appendChild(link);
+        };
+
+        const styles = [
+            "{{ asset('vendor/file-manager/assets/lib/toastr/toastr.min.css') }}",
+            "https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css",
+            "{{ asset('vendor/file-manager/assets/lib/cropper/cropper.min.css') }}",
+            "{{ asset('vendor/file-manager/assets/lib/tabler/tabler.min.css') }}",
+            "{{ asset('vendor/file-manager/assets/lib/tabler/tabler-flags.min.css') }}",
+            "{{ asset('vendor/file-manager/assets/lib/tabler/tabler-vendors.min.css') }}",
+            "{{ asset('vendor/file-manager/assets/css/base.css') }}"
+        ];
+
+        styles.forEach(loadStyle);
+
+        (async () => {
+            try {
+                await loadScript("{{ asset('vendor/file-manager/assets/lib/jquery/jquery-3.7.1.min.js') }}");
+                await loadScript("{{ asset('vendor/file-manager/assets/lib/toastr/toastr.min.js') }}");
+                await loadScript("{{ asset('vendor/file-manager/assets/lib/tabler/tabler.min.js') }}");
+                await loadScript("{{ asset('vendor/file-manager/assets/lib/fslightbox/fslightbox.js') }}");
+                await loadScript("{{ asset('vendor/file-manager/assets/lib/cropper/cropper.min.js') }}");
+                await loadScript("{{ asset('vendor/file-manager/assets/lib/cropper/jquery-cropper.min.js') }}");
+                await loadScript("{{ asset('vendor/file-manager/assets/lib/toastr/toastr-setting.js') }}");
+                await loadScript("{{ asset('vendor/file-manager/assets/js/CKMedia.js') }}");
+            } catch (e) {
+                console.error('Script load error:', e);
+            }
+        })();
     })();
+});
 </script>
+
+
 
 
